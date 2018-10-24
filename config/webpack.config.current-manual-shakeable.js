@@ -9,12 +9,7 @@ module.exports = {
       {
         test: /\.js$/,
         // https://github.com/babel/babel-loader/issues/171#issuecomment-163385201
-        exclude: path => {
-          const shouldExclude = /node_modules\/(?!(@material-ui\/core\/es)\/).*/.test(
-            path
-          );
-          return shouldExclude;
-        },
+        exclude: /node_modules\/(?!(@material-ui\/core\/es)\/).*/,
         loader: "babel-loader"
       }
     ]
