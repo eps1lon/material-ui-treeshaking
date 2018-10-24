@@ -2,7 +2,7 @@
   "name": "material-ui-shook",
   "version": "1.0.0",
   "description": "material-ui + webpack + tree shaking",
-  "author": "MUI Team",
+  "author": "Sebastian Silbermann",
   "license": "MIT",
   "private": true,
   "dependencies": {
@@ -30,6 +30,7 @@
     "dev": "webpack --config config/webpack.config.current-manual-shakeable.js",
     "rebuild": "yarn run build:clean && yarn run build",
     "size": "size-limit",
-    "size:why": "node scripts/runSize"
+    "size:why": "node scripts/runSize",
+    "test": "yarn rebuild && yarn size"
   }
 }
