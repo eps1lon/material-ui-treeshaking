@@ -9,6 +9,7 @@
     "@material-ui/core": "^3.3.1",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "size-limit": "^0.20.1",
     "webpack-bundle-analyzer": "^3.0.3"
   },
   "devDependencies": {
@@ -28,6 +29,7 @@
     "build:clean": "node scripts/run \"rimraf bundle/{name}/*\"",
     "dev": "webpack --config config/webpack.config.current-manual-shakeable.js",
     "rebuild": "yarn run build:clean && yarn run build",
-    "size": "node scripts/runSize"
+    "size": "size-limit",
+    "size:why": "node scripts/runSize"
   }
 }
