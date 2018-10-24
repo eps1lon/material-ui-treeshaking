@@ -1,5 +1,5 @@
 const childProcess = require("child_process");
-const runWithNamedConfiguration = require("./runWithNamedConfiguration");
+const { runWithNamedConfiguration } = require("./utils");
 
 const [commandTemplate] = process.argv.slice(2);
 runWithNamedConfiguration({
