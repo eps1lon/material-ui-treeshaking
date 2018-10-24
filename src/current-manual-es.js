@@ -1,11 +1,11 @@
 /**
  * target only @material-ui/core/es*
  */
-const React = require("react");
-const ReactDOM = require("react-dom");
-const Typography = require("@material-ui/core/es/Typography");
+import React from "react";
+import ReactDOM from "react-dom";
+import Typography from "@material-ui/core/es/Typography";
 
 ReactDOM.render(
-  document.getElementById("root"),
-  <Typography>Hello, World!</Typography>
+  <Typography>Hello, World!</Typography>,
+  document.getElementById("root")
 );

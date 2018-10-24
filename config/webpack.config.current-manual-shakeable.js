@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -7,7 +8,8 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        // https://github.com/babel/babel-loader/issues/171#issuecomment-163385201
+        exclude: /node_modules\/(?!(@material\-ui\/core\/es)).*/,
         loader: "babel-loader"
       }
     ]
@@ -16,6 +18,12 @@ module.exports = {
     path: path.resolve(__dirname, `../bundle/current-manual-shakeable`),
     filename: `index.current-manual-shakeable.js`
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "../public/index.html"),
+      title: "Material-UI tree shaking current-manual-shakeable"
+    })
+  ],
   /**
    * That's the important part. You still import as before but webpack rewrites
    * all of those so that the module version is imported. If you already have

@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 module.exports = {
@@ -15,5 +16,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, `../bundle/current-manual-es`),
     filename: `index.current-manual-es.js`
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "../public/index.html"),
+      title: "Material-UI tree shaking current-manual-es"
+    })
+  ]
 };
