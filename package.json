@@ -26,7 +26,7 @@
   "scripts": {
     "build": "node scripts/run \"webpack --config config/webpack.config.{name}.js --profile --json > bundle/{name}/stats.json\"",
     "build:clean": "node scripts/run \"rimraf bundle/{name}/*\"",
-    "dev": "webpack-dev-server --config config/webpack.config.current-manual-es.js",
+    "dev": "webpack --config config/webpack.config.current-manual-shakeable.js",
     "rebuild": "yarn run build:clean && yarn run build",
     "size": "node scripts/runSize"
   }
