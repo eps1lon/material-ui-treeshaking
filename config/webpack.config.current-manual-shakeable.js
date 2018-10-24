@@ -26,10 +26,7 @@ module.exports = {
   ],
   /**
    * That's the important part. You still import as before but webpack rewrites
-   * all of those so that the module version is imported. If you already have
-   * `from "@material-ui/core/es/*"` imports in your codebase this will cause runtime errors.
-   * However if you already mixed those two import types you probably already had
-   * defects in your code. A simple search & replace is sufficient
+   * all of those so that the module version is imported.
    */
   resolve: {
     alias: {
