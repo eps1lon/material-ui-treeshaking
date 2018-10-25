@@ -1,0 +1,4 @@
+{
+  "sideEffects": false,
+  "module": "../esm/Typography/index.js"
+}

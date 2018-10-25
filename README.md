@@ -65,3 +65,8 @@ tree shaking capability.
 
 This ads overhead for dependendants and should only be considered a workaround
 until material-ui publishes the same version of the package with commonJS and esmodules.
+
+### next
+- created esm/ directory. Same babel config as main build but with esmodules
+- put package.json into every subdirectory that has a module entry that points to the esm build
+- ![do tree-shaking like gru](https://imgflip.com/i/2kx4yu)

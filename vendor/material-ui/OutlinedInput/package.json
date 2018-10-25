@@ -1,0 +1,4 @@
+{
+  "sideEffects": false,
+  "module": "../esm/OutlinedInput/index.js"
+}

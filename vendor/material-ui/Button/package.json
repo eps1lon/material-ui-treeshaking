@@ -1,0 +1,4 @@
+{
+  "sideEffects": false,
+  "module": "../esm/Button/index.js"
+}

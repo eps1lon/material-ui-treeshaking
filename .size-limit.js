@@ -23,5 +23,12 @@ module.exports = [
     path: "bundle/current-magic/index.current-magic.js",
     // little bit bigger because of named import overhead
     limit: "55125 B"
+  },
+  {
+    name: "next: Typography with tree shaking from webpack",
+    webpack: false,
+    path: "bundle/next-magic/index.next-magic.js",
+    // gzipped tricked me :()
+    limit: "55296 B"
   }
 ];
