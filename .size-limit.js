@@ -16,5 +16,12 @@ module.exports = [
     webpack: false,
     path: "bundle/current-manual-shakeable/index.current-manual-shakeable.js",
     limit: "53989 B"
+  },
+  {
+    name: "Typography with tree shaking from webpack",
+    webpack: false,
+    path: "bundle/current-magic/index.current-magic.js",
+    // little bit bigger because of named import overhead
+    limit: "55125 B"
   }
 ];
