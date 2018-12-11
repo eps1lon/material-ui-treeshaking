@@ -4,9 +4,9 @@
  */
 import React from "react";
 import ReactDOM from "react-dom";
-import { Typography } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 
 ReactDOM.render(
-  <Typography>Hello, World!</Typography>,
+  <Paper>Hello, World!</Paper>,
   document.getElementById("root")
 );
