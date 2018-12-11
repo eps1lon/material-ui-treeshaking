@@ -4,17 +4,18 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutP
 import React from 'react';
 import PropTypes from 'prop-types';
 import SelectInput from './SelectInput';
+import formControlState from '../FormControl/formControlState';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import withStyles from '../styles/withStyles';
 import mergeClasses from '../styles/mergeClasses';
 import ArrowDropDownIcon from '../internal/svg-icons/ArrowDropDown'; // To replace with InputBase in v4.0.0
 
 import Input from '../Input';
-import { formControlState } from '../InputBase/InputBase';
 import { styles as nativeSelectStyles } from '../NativeSelect/NativeSelect';
 import NativeSelectInput from '../NativeSelect/NativeSelectInput';
 export const styles = nativeSelectStyles;
 
-function Select(props, context) {
+function Select(props) {
   const {
     autoWidth,
     children,
@@ -24,6 +25,7 @@ function Select(props, context) {
     input,
     inputProps,
     MenuProps,
+    muiFormControl,
     multiple,
     native,
     onClose,
@@ -32,12 +34,12 @@ function Select(props, context) {
     renderValue,
     SelectDisplayProps
   } = props,
-        other = _objectWithoutPropertiesLoose(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
+        other = _objectWithoutPropertiesLoose(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "muiFormControl", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
 
   const inputComponent = native ? NativeSelectInput : SelectInput;
   const fcs = formControlState({
     props,
-    context,
+    muiFormControl,
     states: ['variant']
   });
   return React.cloneElement(input, _extends({
@@ -48,12 +50,13 @@ function Select(props, context) {
       children,
       IconComponent,
       variant: fcs.variant,
-      type: undefined
+      type: undefined,
+      // We render a select. We can ignore the type provided by the `Input`.
+      multiple
     }, native ? {} : {
       autoWidth,
       displayEmpty,
       MenuProps,
-      multiple,
       onClose,
       onOpen,
       open,
@@ -69,7 +72,7 @@ function Select(props, context) {
   }, other));
 }
 
-Select.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Select.propTypes = {
   /**
    * If true, the width of the popover will automatically be set according to the items inside the
    * menu, otherwise it will be at least the width of the select input.
@@ -175,13 +178,13 @@ Select.propTypes = process.env.NODE_ENV !== "production" ? {
    * The input value.
    * This property is required when the `native` property is `false` (default).
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]),
 
   /**
    * The variant to use.
    */
   variant: PropTypes.oneOf(['standard', 'outlined', 'filled'])
-} : {};
+} : void 0;
 Select.defaultProps = {
   autoWidth: false,
   displayEmpty: false,
@@ -190,10 +193,7 @@ Select.defaultProps = {
   multiple: false,
   native: false
 };
-Select.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 Select.muiName = 'Select';
-export default withStyles(nativeSelectStyles, {
+export default withStyles(styles, {
   name: 'MuiSelect'
-})(Select);
+})(withFormControlContext(Select));

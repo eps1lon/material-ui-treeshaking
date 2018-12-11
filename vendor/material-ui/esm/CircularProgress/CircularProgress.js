@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import withStyles from '../styles/withStyles';
 import { capitalize } from '../utils/helpers';
+import chainPropTypes from '../utils/chainPropTypes';
 var SIZE = 44;
 
 function getRelativeValue(value, min, max) {
@@ -94,6 +95,11 @@ export var styles = function styles(theme) {
         strokeDasharray: '100px, 200px',
         strokeDashoffset: '-120px'
       }
+    },
+
+    /* Styles applied to the `circle` svg path if `disableShrink={true}`. */
+    circleDisableShrink: {
+      animation: 'none'
     }
   };
 };
@@ -111,12 +117,13 @@ function CircularProgress(props) {
   var classes = props.classes,
       className = props.className,
       color = props.color,
+      disableShrink = props.disableShrink,
       size = props.size,
       style = props.style,
       thickness = props.thickness,
       value = props.value,
       variant = props.variant,
-      other = _objectWithoutProperties(props, ["classes", "className", "color", "size", "style", "thickness", "value", "variant"]);
+      other = _objectWithoutProperties(props, ["classes", "className", "color", "disableShrink", "size", "style", "thickness", "value", "variant"]);
 
   var circleStyle = {};
   var rootStyle = {};
@@ -147,7 +154,7 @@ function CircularProgress(props) {
     className: classes.svg,
     viewBox: "".concat(SIZE / 2, " ").concat(SIZE / 2, " ").concat(SIZE, " ").concat(SIZE)
   }, React.createElement("circle", {
-    className: classNames(classes.circle, (_classNames2 = {}, _defineProperty(_classNames2, classes.circleIndeterminate, variant === 'indeterminate'), _defineProperty(_classNames2, classes.circleStatic, variant === 'static'), _classNames2)),
+    className: classNames(classes.circle, (_classNames2 = {}, _defineProperty(_classNames2, classes.circleIndeterminate, variant === 'indeterminate'), _defineProperty(_classNames2, classes.circleStatic, variant === 'static'), _defineProperty(_classNames2, classes.circleDisableShrink, disableShrink), _classNames2)),
     style: circleStyle,
     cx: SIZE,
     cy: SIZE,
@@ -173,6 +180,19 @@ CircularProgress.propTypes = {
    * The color of the component. It supports those theme colors that make sense for this component.
    */
   color: PropTypes.oneOf(['primary', 'secondary', 'inherit']),
+
+  /**
+   * If `true`, the shrink animation is disabled.
+   * This only works if variant is `indeterminate`.
+   */
+  disableShrink: chainPropTypes(PropTypes.bool, function (props) {
+    /* istanbul ignore if */
+    if (props.disableShrink && props.variant !== 'indeterminate') {
+      return new Error('Material-UI: you have provided the `disableShrink` property ' + 'with a variant other than `indeterminate`. This will have no effect.');
+    }
+
+    return null;
+  }),
 
   /**
    * The size of the circle.
@@ -203,6 +223,7 @@ CircularProgress.propTypes = {
 };
 CircularProgress.defaultProps = {
   color: 'primary',
+  disableShrink: false,
   size: 40,
   thickness: 3.6,
   value: 0,

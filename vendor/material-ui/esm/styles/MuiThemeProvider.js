@@ -5,30 +5,32 @@ import _createClass from "@babel/runtime/helpers/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/inherits";
+
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
 import createBroadcast from 'brcast';
+import { exactProp, ponyfillGlobal } from '@material-ui/utils';
 import themeListener, { CHANNEL } from './themeListener';
-import exactProp from '../utils/exactProp';
 /**
  * This component takes a `theme` property.
  * It makes the `theme` available down the React tree thanks to React context.
  * This component should preferably be used at **the root of your component tree**.
  */
 
-var MuiThemeProvider =
+export var MuiThemeProviderOld =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(MuiThemeProvider, _React$Component);
+  _inherits(MuiThemeProviderOld, _React$Component);
 
   // We are not using the React state in order to avoid unnecessary rerender.
-  function MuiThemeProvider(props, context) {
+  function MuiThemeProviderOld(props, context) {
     var _this;
 
-    _classCallCheck(this, MuiThemeProvider);
+    _classCallCheck(this, MuiThemeProviderOld);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MuiThemeProvider).call(this)); // Get the outer theme from the context, can be null
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MuiThemeProviderOld).call(this)); // Get the outer theme from the context, can be null
 
     _this.broadcast = createBroadcast();
     _this.outerTheme = themeListener.initial(context); // Propagate the theme so it can be accessed by the children
@@ -38,7 +40,7 @@ function (_React$Component) {
     return _this;
   }
 
-  _createClass(MuiThemeProvider, [{
+  _createClass(MuiThemeProviderOld, [{
     key: "getChildContext",
     value: function getChildContext() {
       var _ref;
@@ -122,10 +124,9 @@ function (_React$Component) {
     }
   }]);
 
-  return MuiThemeProvider;
+  return MuiThemeProviderOld;
 }(React.Component);
-
-MuiThemeProvider.propTypes = {
+MuiThemeProviderOld.propTypes = {
   /**
    * You can wrap a node.
    */
@@ -160,11 +161,25 @@ MuiThemeProvider.propTypes = {
    */
   theme: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired
 };
-MuiThemeProvider.propTypes = exactProp(MuiThemeProvider.propTypes);
-MuiThemeProvider.childContextTypes = _extends({}, themeListener.contextTypes, {
+
+if (process.env.NODE_ENV !== 'production') {
+  MuiThemeProviderOld.propTypes = exactProp(MuiThemeProviderOld.propTypes);
+}
+
+MuiThemeProviderOld.childContextTypes = _extends({}, themeListener.contextTypes, {
   muiThemeProviderOptions: PropTypes.object
 });
-MuiThemeProvider.contextTypes = _extends({}, themeListener.contextTypes, {
+MuiThemeProviderOld.contextTypes = _extends({}, themeListener.contextTypes, {
   muiThemeProviderOptions: PropTypes.object
 });
-export default MuiThemeProvider;
+/* istanbul ignore if */
+
+if (!ponyfillGlobal.__MUI_STYLES__) {
+  ponyfillGlobal.__MUI_STYLES__ = {};
+}
+
+if (!ponyfillGlobal.__MUI_STYLES__.MuiThemeProvider) {
+  ponyfillGlobal.__MUI_STYLES__.MuiThemeProvider = MuiThemeProviderOld;
+}
+
+export default ponyfillGlobal.__MUI_STYLES__.MuiThemeProvider;

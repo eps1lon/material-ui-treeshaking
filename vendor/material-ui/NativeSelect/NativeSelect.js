@@ -19,7 +19,9 @@ var _NativeSelectInput = _interopRequireDefault(require("./NativeSelectInput"));
 
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
-var _InputBase = require("../InputBase/InputBase");
+var _formControlState = _interopRequireDefault(require("../FormControl/formControlState"));
+
+var _withFormControlContext = _interopRequireDefault(require("../FormControl/withFormControlContext"));
 
 var _ArrowDropDown = _interopRequireDefault(require("../internal/svg-icons/ArrowDropDown"));
 
@@ -58,17 +60,15 @@ var styles = function styles(theme) {
         borderRadius: 0 // Reset Chrome style
 
       },
-      // Remove Firefox focus border
-      '&:-moz-focusring': {
-        color: 'transparent',
-        textShadow: '0 0 0 #000'
-      },
       // Remove IE 11 arrow
       '&::-ms-expand': {
         display: 'none'
       },
       '&$disabled': {
         cursor: 'default'
+      },
+      '&[multiple]': {
+        height: 'auto'
       }
     },
 
@@ -120,17 +120,18 @@ var styles = function styles(theme) {
 
 exports.styles = styles;
 
-function NativeSelect(props, context) {
+function NativeSelect(props) {
   var children = props.children,
       classes = props.classes,
       IconComponent = props.IconComponent,
       input = props.input,
       inputProps = props.inputProps,
+      muiFormControl = props.muiFormControl,
       variant = props.variant,
-      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "IconComponent", "input", "inputProps", "variant"]);
-  var fcs = (0, _InputBase.formControlState)({
+      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "IconComponent", "input", "inputProps", "muiFormControl", "variant"]);
+  var fcs = (0, _formControlState.default)({
     props: props,
-    context: context,
+    muiFormControl: muiFormControl,
     states: ['variant']
   });
   return _react.default.cloneElement(input, (0, _extends2.default)({
@@ -176,6 +177,11 @@ NativeSelect.propTypes = {
   inputProps: _propTypes.default.object,
 
   /**
+   * @ignore
+   */
+  muiFormControl: _propTypes.default.object,
+
+  /**
    * Callback function fired when a menu item is selected.
    *
    * @param {object} event The event source of the callback.
@@ -186,7 +192,7 @@ NativeSelect.propTypes = {
   /**
    * The input value.
    */
-  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.arrayOf(_propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool]))]),
 
   /**
    * The variant to use.
@@ -197,13 +203,10 @@ NativeSelect.defaultProps = {
   IconComponent: _ArrowDropDown.default,
   input: _react.default.createElement(_Input.default, null)
 };
-NativeSelect.contextTypes = {
-  muiFormControl: _propTypes.default.object
-};
 NativeSelect.muiName = 'Select';
 
 var _default = (0, _withStyles.default)(styles, {
   name: 'MuiNativeSelect'
-})(NativeSelect);
+})((0, _withFormControlContext.default)(NativeSelect));
 
 exports.default = _default;

@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 export const styles = {
   /* Styles applied to the root element. */
@@ -54,7 +55,7 @@ function GridList(props) {
   }));
 }
 
-GridList.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? GridList.propTypes = {
   /**
    * Number of px for one cell height.
    * You can set `'auto'` if you want to let the children determine the height.
@@ -86,7 +87,7 @@ GridList.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Number of px for the spacing between tiles.
@@ -97,7 +98,7 @@ GridList.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   style: PropTypes.object
-} : {};
+} : void 0;
 GridList.defaultProps = {
   cellHeight: 180,
   cols: 2,

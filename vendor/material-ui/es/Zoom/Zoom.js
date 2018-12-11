@@ -84,7 +84,7 @@ class Zoom extends React.Component {
 
 }
 
-Zoom.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Zoom.propTypes = {
   /**
    * A single child content element.
    */
@@ -123,7 +123,7 @@ Zoom.propTypes = process.env.NODE_ENV !== "production" ? {
     enter: PropTypes.number,
     exit: PropTypes.number
   })])
-} : {};
+} : void 0;
 Zoom.defaultProps = {
   timeout: {
     enter: duration.enteringScreen,

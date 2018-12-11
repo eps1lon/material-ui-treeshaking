@@ -340,8 +340,7 @@ Snackbar.propTypes = {
   autoHideDuration: _propTypes.default.number,
 
   /**
-   * If you wish the take control over the children of the component you can use this property.
-   * When used, you replace the `SnackbarContent` component with the children.
+   * Replace the `SnackbarContent` component.
    */
   children: _propTypes.default.element,
 

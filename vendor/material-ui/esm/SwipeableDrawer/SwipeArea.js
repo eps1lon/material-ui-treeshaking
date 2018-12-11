@@ -42,11 +42,12 @@ export var styles = function styles(theme) {
 function SwipeArea(props) {
   var anchor = props.anchor,
       classes = props.classes,
+      className = props.className,
       width = props.width,
-      other = _objectWithoutProperties(props, ["anchor", "classes", "width"]);
+      other = _objectWithoutProperties(props, ["anchor", "classes", "className", "width"]);
 
   return React.createElement("div", _extends({
-    className: classNames(classes.root, classes["anchor".concat(capitalize(anchor))]),
+    className: classNames(classes.root, classes["anchor".concat(capitalize(anchor))], className),
     style: _defineProperty({}, isHorizontal(props) ? 'width' : 'height', width)
   }, other));
 }
@@ -63,9 +64,16 @@ SwipeArea.propTypes = {
   classes: PropTypes.object.isRequired,
 
   /**
+   * @ignore
+   */
+  className: PropTypes.string,
+
+  /**
    * The width of the left most (or right most) area in pixels where the
    * drawer can be swiped open from.
    */
   width: PropTypes.number.isRequired
 };
-export default withStyles(styles)(SwipeArea);
+export default withStyles(styles, {
+  name: 'MuiPrivateSwipeArea'
+})(SwipeArea);

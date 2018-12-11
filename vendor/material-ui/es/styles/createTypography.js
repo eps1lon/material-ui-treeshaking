@@ -3,6 +3,7 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutP
 import deepmerge from 'deepmerge'; // < 1kb payload overhead when lodash/merge is > 3kb.
 
 import warning from 'warning';
+import { ponyfillGlobal } from '@material-ui/utils';
 
 function round(value) {
   return Math.round(value * 1e5) / 1e5;
@@ -31,7 +32,7 @@ export default function createTypography(palette, typography) {
     // 16px is the default font-size used by browsers.
     htmlFontSize = 16,
     // eslint-disable-next-line no-underscore-dangle
-    useNextVariants = Boolean(global.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__),
+    useNextVariants = Boolean(ponyfillGlobal.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__),
     // Private option to prevent noise in the console from the default theme.
     suppressWarning = false,
     // Apply the CSS properties to all the variants.

@@ -4,6 +4,7 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { capitalize } from '../utils/helpers';
 export var styles = function styles(theme) {
@@ -103,7 +104,7 @@ Icon.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.

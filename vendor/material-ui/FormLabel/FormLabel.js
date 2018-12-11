@@ -19,9 +19,13 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
-var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+var _utils = require("@material-ui/utils");
 
-var _InputBase = require("../InputBase/InputBase");
+var _formControlState = _interopRequireDefault(require("../FormControl/formControlState"));
+
+var _withFormControlContext = _interopRequireDefault(require("../FormControl/withFormControlContext"));
+
+var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var styles = function styles(theme) {
   return {
@@ -67,7 +71,7 @@ var styles = function styles(theme) {
 
 exports.styles = styles;
 
-function FormLabel(props, context) {
+function FormLabel(props) {
   var _classNames;
 
   var children = props.children,
@@ -78,11 +82,12 @@ function FormLabel(props, context) {
       error = props.error,
       filled = props.filled,
       focused = props.focused,
+      muiFormControl = props.muiFormControl,
       required = props.required,
-      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "required"]);
-  var fcs = (0, _InputBase.formControlState)({
+      other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "muiFormControl", "required"]);
+  var fcs = (0, _formControlState.default)({
     props: props,
-    context: context,
+    muiFormControl: muiFormControl,
     states: ['required', 'focused', 'disabled', 'error', 'filled']
   });
   return _react.default.createElement(Component, (0, _extends2.default)({
@@ -114,7 +119,7 @@ FormLabel.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * If `true`, the label should be displayed in a disabled state.
@@ -137,6 +142,11 @@ FormLabel.propTypes = {
   focused: _propTypes.default.bool,
 
   /**
+   * @ignore
+   */
+  muiFormControl: _propTypes.default.object,
+
+  /**
    * If `true`, the label will indicate that the input is required.
    */
   required: _propTypes.default.bool
@@ -144,12 +154,9 @@ FormLabel.propTypes = {
 FormLabel.defaultProps = {
   component: 'label'
 };
-FormLabel.contextTypes = {
-  muiFormControl: _propTypes.default.object
-};
 
 var _default = (0, _withStyles.default)(styles, {
   name: 'MuiFormLabel'
-})(FormLabel);
+})((0, _withFormControlContext.default)(FormLabel));
 
 exports.default = _default;

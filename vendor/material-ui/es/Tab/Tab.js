@@ -12,8 +12,9 @@ export const styles = theme => ({
   /* Styles applied to the root element. */
   root: _extends({}, theme.typography.button, {
     maxWidth: 264,
-    position: 'relative',
     minWidth: 72,
+    position: 'relative',
+    boxSizing: 'border-box',
     padding: 0,
     minHeight: 48,
     flexShrink: 0,
@@ -28,7 +29,14 @@ export const styles = theme => ({
 
   /* Styles applied to the root element if both `icon` and `label` are provided. */
   labelIcon: {
-    minHeight: 72
+    minHeight: 72,
+    // paddingTop supposed to be 12px
+    // - 3px from the paddingBottom
+    paddingTop: 9 // paddingBottom supposed to be 12px
+    // -3px for line-height of the label
+    // -6px for label padding
+    // = 3px
+
   },
 
   /* Styles applied to the root element if `textColor="inherit"`. */
@@ -92,13 +100,9 @@ export const styles = theme => ({
     width: '100%',
     // Fix an IE 11 issue
     boxSizing: 'border-box',
-    paddingTop: 6,
-    paddingBottom: 6,
-    paddingLeft: 12,
-    paddingRight: 12,
+    padding: '6px 12px',
     [theme.breakpoints.up('md')]: {
-      paddingLeft: 24,
-      paddingRight: 24
+      padding: '6px 24px'
     }
   },
 
@@ -168,7 +172,7 @@ class Tab extends React.Component {
     const _this$props = this.props,
           {
       classes,
-      className: classNameProp,
+      className,
       disabled,
       fullWidth,
       icon,
@@ -194,15 +198,14 @@ class Tab extends React.Component {
       }, labelProp));
     }
 
-    const className = classNames(classes.root, classes[`textColor${capitalize(textColor)}`], {
-      [classes.disabled]: disabled,
-      [classes.selected]: selected,
-      [classes.labelIcon]: icon && label,
-      [classes.fullWidth]: fullWidth
-    }, classNameProp);
     return React.createElement(ButtonBase, _extends({
       focusRipple: true,
-      className: className,
+      className: classNames(classes.root, classes[`textColor${capitalize(textColor)}`], {
+        [classes.disabled]: disabled,
+        [classes.selected]: selected,
+        [classes.labelIcon]: icon && label,
+        [classes.fullWidth]: fullWidth
+      }, className),
       role: "tab",
       "aria-selected": selected,
       disabled: disabled
@@ -215,7 +218,7 @@ class Tab extends React.Component {
 
 }
 
-Tab.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Tab.propTypes = {
   /**
    * This property isn't supported.
    * Use the `component` property if you need to change the children structure.
@@ -284,7 +287,7 @@ Tab.propTypes = process.env.NODE_ENV !== "production" ? {
    * You can provide your own value. Otherwise, we fallback to the child position index.
    */
   value: PropTypes.any
-} : {};
+} : void 0;
 Tab.defaultProps = {
   disabled: false,
   textColor: 'inherit'

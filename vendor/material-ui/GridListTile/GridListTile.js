@@ -33,6 +33,8 @@ var _reactEventListener = _interopRequireDefault(require("react-event-listener")
 
 var _debounce = _interopRequireDefault(require("debounce"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 // < 1kb payload overhead when lodash/debounce is > 3kb.
@@ -210,7 +212,7 @@ GridListTile.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * Height of the tile in number of grid cells.

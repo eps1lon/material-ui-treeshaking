@@ -6,7 +6,7 @@ import _inherits from "@babel/runtime/helpers/inherits";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import exactProp from '../utils/exactProp';
+import { exactProp } from '@material-ui/utils';
 import { setRef } from '../utils/reactHelpers';
 /**
  * Helper component to allow attaching a ref to a
@@ -98,5 +98,9 @@ RootRef.propTypes = {
    */
   rootRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired
 };
-RootRef.propTypes = exactProp(RootRef.propTypes);
+
+if (process.env.NODE_ENV !== 'production') {
+  RootRef.propTypes = exactProp(RootRef.propTypes);
+}
+
 export default RootRef;

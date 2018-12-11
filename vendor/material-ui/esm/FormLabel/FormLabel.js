@@ -4,8 +4,10 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
+import formControlState from '../FormControl/formControlState';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import withStyles from '../styles/withStyles';
-import { formControlState } from '../InputBase/InputBase';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -48,7 +50,7 @@ export var styles = function styles(theme) {
   };
 };
 
-function FormLabel(props, context) {
+function FormLabel(props) {
   var _classNames;
 
   var children = props.children,
@@ -59,12 +61,13 @@ function FormLabel(props, context) {
       error = props.error,
       filled = props.filled,
       focused = props.focused,
+      muiFormControl = props.muiFormControl,
       required = props.required,
-      other = _objectWithoutProperties(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "required"]);
+      other = _objectWithoutProperties(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "muiFormControl", "required"]);
 
   var fcs = formControlState({
     props: props,
-    context: context,
+    muiFormControl: muiFormControl,
     states: ['required', 'focused', 'disabled', 'error', 'filled']
   });
   return React.createElement(Component, _extends({
@@ -96,7 +99,7 @@ FormLabel.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the label should be displayed in a disabled state.
@@ -119,6 +122,11 @@ FormLabel.propTypes = {
   focused: PropTypes.bool,
 
   /**
+   * @ignore
+   */
+  muiFormControl: PropTypes.object,
+
+  /**
    * If `true`, the label will indicate that the input is required.
    */
   required: PropTypes.bool
@@ -126,9 +134,6 @@ FormLabel.propTypes = {
 FormLabel.defaultProps = {
   component: 'label'
 };
-FormLabel.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 export default withStyles(styles, {
   name: 'MuiFormLabel'
-})(FormLabel);
+})(withFormControlContext(FormLabel));

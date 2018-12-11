@@ -52,11 +52,11 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Menu)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _this.getContentAnchorEl = function () {
-      if (!_this.menuListRef || !_this.menuListRef.selectedItemRef) {
-        return ReactDOM.findDOMNode(_this.menuListRef).firstChild;
+      if (_this.menuListRef.selectedItemRef) {
+        return ReactDOM.findDOMNode(_this.menuListRef.selectedItemRef);
       }
 
-      return ReactDOM.findDOMNode(_this.menuListRef.selectedItemRef);
+      return ReactDOM.findDOMNode(_this.menuListRef).firstChild;
     };
 
     _this.focus = function () {
@@ -72,7 +72,11 @@ function (_React$Component) {
       }
     };
 
-    _this.handleEnter = function (element) {
+    _this.handleMenuListRef = function (ref) {
+      _this.menuListRef = ref;
+    };
+
+    _this.handleEntering = function (element) {
       var _this$props = _this.props,
           disableAutoFocusItem = _this$props.disableAutoFocusItem,
           theme = _this$props.theme;
@@ -90,8 +94,8 @@ function (_React$Component) {
         menuList.style.width = "calc(100% + ".concat(size, ")");
       }
 
-      if (_this.props.onEnter) {
-        _this.props.onEnter(element);
+      if (_this.props.onEntering) {
+        _this.props.onEntering(element);
       }
     };
 
@@ -118,24 +122,22 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       var _this$props2 = this.props,
           children = _this$props2.children,
           classes = _this$props2.classes,
           disableAutoFocusItem = _this$props2.disableAutoFocusItem,
           MenuListProps = _this$props2.MenuListProps,
-          onEnter = _this$props2.onEnter,
+          onEntering = _this$props2.onEntering,
           _this$props2$PaperPro = _this$props2.PaperProps,
           PaperProps = _this$props2$PaperPro === void 0 ? {} : _this$props2$PaperPro,
           PopoverClasses = _this$props2.PopoverClasses,
           theme = _this$props2.theme,
-          other = _objectWithoutProperties(_this$props2, ["children", "classes", "disableAutoFocusItem", "MenuListProps", "onEnter", "PaperProps", "PopoverClasses", "theme"]);
+          other = _objectWithoutProperties(_this$props2, ["children", "classes", "disableAutoFocusItem", "MenuListProps", "onEntering", "PaperProps", "PopoverClasses", "theme"]);
 
       return React.createElement(Popover, _extends({
         getContentAnchorEl: this.getContentAnchorEl,
         classes: PopoverClasses,
-        onEnter: this.handleEnter,
+        onEntering: this.handleEntering,
         anchorOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
         transformOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
         PaperProps: _extends({}, PaperProps, {
@@ -147,9 +149,7 @@ function (_React$Component) {
         "data-mui-test": "Menu",
         onKeyDown: this.handleListKeyDown
       }, MenuListProps, {
-        ref: function ref(_ref) {
-          _this2.menuListRef = _ref;
-        }
+        ref: this.handleMenuListRef
       }), children));
     }
   }]);

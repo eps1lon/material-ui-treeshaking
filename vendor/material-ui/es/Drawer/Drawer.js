@@ -22,6 +22,9 @@ export function getAnchor(props) {
   return props.theme.direction === 'rtl' && isHorizontal(props) ? oppositeDirection[props.anchor] : props.anchor;
 }
 export const styles = theme => ({
+  /* Styles applied to the root element. */
+  root: {},
+
   /* Styles applied to the root element if `variant="permanent or persistent"`. */
   docked: {
     flex: '0 0 auto'
@@ -148,7 +151,7 @@ class Drawer extends React.Component {
 
     if (variant === 'permanent') {
       return React.createElement("div", _extends({
-        className: classNames(classes.docked, className)
+        className: classNames(classes.root, classes.docked, className)
       }, other), drawer);
     }
 
@@ -161,7 +164,7 @@ class Drawer extends React.Component {
 
     if (variant === 'persistent') {
       return React.createElement("div", _extends({
-        className: classNames(classes.docked, className)
+        className: classNames(classes.root, classes.docked, className)
       }, other), slidingDrawer);
     } // variant === temporary
 
@@ -170,7 +173,7 @@ class Drawer extends React.Component {
       BackdropProps: _extends({}, BackdropProps, BackdropPropsProp, {
         transitionDuration
       }),
-      className: classNames(classes.modal, className),
+      className: classNames(classes.root, classes.modal, className),
       open: open,
       onClose: onClose
     }, other, ModalProps), slidingDrawer);
@@ -178,7 +181,7 @@ class Drawer extends React.Component {
 
 }
 
-Drawer.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Drawer.propTypes = {
   /**
    * Side from which the drawer will appear.
    */
@@ -250,7 +253,7 @@ Drawer.propTypes = process.env.NODE_ENV !== "production" ? {
    * The variant to use.
    */
   variant: PropTypes.oneOf(['permanent', 'persistent', 'temporary'])
-} : {};
+} : void 0;
 Drawer.defaultProps = {
   anchor: 'left',
   elevation: 16,

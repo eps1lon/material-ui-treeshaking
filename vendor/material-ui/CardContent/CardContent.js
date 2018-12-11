@@ -17,21 +17,19 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
-var styles = function styles(theme) {
-  return {
-    /* Styles applied to the root element. */
-    root: theme.mixins.gutters({
-      paddingTop: 16,
-      paddingBottom: 16,
-      '&:last-child': {
-        paddingBottom: 24
-      }
-    })
-  };
+var styles = {
+  /* Styles applied to the root element. */
+  root: {
+    padding: 16,
+    '&:last-child': {
+      paddingBottom: 24
+    }
+  }
 };
-
 exports.styles = styles;
 
 function CardContent(props) {
@@ -60,7 +58,7 @@ CardContent.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object])
+  component: _utils.componentPropType
 };
 CardContent.defaultProps = {
   component: 'div'

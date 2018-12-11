@@ -15,6 +15,7 @@ import debounce from 'debounce'; // < 1kb payload overhead when lodash/debounce 
 import EventListener from 'react-event-listener';
 import ownerDocument from '../utils/ownerDocument';
 import ownerWindow from '../utils/ownerWindow';
+import { createChainedFunction } from '../utils/helpers';
 import withStyles from '../styles/withStyles';
 import Modal from '../Modal';
 import Grow from '../Grow';
@@ -107,19 +108,17 @@ function (_React$Component) {
     };
 
     _this.setPositioningStyles = function (element) {
-      if (element && element.style) {
-        var positioning = _this.getPositioningStyle(element);
+      var positioning = _this.getPositioningStyle(element);
 
-        if (positioning.top !== null) {
-          element.style.top = positioning.top;
-        }
-
-        if (positioning.left !== null) {
-          element.style.left = positioning.left;
-        }
-
-        element.style.transformOrigin = positioning.transformOrigin;
+      if (positioning.top !== null) {
+        element.style.top = positioning.top;
       }
+
+      if (positioning.left !== null) {
+        element.style.left = positioning.left;
+      }
+
+      element.style.transformOrigin = positioning.transformOrigin;
     };
 
     _this.getPositioningStyle = function (element) {
@@ -191,9 +190,9 @@ function (_React$Component) {
       };
     };
 
-    _this.handleEnter = function (element) {
-      if (_this.props.onEnter) {
-        _this.props.onEnter(element);
+    _this.handleEntering = function (element) {
+      if (_this.props.onEntering) {
+        _this.props.onEntering(element);
       }
 
       _this.setPositioningStyles(element);
@@ -201,6 +200,12 @@ function (_React$Component) {
 
     if (typeof window !== 'undefined') {
       _this.handleResize = debounce(function () {
+        // Because we debounce the event, the open property might no longer be true
+        // when the callback resolves.
+        if (!_this.props.open) {
+          return;
+        }
+
         _this.setPositioningStyles(_this.paperRef);
       }, 166); // Corresponds to 10 frames at 60 Hz.
     }
@@ -307,7 +312,8 @@ function (_React$Component) {
           transformOrigin = _this$props4.transformOrigin,
           TransitionComponent = _this$props4.TransitionComponent,
           transitionDurationProp = _this$props4.transitionDuration,
-          TransitionProps = _this$props4.TransitionProps,
+          _this$props4$Transiti = _this$props4.TransitionProps,
+          TransitionProps = _this$props4$Transiti === void 0 ? {} : _this$props4$Transiti,
           other = _objectWithoutProperties(_this$props4, ["action", "anchorEl", "anchorOrigin", "anchorPosition", "anchorReference", "children", "classes", "container", "elevation", "getContentAnchorEl", "marginThreshold", "ModalClasses", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "open", "PaperProps", "role", "transformOrigin", "TransitionComponent", "transitionDuration", "TransitionProps"]);
 
       var transitionDuration = transitionDurationProp;
@@ -330,15 +336,16 @@ function (_React$Component) {
       }, other), React.createElement(TransitionComponent, _extends({
         appear: true,
         in: open,
-        onEnter: this.handleEnter,
+        onEnter: onEnter,
         onEntered: onEntered,
-        onEntering: onEntering,
         onExit: onExit,
         onExited: onExited,
         onExiting: onExiting,
         role: role,
         timeout: transitionDuration
-      }, TransitionProps), React.createElement(Paper, _extends({
+      }, TransitionProps, {
+        onEntering: createChainedFunction(this.handleEntering, TransitionProps.onEntering)
+      }), React.createElement(Paper, _extends({
         className: classes.paper,
         "data-mui-test": "Popover",
         elevation: elevation,

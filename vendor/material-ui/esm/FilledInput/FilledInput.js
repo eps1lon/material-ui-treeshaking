@@ -1,3 +1,4 @@
+import _defineProperty from "@babel/runtime/helpers/defineProperty";
 import _extends from "@babel/runtime/helpers/extends";
 import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
 // @inheritedComponent InputBase
@@ -9,11 +10,12 @@ import withStyles from '../styles/withStyles';
 export var styles = function styles(theme) {
   var light = theme.palette.type === 'light';
   var bottomLineColor = light ? 'rgba(0, 0, 0, 0.42)' : 'rgba(255, 255, 255, 0.7)';
+  var backgroundColor = light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)';
   return {
     /* Styles applied to the root element. */
     root: {
       position: 'relative',
-      backgroundColor: light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)',
+      backgroundColor: backgroundColor,
       borderTopLeftRadius: theme.shape.borderRadius,
       borderTopRightRadius: theme.shape.borderRadius,
       transition: theme.transitions.create('background-color', {
@@ -21,7 +23,11 @@ export var styles = function styles(theme) {
         easing: theme.transitions.easing.easeOut
       }),
       '&:hover': {
-        backgroundColor: light ? 'rgba(0, 0, 0, 0.13)' : 'rgba(255, 255, 255, 0.13)'
+        backgroundColor: light ? 'rgba(0, 0, 0, 0.13)' : 'rgba(255, 255, 255, 0.13)',
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor: backgroundColor
+        }
       },
       '&$focused': {
         backgroundColor: light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)'
@@ -134,12 +140,13 @@ export var styles = function styles(theme) {
 };
 
 function FilledInput(props) {
-  var classes = props.classes,
-      other = _objectWithoutProperties(props, ["classes"]);
+  var disableUnderline = props.disableUnderline,
+      classes = props.classes,
+      other = _objectWithoutProperties(props, ["disableUnderline", "classes"]);
 
   return React.createElement(InputBase, _extends({
     classes: _extends({}, classes, {
-      root: classNames(classes.root, classes.underline, {}),
+      root: classNames(classes.root, _defineProperty({}, classes.underline, !disableUnderline)),
       underline: null
     })
   }, other));
@@ -173,12 +180,17 @@ FilledInput.propTypes = {
   /**
    * The default input value, useful when not controlling the component.
    */
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]),
 
   /**
    * If `true`, the input will be disabled.
    */
   disabled: PropTypes.bool,
+
+  /**
+   * If `true`, the input will not have an underline.
+   */
+  disableUnderline: PropTypes.bool,
 
   /**
    * End `InputAdornment` for this component.
@@ -280,7 +292,7 @@ FilledInput.propTypes = {
   /**
    * The input value, required for a controlled component.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))])
 };
 InputBase.defaultProps = {
   fullWidth: false,

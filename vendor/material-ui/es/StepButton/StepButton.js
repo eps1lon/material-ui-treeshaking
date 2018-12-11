@@ -65,7 +65,7 @@ function StepButton(props) {
   }, other), child);
 }
 
-StepButton.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? StepButton.propTypes = {
   /**
    * @ignore
    * Passed in via `Step` - passed through to `StepLabel`.
@@ -125,7 +125,7 @@ StepButton.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   orientation: PropTypes.oneOf(['horizontal', 'vertical'])
-} : {};
+} : void 0;
 export default withStyles(styles, {
   name: 'MuiStepButton'
 })(StepButton);

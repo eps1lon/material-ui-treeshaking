@@ -81,7 +81,7 @@ TabIndicator.propTypes = {
 };
 
 var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiTabIndicator'
+  name: 'MuiPrivateTabIndicator'
 })(TabIndicator);
 
 exports.default = _default;

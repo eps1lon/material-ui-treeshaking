@@ -8,7 +8,9 @@ import _inherits from "@babel/runtime/helpers/inherits";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
+import TableContext from './TableContext';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -28,20 +30,38 @@ function (_React$Component) {
   _inherits(Table, _React$Component);
 
   function Table() {
+    var _getPrototypeOf2;
+
+    var _this;
+
     _classCallCheck(this, Table);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Table).apply(this, arguments));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(Table)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this.memoizedContextValue = {};
+    return _this;
   }
 
   _createClass(Table, [{
-    key: "getChildContext",
-    value: function getChildContext() {
-      // eslint-disable-line class-methods-use-this
-      return {
-        table: {
-          padding: this.props.padding
+    key: "useMemo",
+    // To replace with the corresponding Hook once Material-UI v4.0.0 is out:
+    // https://reactjs.org/docs/hooks-reference.html#usememo
+    value: function useMemo(contextValue) {
+      var objectKeys = Object.keys(contextValue);
+
+      for (var i = 0; i < objectKeys.length; i += 1) {
+        var objectKey = objectKeys[i];
+
+        if (contextValue[objectKey] !== this.memoizedContextValue[objectKey]) {
+          this.memoizedContextValue = contextValue;
+          break;
         }
-      };
+      }
+
+      return this.memoizedContextValue;
     }
   }, {
     key: "render",
@@ -53,9 +73,13 @@ function (_React$Component) {
           padding = _this$props.padding,
           other = _objectWithoutProperties(_this$props, ["classes", "className", "component", "padding"]);
 
-      return React.createElement(Component, _extends({
+      return React.createElement(TableContext.Provider, {
+        value: this.useMemo({
+          padding: padding
+        })
+      }, React.createElement(Component, _extends({
         className: classNames(classes.root, className)
-      }, other));
+      }, other)));
     }
   }]);
 
@@ -83,7 +107,7 @@ Table.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Allows TableCells to inherit padding of the Table.
@@ -93,9 +117,6 @@ Table.propTypes = {
 Table.defaultProps = {
   component: 'table',
   padding: 'default'
-};
-Table.childContextTypes = {
-  table: PropTypes.object
 };
 export default withStyles(styles, {
   name: 'MuiTable'

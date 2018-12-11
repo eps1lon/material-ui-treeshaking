@@ -19,6 +19,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _helpers = require("../utils/helpers");
@@ -121,7 +123,7 @@ Icon.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.

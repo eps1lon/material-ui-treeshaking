@@ -63,10 +63,11 @@ exports.styles = styles;
 function SwipeArea(props) {
   var anchor = props.anchor,
       classes = props.classes,
+      className = props.className,
       width = props.width,
-      other = (0, _objectWithoutProperties2.default)(props, ["anchor", "classes", "width"]);
+      other = (0, _objectWithoutProperties2.default)(props, ["anchor", "classes", "className", "width"]);
   return _react.default.createElement("div", (0, _extends2.default)({
-    className: (0, _classnames.default)(classes.root, classes["anchor".concat((0, _helpers.capitalize)(anchor))]),
+    className: (0, _classnames.default)(classes.root, classes["anchor".concat((0, _helpers.capitalize)(anchor))], className),
     style: (0, _defineProperty2.default)({}, (0, _Drawer.isHorizontal)(props) ? 'width' : 'height', width)
   }, other));
 }
@@ -83,12 +84,19 @@ SwipeArea.propTypes = {
   classes: _propTypes.default.object.isRequired,
 
   /**
+   * @ignore
+   */
+  className: _propTypes.default.string,
+
+  /**
    * The width of the left most (or right most) area in pixels where the
    * drawer can be swiped open from.
    */
   width: _propTypes.default.number.isRequired
 };
 
-var _default = (0, _withStyles.default)(styles)(SwipeArea);
+var _default = (0, _withStyles.default)(styles, {
+  name: 'MuiPrivateSwipeArea'
+})(SwipeArea);
 
 exports.default = _default;

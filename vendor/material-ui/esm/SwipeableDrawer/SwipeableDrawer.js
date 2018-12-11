@@ -354,9 +354,10 @@ function (_React$Component) {
           open = _this$props2.open,
           _this$props2$PaperPro = _this$props2.PaperProps,
           PaperProps = _this$props2$PaperPro === void 0 ? {} : _this$props2$PaperPro,
+          SwipeAreaProps = _this$props2.SwipeAreaProps,
           swipeAreaWidth = _this$props2.swipeAreaWidth,
           variant = _this$props2.variant,
-          other = _objectWithoutProperties(_this$props2, ["anchor", "disableBackdropTransition", "disableDiscovery", "disableSwipeToOpen", "hysteresis", "minFlingVelocity", "ModalProps", "onOpen", "open", "PaperProps", "swipeAreaWidth", "variant"]);
+          other = _objectWithoutProperties(_this$props2, ["anchor", "disableBackdropTransition", "disableDiscovery", "disableSwipeToOpen", "hysteresis", "minFlingVelocity", "ModalProps", "onOpen", "open", "PaperProps", "SwipeAreaProps", "swipeAreaWidth", "variant"]);
 
       var maybeSwiping = this.state.maybeSwiping;
       return React.createElement(React.Fragment, null, React.createElement(Drawer, _extends({
@@ -374,10 +375,10 @@ function (_React$Component) {
           ref: this.handlePaperRef
         }),
         anchor: anchor
-      }, other)), !disableDiscovery && !disableSwipeToOpen && variant === 'temporary' && React.createElement(NoSsr, null, React.createElement(SwipeArea, {
+      }, other)), !disableDiscovery && !disableSwipeToOpen && variant === 'temporary' && React.createElement(NoSsr, null, React.createElement(SwipeArea, _extends({
         anchor: anchor,
         width: swipeAreaWidth
-      })));
+      }, SwipeAreaProps))));
     }
   }], [{
     key: "getDerivedStateFromProps",
@@ -470,6 +471,11 @@ SwipeableDrawer.propTypes = {
    * @ignore
    */
   PaperProps: PropTypes.object,
+
+  /**
+   * Properties applied to the swipe area element.
+   */
+  SwipeAreaProps: PropTypes.object,
 
   /**
    * The width of the left most (or right most) area in pixels where the

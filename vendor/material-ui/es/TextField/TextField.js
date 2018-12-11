@@ -146,7 +146,7 @@ class TextField extends React.Component {
 
 }
 
-TextField.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? TextField.propTypes = {
   /**
    * This property helps users to fill forms faster, especially on mobile devices.
    * The name can be confusing, as it's more like an autofill.
@@ -309,7 +309,7 @@ TextField.propTypes = process.env.NODE_ENV !== "production" ? {
    * The variant to use.
    */
   variant: PropTypes.oneOf(['standard', 'outlined', 'filled'])
-} : {};
+} : void 0;
 TextField.defaultProps = {
   required: false,
   select: false,

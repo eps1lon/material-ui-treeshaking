@@ -8,7 +8,7 @@ import _inherits from "@babel/runtime/helpers/inherits";
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '../styles';
-import exactProp from '../utils/exactProp';
+import { exactProp } from '@material-ui/utils';
 
 var styles = function styles(theme) {
   return {
@@ -74,7 +74,11 @@ CssBaseline.propTypes = {
    */
   classes: PropTypes.object.isRequired
 };
-CssBaseline.propTypes = exactProp(CssBaseline.propTypes);
+
+if (process.env.NODE_ENV !== 'production') {
+  CssBaseline.propTypes = exactProp(CssBaseline.propTypes);
+}
+
 CssBaseline.defaultProps = {
   children: null
 };

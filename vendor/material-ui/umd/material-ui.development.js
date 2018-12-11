@@ -1,16 +1,11 @@
-/** @license Material-UI v3.3.1
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react'), require('react-dom')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'react', 'react-dom'], factory) :
-  (factory((global['material-ui'] = {}),global.React,global.ReactDOM));
-}(this, (function (exports,React,ReactDOM) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('react-dom'), require('react')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'react-dom', 'react'], factory) :
+  (factory((global['material-ui'] = {}),global.ReactDOM,global.React));
+}(this, (function (exports,ReactDOM,React) { 'use strict';
 
-  React = React && React.hasOwnProperty('default') ? React['default'] : React;
   ReactDOM = ReactDOM && ReactDOM.hasOwnProperty('default') ? ReactDOM['default'] : ReactDOM;
+  React = React && React.hasOwnProperty('default') ? React['default'] : React;
 
   var common = {
     black: '#000',
@@ -455,12 +450,12 @@
       warning_1(ruleCounter < 1e10, ['Material-UI: you might have a memory leak.', 'The ruleCounter is not supposed to grow that much.'].join(''));
 
       if (dangerouslyUseGlobalCSS && styleSheet && styleSheet.options.name) {
-        return "".concat(styleSheet.options.name, "-").concat(rule.key);
+        return "".concat(safePrefix(styleSheet.options.name), "-").concat(rule.key);
       }
 
+
       if (styleSheet && styleSheet.options.classNamePrefix) {
-        var prefix = safePrefix(styleSheet.options.classNamePrefix);
-        return "".concat(prefix, "-").concat(rule.key, "-").concat(seed).concat(ruleCounter);
+        return "".concat(safePrefix(styleSheet.options.classNamePrefix), "-").concat(rule.key, "-").concat(seed).concat(ruleCounter);
       }
 
       return "".concat(rule.key, "-").concat(seed).concat(ruleCounter);
@@ -535,6 +530,10 @@
 
   var objectWithoutProperties = _objectWithoutProperties;
 
+  var umd = createCommonjsModule(function (module, exports) {
+  (function (global, factory) {
+  	module.exports = factory();
+  }(this, (function () {
   var isMergeableObject = function isMergeableObject(value) {
   	return isNonNullObject(value)
   		&& !isSpecial(value)
@@ -622,6 +621,11 @@
   };
 
   var deepmerge_1 = deepmerge;
+
+  return deepmerge_1;
+
+  })));
+  });
 
   /*!
    * isobject <https://github.com/jonschlinkert/isobject>
@@ -1129,6 +1133,8 @@
       if (!color.contrastText) {
         color.contrastText = getContrastText(color.main);
       }
+
+      return color;
     }
 
     augmentColor(primary);
@@ -1139,7 +1145,7 @@
       light: light
     };
     warning_1(types[type], "Material-UI: the palette type `".concat(type, "` is not supported."));
-    var paletteOutput = deepmerge_1(_extends_1({
+    var paletteOutput = umd(_extends_1({
       // A collection of common colors.
       common: common,
       // The palette type, can be light or dark.
@@ -1170,6 +1176,415 @@
     return paletteOutput;
   }
 
+  var _typeof_1 = createCommonjsModule(function (module) {
+  function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+  function _typeof(obj) {
+    if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+      module.exports = _typeof = function _typeof(obj) {
+        return _typeof2(obj);
+      };
+    } else {
+      module.exports = _typeof = function _typeof(obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+      };
+    }
+
+    return _typeof(obj);
+  }
+
+  module.exports = _typeof;
+  });
+
+  var reactIs_production_min = createCommonjsModule(function (module, exports) {
+  Object.defineProperty(exports,"__esModule",{value:!0});
+  var b="function"===typeof Symbol&&Symbol.for,c=b?Symbol.for("react.element"):60103,d=b?Symbol.for("react.portal"):60106,e=b?Symbol.for("react.fragment"):60107,f=b?Symbol.for("react.strict_mode"):60108,g=b?Symbol.for("react.profiler"):60114,h=b?Symbol.for("react.provider"):60109,k=b?Symbol.for("react.context"):60110,l=b?Symbol.for("react.async_mode"):60111,m=b?Symbol.for("react.concurrent_mode"):60111,n=b?Symbol.for("react.forward_ref"):60112,p=b?Symbol.for("react.suspense"):60113,r=b?Symbol.for("react.memo"):
+  60115,t=b?Symbol.for("react.lazy"):60116;function u(a){if("object"===typeof a&&null!==a){var q=a.$$typeof;switch(q){case c:switch(a=a.type,a){case l:case m:case e:case g:case f:return a;default:switch(a=a&&a.$$typeof,a){case k:case n:case h:return a;default:return q}}case d:return q}}}function v(a){return u(a)===m}exports.typeOf=u;exports.AsyncMode=l;exports.ConcurrentMode=m;exports.ContextConsumer=k;exports.ContextProvider=h;exports.Element=c;exports.ForwardRef=n;exports.Fragment=e;
+  exports.Profiler=g;exports.Portal=d;exports.StrictMode=f;exports.isValidElementType=function(a){return "string"===typeof a||"function"===typeof a||a===e||a===m||a===g||a===f||a===p||"object"===typeof a&&null!==a&&(a.$$typeof===t||a.$$typeof===r||a.$$typeof===h||a.$$typeof===k||a.$$typeof===n)};exports.isAsyncMode=function(a){return v(a)||u(a)===l};exports.isConcurrentMode=v;exports.isContextConsumer=function(a){return u(a)===k};exports.isContextProvider=function(a){return u(a)===h};
+  exports.isElement=function(a){return "object"===typeof a&&null!==a&&a.$$typeof===c};exports.isForwardRef=function(a){return u(a)===n};exports.isFragment=function(a){return u(a)===e};exports.isProfiler=function(a){return u(a)===g};exports.isPortal=function(a){return u(a)===d};exports.isStrictMode=function(a){return u(a)===f};
+  });
+
+  unwrapExports(reactIs_production_min);
+  var reactIs_production_min_1 = reactIs_production_min.typeOf;
+  var reactIs_production_min_2 = reactIs_production_min.AsyncMode;
+  var reactIs_production_min_3 = reactIs_production_min.ConcurrentMode;
+  var reactIs_production_min_4 = reactIs_production_min.ContextConsumer;
+  var reactIs_production_min_5 = reactIs_production_min.ContextProvider;
+  var reactIs_production_min_6 = reactIs_production_min.Element;
+  var reactIs_production_min_7 = reactIs_production_min.ForwardRef;
+  var reactIs_production_min_8 = reactIs_production_min.Fragment;
+  var reactIs_production_min_9 = reactIs_production_min.Profiler;
+  var reactIs_production_min_10 = reactIs_production_min.Portal;
+  var reactIs_production_min_11 = reactIs_production_min.StrictMode;
+  var reactIs_production_min_12 = reactIs_production_min.isValidElementType;
+  var reactIs_production_min_13 = reactIs_production_min.isAsyncMode;
+  var reactIs_production_min_14 = reactIs_production_min.isConcurrentMode;
+  var reactIs_production_min_15 = reactIs_production_min.isContextConsumer;
+  var reactIs_production_min_16 = reactIs_production_min.isContextProvider;
+  var reactIs_production_min_17 = reactIs_production_min.isElement;
+  var reactIs_production_min_18 = reactIs_production_min.isForwardRef;
+  var reactIs_production_min_19 = reactIs_production_min.isFragment;
+  var reactIs_production_min_20 = reactIs_production_min.isProfiler;
+  var reactIs_production_min_21 = reactIs_production_min.isPortal;
+  var reactIs_production_min_22 = reactIs_production_min.isStrictMode;
+
+  var reactIs_development = createCommonjsModule(function (module, exports) {
+
+
+
+  {
+    (function() {
+
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+  // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
+  // nor polyfill, then a plain number is used for performance.
+  var hasSymbol = typeof Symbol === 'function' && Symbol.for;
+
+  var REACT_ELEMENT_TYPE = hasSymbol ? Symbol.for('react.element') : 0xeac7;
+  var REACT_PORTAL_TYPE = hasSymbol ? Symbol.for('react.portal') : 0xeaca;
+  var REACT_FRAGMENT_TYPE = hasSymbol ? Symbol.for('react.fragment') : 0xeacb;
+  var REACT_STRICT_MODE_TYPE = hasSymbol ? Symbol.for('react.strict_mode') : 0xeacc;
+  var REACT_PROFILER_TYPE = hasSymbol ? Symbol.for('react.profiler') : 0xead2;
+  var REACT_PROVIDER_TYPE = hasSymbol ? Symbol.for('react.provider') : 0xeacd;
+  var REACT_CONTEXT_TYPE = hasSymbol ? Symbol.for('react.context') : 0xeace;
+  var REACT_ASYNC_MODE_TYPE = hasSymbol ? Symbol.for('react.async_mode') : 0xeacf;
+  var REACT_CONCURRENT_MODE_TYPE = hasSymbol ? Symbol.for('react.concurrent_mode') : 0xeacf;
+  var REACT_FORWARD_REF_TYPE = hasSymbol ? Symbol.for('react.forward_ref') : 0xead0;
+  var REACT_SUSPENSE_TYPE = hasSymbol ? Symbol.for('react.suspense') : 0xead1;
+  var REACT_MEMO_TYPE = hasSymbol ? Symbol.for('react.memo') : 0xead3;
+  var REACT_LAZY_TYPE = hasSymbol ? Symbol.for('react.lazy') : 0xead4;
+
+  function isValidElementType(type) {
+    return typeof type === 'string' || typeof type === 'function' ||
+    // Note: its typeof might be other than 'symbol' or 'number' if it's a polyfill.
+    type === REACT_FRAGMENT_TYPE || type === REACT_CONCURRENT_MODE_TYPE || type === REACT_PROFILER_TYPE || type === REACT_STRICT_MODE_TYPE || type === REACT_SUSPENSE_TYPE || typeof type === 'object' && type !== null && (type.$$typeof === REACT_LAZY_TYPE || type.$$typeof === REACT_MEMO_TYPE || type.$$typeof === REACT_PROVIDER_TYPE || type.$$typeof === REACT_CONTEXT_TYPE || type.$$typeof === REACT_FORWARD_REF_TYPE);
+  }
+
+  /**
+   * Forked from fbjs/warning:
+   * https://github.com/facebook/fbjs/blob/e66ba20ad5be433eb54423f2b097d829324d9de6/packages/fbjs/src/__forks__/warning.js
+   *
+   * Only change is we use console.warn instead of console.error,
+   * and do nothing when 'console' is not supported.
+   * This really simplifies the code.
+   * ---
+   * Similar to invariant but only logs a warning if the condition is not met.
+   * This can be used to log issues in development environments in critical
+   * paths. Removing the logging code for production environments will keep the
+   * same logic and follow the same code paths.
+   */
+
+  var lowPriorityWarning = function () {};
+
+  {
+    var printWarning = function (format) {
+      for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        args[_key - 1] = arguments[_key];
+      }
+
+      var argIndex = 0;
+      var message = 'Warning: ' + format.replace(/%s/g, function () {
+        return args[argIndex++];
+      });
+      if (typeof console !== 'undefined') {
+        console.warn(message);
+      }
+      try {
+        // --- Welcome to debugging React ---
+        // This error was thrown as a convenience so that you can use this stack
+        // to find the callsite that caused this warning to fire.
+        throw new Error(message);
+      } catch (x) {}
+    };
+
+    lowPriorityWarning = function (condition, format) {
+      if (format === undefined) {
+        throw new Error('`lowPriorityWarning(condition, format, ...args)` requires a warning ' + 'message argument');
+      }
+      if (!condition) {
+        for (var _len2 = arguments.length, args = Array(_len2 > 2 ? _len2 - 2 : 0), _key2 = 2; _key2 < _len2; _key2++) {
+          args[_key2 - 2] = arguments[_key2];
+        }
+
+        printWarning.apply(undefined, [format].concat(args));
+      }
+    };
+  }
+
+  var lowPriorityWarning$1 = lowPriorityWarning;
+
+  function typeOf(object) {
+    if (typeof object === 'object' && object !== null) {
+      var $$typeof = object.$$typeof;
+
+      switch ($$typeof) {
+        case REACT_ELEMENT_TYPE:
+          var type = object.type;
+
+          switch (type) {
+            case REACT_ASYNC_MODE_TYPE:
+            case REACT_CONCURRENT_MODE_TYPE:
+            case REACT_FRAGMENT_TYPE:
+            case REACT_PROFILER_TYPE:
+            case REACT_STRICT_MODE_TYPE:
+              return type;
+            default:
+              var $$typeofType = type && type.$$typeof;
+
+              switch ($$typeofType) {
+                case REACT_CONTEXT_TYPE:
+                case REACT_FORWARD_REF_TYPE:
+                case REACT_PROVIDER_TYPE:
+                  return $$typeofType;
+                default:
+                  return $$typeof;
+              }
+          }
+        case REACT_PORTAL_TYPE:
+          return $$typeof;
+      }
+    }
+
+    return undefined;
+  }
+
+  // AsyncMode is deprecated along with isAsyncMode
+  var AsyncMode = REACT_ASYNC_MODE_TYPE;
+  var ConcurrentMode = REACT_CONCURRENT_MODE_TYPE;
+  var ContextConsumer = REACT_CONTEXT_TYPE;
+  var ContextProvider = REACT_PROVIDER_TYPE;
+  var Element = REACT_ELEMENT_TYPE;
+  var ForwardRef = REACT_FORWARD_REF_TYPE;
+  var Fragment = REACT_FRAGMENT_TYPE;
+  var Profiler = REACT_PROFILER_TYPE;
+  var Portal = REACT_PORTAL_TYPE;
+  var StrictMode = REACT_STRICT_MODE_TYPE;
+
+  var hasWarnedAboutDeprecatedIsAsyncMode = false;
+
+  // AsyncMode should be deprecated
+  function isAsyncMode(object) {
+    {
+      if (!hasWarnedAboutDeprecatedIsAsyncMode) {
+        hasWarnedAboutDeprecatedIsAsyncMode = true;
+        lowPriorityWarning$1(false, 'The ReactIs.isAsyncMode() alias has been deprecated, ' + 'and will be removed in React 17+. Update your code to use ' + 'ReactIs.isConcurrentMode() instead. It has the exact same API.');
+      }
+    }
+    return isConcurrentMode(object) || typeOf(object) === REACT_ASYNC_MODE_TYPE;
+  }
+  function isConcurrentMode(object) {
+    return typeOf(object) === REACT_CONCURRENT_MODE_TYPE;
+  }
+  function isContextConsumer(object) {
+    return typeOf(object) === REACT_CONTEXT_TYPE;
+  }
+  function isContextProvider(object) {
+    return typeOf(object) === REACT_PROVIDER_TYPE;
+  }
+  function isElement(object) {
+    return typeof object === 'object' && object !== null && object.$$typeof === REACT_ELEMENT_TYPE;
+  }
+  function isForwardRef(object) {
+    return typeOf(object) === REACT_FORWARD_REF_TYPE;
+  }
+  function isFragment(object) {
+    return typeOf(object) === REACT_FRAGMENT_TYPE;
+  }
+  function isProfiler(object) {
+    return typeOf(object) === REACT_PROFILER_TYPE;
+  }
+  function isPortal(object) {
+    return typeOf(object) === REACT_PORTAL_TYPE;
+  }
+  function isStrictMode(object) {
+    return typeOf(object) === REACT_STRICT_MODE_TYPE;
+  }
+
+  exports.typeOf = typeOf;
+  exports.AsyncMode = AsyncMode;
+  exports.ConcurrentMode = ConcurrentMode;
+  exports.ContextConsumer = ContextConsumer;
+  exports.ContextProvider = ContextProvider;
+  exports.Element = Element;
+  exports.ForwardRef = ForwardRef;
+  exports.Fragment = Fragment;
+  exports.Profiler = Profiler;
+  exports.Portal = Portal;
+  exports.StrictMode = StrictMode;
+  exports.isValidElementType = isValidElementType;
+  exports.isAsyncMode = isAsyncMode;
+  exports.isConcurrentMode = isConcurrentMode;
+  exports.isContextConsumer = isContextConsumer;
+  exports.isContextProvider = isContextProvider;
+  exports.isElement = isElement;
+  exports.isForwardRef = isForwardRef;
+  exports.isFragment = isFragment;
+  exports.isProfiler = isProfiler;
+  exports.isPortal = isPortal;
+  exports.isStrictMode = isStrictMode;
+    })();
+  }
+  });
+
+  unwrapExports(reactIs_development);
+  var reactIs_development_1 = reactIs_development.typeOf;
+  var reactIs_development_2 = reactIs_development.AsyncMode;
+  var reactIs_development_3 = reactIs_development.ConcurrentMode;
+  var reactIs_development_4 = reactIs_development.ContextConsumer;
+  var reactIs_development_5 = reactIs_development.ContextProvider;
+  var reactIs_development_6 = reactIs_development.Element;
+  var reactIs_development_7 = reactIs_development.ForwardRef;
+  var reactIs_development_8 = reactIs_development.Fragment;
+  var reactIs_development_9 = reactIs_development.Profiler;
+  var reactIs_development_10 = reactIs_development.Portal;
+  var reactIs_development_11 = reactIs_development.StrictMode;
+  var reactIs_development_12 = reactIs_development.isValidElementType;
+  var reactIs_development_13 = reactIs_development.isAsyncMode;
+  var reactIs_development_14 = reactIs_development.isConcurrentMode;
+  var reactIs_development_15 = reactIs_development.isContextConsumer;
+  var reactIs_development_16 = reactIs_development.isContextProvider;
+  var reactIs_development_17 = reactIs_development.isElement;
+  var reactIs_development_18 = reactIs_development.isForwardRef;
+  var reactIs_development_19 = reactIs_development.isFragment;
+  var reactIs_development_20 = reactIs_development.isProfiler;
+  var reactIs_development_21 = reactIs_development.isPortal;
+  var reactIs_development_22 = reactIs_development.isStrictMode;
+
+  var reactIs = createCommonjsModule(function (module) {
+
+  {
+    module.exports = reactIs_development;
+  }
+  });
+
+  /**
+   * A factory that returns a propTypes validator that only accepts values that
+   * are also accepted by React.createElement
+   * e.g. "div", functional, class components, forwardRef etc.
+   *
+   * @param {boolean} isRequired If `true` returns a validator
+   *                             that will throw if nullish values are passed
+   */
+
+  function createComponentProp(isRequired) {
+
+    return function componentPropType(props, key, componentName, location, propFullName) {
+      var prop = props[key];
+      var propName = propFullName || key;
+      var message;
+
+      if (prop == null) {
+        if (isRequired) {
+          message = "The ".concat(location, " `").concat(propName, "` is marked as required in `").concat(componentName, "`, ") + "but its value is `".concat(_typeof_1(prop), "`.");
+        }
+      } else if (!undefined(prop)) {
+        var preciseType = _typeof_1(prop);
+
+        message = "Invalid ".concat(location, " `").concat(propName, "` of type `").concat(preciseType, "` ") + "supplied to `".concat(componentName, "`, expected a component.");
+      }
+
+      if (message != null) {
+        // change error message slightly on every check to prevent caching when testing
+        // which would not trigger console errors on subsequent fails
+        return new Error("".concat(message).concat(''));
+      }
+
+      return null;
+    };
+  }
+
+  var componentPropType = createComponentProp(false);
+  componentPropType.isRequired = createComponentProp(true);
+
+  function _defineProperty$1(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  var defineProperty$1 = _defineProperty$1;
+
+  var _extends_1$1 = createCommonjsModule(function (module) {
+  function _extends() {
+    module.exports = _extends = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
+
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+
+      return target;
+    };
+
+    return _extends.apply(this, arguments);
+  }
+
+  module.exports = _extends;
+  });
+
+  // This module is based on https://github.com/airbnb/prop-types-exact repository.
+  // However, in order to reduce the number of dependencies and to remove some extra safe checks
+  // the module was forked.
+  // Only exported for test purposes.
+  var specialProperty = "exact-prop: \u200B";
+
+  function exactProp(propTypes) {
+
+    return _extends_1$1({}, propTypes, defineProperty$1({}, specialProperty, function (props) {
+      var unsupportedProps = Object.keys(props).filter(function (prop) {
+        return !propTypes.hasOwnProperty(prop);
+      });
+
+      if (unsupportedProps.length > 0) {
+        return new Error("The following properties are not supported: ".concat(unsupportedProps.map(function (prop) {
+          return "`".concat(prop, "`");
+        }).join(', '), ". Please remove them."));
+      }
+
+      return null;
+    }));
+  }
+
+  // Fork of recompose/getDisplayName with added IE 11 support
+  // Simplified polyfill for IE 11 support
+  // https://github.com/JamesMGreene/Function.name/blob/58b314d4a983110c3682f1228f845d39ccca1817/Function.name.js#L3
+  var fnNameMatchRegex = /^\s*function(?:\s|\s*\/\*.*\*\/\s*)+([^(\s/]*)\s*/;
+  function getFunctionName(fn) {
+    var match = "".concat(fn).match(fnNameMatchRegex);
+    var name = match && match[1];
+    return name || '';
+  }
+
+  function getDisplayName(Component) {
+    if (typeof Component === 'string') {
+      return Component;
+    }
+
+    if (!Component) {
+      return undefined;
+    }
+
+    return Component.displayName || Component.name || getFunctionName(Component) || 'Component';
+  }
+
+  /* eslint-disable */
+  // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
+  var ponyfillGlobal = typeof window != 'undefined' && window.Math == Math ? window : typeof self != 'undefined' && self.Math == Math ? self : Function('return this')();
+
   function round(value) {
     return Math.round(value * 1e5) / 1e5;
   }
@@ -1198,7 +1613,7 @@
         _ref$htmlFontSize = _ref.htmlFontSize,
         htmlFontSize = _ref$htmlFontSize === void 0 ? 16 : _ref$htmlFontSize,
         _ref$useNextVariants = _ref.useNextVariants,
-        useNextVariants = _ref$useNextVariants === void 0 ? Boolean(global$1.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__) : _ref$useNextVariants,
+        useNextVariants = _ref$useNextVariants === void 0 ? Boolean(ponyfillGlobal.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__) : _ref$useNextVariants,
         _ref$suppressWarning = _ref.suppressWarning,
         suppressWarning = _ref$suppressWarning === void 0 ? false : _ref$suppressWarning,
         allVariants = _ref.allVariants,
@@ -1324,7 +1739,7 @@
         color: palette.text.primary
       }, allVariants)
     };
-    return deepmerge_1(_extends_1({
+    return umd(_extends_1({
       pxToRem: pxToRem,
       round: round,
       fontFamily: fontFamily,
@@ -1467,17 +1882,21 @@
         _options$palette = options.palette,
         paletteInput = _options$palette === void 0 ? {} : _options$palette,
         shadowsInput = options.shadows,
+        _options$spacing = options.spacing,
+        spacingInput = _options$spacing === void 0 ? {} : _options$spacing,
         _options$typography = options.typography,
         typographyInput = _options$typography === void 0 ? {} : _options$typography,
-        other = objectWithoutProperties(options, ["breakpoints", "mixins", "palette", "shadows", "typography"]);
+        other = objectWithoutProperties(options, ["breakpoints", "mixins", "palette", "shadows", "spacing", "typography"]);
 
     var palette = createPalette(paletteInput);
     var breakpoints = createBreakpoints(breakpointsInput);
 
+    var spacing$$1 = _extends_1({}, spacing, spacingInput);
+
     var muiTheme = _extends_1({
       breakpoints: breakpoints,
       direction: 'ltr',
-      mixins: createMixins(breakpoints, spacing, mixinsInput),
+      mixins: createMixins(breakpoints, spacing$$1, mixinsInput),
       overrides: {},
       // Inject custom styles
       palette: palette,
@@ -1485,9 +1904,9 @@
       // Inject custom properties
       shadows: shadowsInput || shadows,
       typography: createTypography(palette, typographyInput)
-    }, deepmerge_1({
+    }, umd({
       shape: shape,
-      spacing: spacing,
+      spacing: spacing$$1,
       transitions: transitions,
       zIndex: zIndex
     }, other, {
@@ -4576,6 +4995,49 @@
 
   var jssGlobal = unwrapExports(lib$1);
 
+  var warning$2 = function() {};
+
+  {
+    warning$2 = function(condition, format, args) {
+      var len = arguments.length;
+      args = new Array(len > 2 ? len - 2 : 0);
+      for (var key = 2; key < len; key++) {
+        args[key - 2] = arguments[key];
+      }
+      if (format === undefined) {
+        throw new Error(
+          '`warning(condition, format, ...args)` requires a warning ' +
+          'message argument'
+        );
+      }
+
+      if (format.length < 10 || (/^[s\W]*$/).test(format)) {
+        throw new Error(
+          'The warning format should be able to uniquely identify this ' +
+          'warning. Please, use a more descriptive format than: ' + format
+        );
+      }
+
+      if (!condition) {
+        var argIndex = 0;
+        var message = 'Warning: ' +
+          format.replace(/%s/g, function() {
+            return args[argIndex++];
+          });
+        if (typeof console !== 'undefined') {
+          console.error(message);
+        }
+        try {
+          // This error was thrown as a convenience so that you can use this stack
+          // to find the callsite that caused this warning to fire.
+          throw new Error(message);
+        } catch(x) {}
+      }
+    };
+  }
+
+  var warning_1$2 = warning$2;
+
   var lib$2 = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, "__esModule", {
@@ -4588,7 +5050,7 @@
 
 
 
-  var _warning2 = _interopRequireDefault(warning_1$1);
+  var _warning2 = _interopRequireDefault(warning_1$2);
 
   function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5403,7 +5865,7 @@
 
   var createClass = _createClass;
 
-  var _typeof_1 = createCommonjsModule(function (module) {
+  var _typeof_1$1 = createCommonjsModule(function (module) {
   function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
   function _typeof(obj) {
@@ -5434,7 +5896,7 @@
   var assertThisInitialized = _assertThisInitialized;
 
   function _possibleConstructorReturn(self, call) {
-    if (call && (_typeof_1(call) === "object" || typeof call === "function")) {
+    if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
       return call;
     }
 
@@ -6300,47 +6762,24 @@
     }
   };
 
-  // This module is based on https://github.com/airbnb/prop-types-exact repository.
-  // However, in order to reduce the number of dependencies and to remove some extra safe checks
-  // the module was forked.
-  // Only exported for test purposes.
-  var specialProperty = "exact-prop: \u200B";
-
-  function exactProp(propTypes) {
-
-    return _extends_1({}, propTypes, defineProperty({}, specialProperty, function (props) {
-      var unsupportedProps = Object.keys(props).filter(function (prop) {
-        return !propTypes.hasOwnProperty(prop);
-      });
-
-      if (unsupportedProps.length > 0) {
-        return new Error("The following properties are not supported: ".concat(unsupportedProps.map(function (prop) {
-          return "`".concat(prop, "`");
-        }).join(', '), ". Please remove them."));
-      }
-
-      return null;
-    }));
-  }
-
   /**
    * This component takes a `theme` property.
    * It makes the `theme` available down the React tree thanks to React context.
    * This component should preferably be used at **the root of your component tree**.
    */
 
-  var MuiThemeProvider =
+  var MuiThemeProviderOld =
   /*#__PURE__*/
   function (_React$Component) {
-    inherits(MuiThemeProvider, _React$Component);
+    inherits(MuiThemeProviderOld, _React$Component);
 
     // We are not using the React state in order to avoid unnecessary rerender.
-    function MuiThemeProvider(props, context) {
+    function MuiThemeProviderOld(props, context) {
       var _this;
 
-      classCallCheck(this, MuiThemeProvider);
+      classCallCheck(this, MuiThemeProviderOld);
 
-      _this = possibleConstructorReturn(this, getPrototypeOf(MuiThemeProvider).call(this)); // Get the outer theme from the context, can be null
+      _this = possibleConstructorReturn(this, getPrototypeOf(MuiThemeProviderOld).call(this)); // Get the outer theme from the context, can be null
 
       _this.broadcast = createBroadcast();
       _this.outerTheme = themeListener.initial(context); // Propagate the theme so it can be accessed by the children
@@ -6350,7 +6789,7 @@
       return _this;
     }
 
-    createClass(MuiThemeProvider, [{
+    createClass(MuiThemeProviderOld, [{
       key: "getChildContext",
       value: function getChildContext() {
         var _ref;
@@ -6434,10 +6873,9 @@
       }
     }]);
 
-    return MuiThemeProvider;
+    return MuiThemeProviderOld;
   }(React.Component);
-
-  MuiThemeProvider.propTypes = {
+  MuiThemeProviderOld.propTypes = {
     /**
      * You can wrap a node.
      */
@@ -6472,13 +6910,28 @@
      */
     theme: propTypes.oneOfType([propTypes.object, propTypes.func]).isRequired
   };
-  MuiThemeProvider.propTypes = exactProp(MuiThemeProvider.propTypes);
-  MuiThemeProvider.childContextTypes = _extends_1({}, themeListener.contextTypes, {
+
+  {
+    MuiThemeProviderOld.propTypes = exactProp(MuiThemeProviderOld.propTypes);
+  }
+
+  MuiThemeProviderOld.childContextTypes = _extends_1({}, themeListener.contextTypes, {
     muiThemeProviderOptions: propTypes.object
   });
-  MuiThemeProvider.contextTypes = _extends_1({}, themeListener.contextTypes, {
+  MuiThemeProviderOld.contextTypes = _extends_1({}, themeListener.contextTypes, {
     muiThemeProviderOptions: propTypes.object
   });
+  /* istanbul ignore if */
+
+  if (!ponyfillGlobal.__MUI_STYLES__) {
+    ponyfillGlobal.__MUI_STYLES__ = {};
+  }
+
+  if (!ponyfillGlobal.__MUI_STYLES__.MuiThemeProvider) {
+    ponyfillGlobal.__MUI_STYLES__.MuiThemeProvider = MuiThemeProviderOld;
+  }
+
+  var MuiThemeProvider = ponyfillGlobal.__MUI_STYLES__.MuiThemeProvider;
 
   function createStyles(styles) {
     return styles;
@@ -6488,8 +6941,11 @@
    * Copyright 2015, Yahoo! Inc.
    * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
    */
+
+
   var REACT_STATICS = {
       childContextTypes: true,
+      contextType: true,
       contextTypes: true,
       defaultProps: true,
       displayName: true,
@@ -6510,15 +6966,24 @@
       arity: true
   };
 
-  var defineProperty$1 = Object.defineProperty;
+  var FORWARD_REF_STATICS = {
+      '$$typeof': true,
+      render: true
+  };
+
+  var TYPE_STATICS = {};
+  TYPE_STATICS[reactIs.ForwardRef] = FORWARD_REF_STATICS;
+
+  var defineProperty$2 = Object.defineProperty;
   var getOwnPropertyNames = Object.getOwnPropertyNames;
   var getOwnPropertySymbols$1 = Object.getOwnPropertySymbols;
   var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
   var getPrototypeOf$1 = Object.getPrototypeOf;
-  var objectPrototype = getPrototypeOf$1 && getPrototypeOf$1(Object);
+  var objectPrototype = Object.prototype;
 
   function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
-      if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+      if (typeof sourceComponent !== 'string') {
+          // don't hoist over string (html) components
 
           if (objectPrototype) {
               var inheritedComponent = getPrototypeOf$1(sourceComponent);
@@ -6533,12 +6998,16 @@
               keys = keys.concat(getOwnPropertySymbols$1(sourceComponent));
           }
 
+          var targetStatics = TYPE_STATICS[targetComponent['$$typeof']] || REACT_STATICS;
+          var sourceStatics = TYPE_STATICS[sourceComponent['$$typeof']] || REACT_STATICS;
+
           for (var i = 0; i < keys.length; ++i) {
               var key = keys[i];
-              if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
+              if (!KNOWN_STATICS[key] && !(blacklist && blacklist[key]) && !(sourceStatics && sourceStatics[key]) && !(targetStatics && targetStatics[key])) {
                   var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
-                  try { // Avoid failures from read-only properties
-                      defineProperty$1(targetComponent, key, descriptor);
+                  try {
+                      // Avoid failures from read-only properties
+                      defineProperty$2(targetComponent, key, descriptor);
                   } catch (e) {}
               }
           }
@@ -6551,60 +7020,6 @@
 
   var hoistNonReactStatics_cjs = hoistNonReactStatics;
 
-  var interopRequireDefault = createCommonjsModule(function (module) {
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
-  module.exports = _interopRequireDefault;
-  });
-
-  unwrapExports(interopRequireDefault);
-
-  var getDisplayName_1 = createCommonjsModule(function (module, exports) {
-
-  exports.__esModule = true;
-  exports.default = void 0;
-
-  var getDisplayName = function getDisplayName(Component) {
-    if (typeof Component === 'string') {
-      return Component;
-    }
-
-    if (!Component) {
-      return undefined;
-    }
-
-    return Component.displayName || Component.name || 'Component';
-  };
-
-  var _default = getDisplayName;
-  exports.default = _default;
-  });
-
-  unwrapExports(getDisplayName_1);
-
-  var wrapDisplayName_1 = createCommonjsModule(function (module, exports) {
-
-
-
-  exports.__esModule = true;
-  exports.default = void 0;
-
-  var _getDisplayName = interopRequireDefault(getDisplayName_1);
-
-  var wrapDisplayName = function wrapDisplayName(BaseComponent, hocName) {
-    return hocName + "(" + (0, _getDisplayName.default)(BaseComponent) + ")";
-  };
-
-  var _default = wrapDisplayName;
-  exports.default = _default;
-  });
-
-  var wrapDisplayName = unwrapExports(wrapDisplayName_1);
-
   // Share the same values than in
   // https://github.com/cssinjs/jss/blob/master/packages/react-jss/src/ns.js
   var ns = {
@@ -6612,28 +7027,6 @@
     sheetsRegistry: 'd4bd0baacbc52bbd48bbb9eb24344ecd',
     sheetOptions: '6fc570d6bd61383819d0f9e7407c452d'
   };
-
-  // Fork of recompose/getDisplayName with added IE 11 support
-  // Simplified polyfill for IE 11 support
-  // https://github.com/JamesMGreene/Function.name/blob/58b314d4a983110c3682f1228f845d39ccca1817/Function.name.js#L3
-  var fnNameMatchRegex = /^\s*function(?:\s|\s*\/\*.*\*\/\s*)+([^(\s/]*)\s*/;
-  function getFunctionName(fn) {
-    var match = "".concat(fn).match(fnNameMatchRegex);
-    var name = match && match[1];
-    return name || '';
-  }
-
-  function getDisplayName$1(Component) {
-    if (typeof Component === 'string') {
-      return Component;
-    }
-
-    if (!Component) {
-      return undefined;
-    }
-
-    return Component.displayName || Component.name || getFunctionName(Component) || 'Component';
-  }
 
   function mergeClasses() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -6648,8 +7041,10 @@
     var nextClasses = _extends_1({}, baseClasses);
 
     Object.keys(newClasses).forEach(function (key) {
-      warning_1(baseClasses[key] || !newClasses[key], ["Material-UI: the key `".concat(key, "` ") + "provided to the classes property is not implemented in ".concat(getDisplayName$1(Component), "."), "You can only override one of the following: ".concat(Object.keys(baseClasses).join(','), ".")].join('\n'));
-      warning_1(!newClasses[key] || typeof newClasses[key] === 'string', ["Material-UI: the key `".concat(key, "` ") + "provided to the classes property is not valid for ".concat(getDisplayName$1(Component), "."), "You need to provide a non empty string instead of: ".concat(newClasses[key], ".")].join('\n'));
+      if (Component) {
+        warning_1(baseClasses[key] || !newClasses[key], ["Material-UI: the key `".concat(key, "` ") + "provided to the classes property is not implemented in ".concat(getDisplayName(Component), "."), "You can only override one of the following: ".concat(Object.keys(baseClasses).join(','), ".")].join('\n'));
+        warning_1(!newClasses[key] || typeof newClasses[key] === 'string', ["Material-UI: the key `".concat(key, "` ") + "provided to the classes property is not valid for ".concat(getDisplayName(Component), "."), "You need to provide a non empty string instead of: ".concat(newClasses[key], ".")].join('\n'));
+      }
 
       if (newClasses[key]) {
         nextClasses[key] = "".concat(baseClasses[key], " ").concat(newClasses[key]);
@@ -6688,7 +7083,7 @@
 
   function getStylesCreator(stylesOrCreator) {
     var themingEnabled = typeof stylesOrCreator === 'function';
-    warning_1(_typeof_1(stylesOrCreator) === 'object' || themingEnabled, ['Material-UI: the first argument provided to withStyles() is invalid.', 'You need to provide a function generating the styles or a styles object.'].join('\n'));
+    warning_1(_typeof_1$1(stylesOrCreator) === 'object' || themingEnabled, ['Material-UI: the first argument provided to withStyles() is invalid.', 'You need to provide a function generating the styles or a styles object.'].join('\n'));
 
     function create(theme, name) {
       var styles = themingEnabled ? stylesOrCreator(theme) : stylesOrCreator;
@@ -6703,7 +7098,7 @@
 
       Object.keys(overrides).forEach(function (key) {
         warning_1(stylesWithOverrides[key], ['Material-UI: you are trying to override a style that does not exist.', "Fix the `".concat(key, "` key of `theme.overrides.").concat(name, "`.")].join('\n'));
-        stylesWithOverrides[key] = deepmerge_1(stylesWithOverrides[key], overrides[key], {
+        stylesWithOverrides[key] = umd(stylesWithOverrides[key], overrides[key], {
           arrayMerge: arrayMerge
         });
       });
@@ -6761,25 +7156,15 @@
 
   var noopTheme = {}; // In order to have self-supporting components, we rely on default theme when not provided.
 
-  var defaultTheme;
-
-  function getDefaultTheme() {
-    if (defaultTheme) {
-      return defaultTheme;
+  var defaultTheme = createMuiTheme({
+    typography: {
+      suppressWarning: true
     }
-
-    defaultTheme = createMuiTheme({
-      typography: {
-        suppressWarning: true
-      }
-    });
-    return defaultTheme;
-  } // Link a style sheet with a component.
+  }); // Link a style sheet with a component.
   // It does not modify the component passed to it;
   // instead, it returns a new component, with a `classes` property.
 
-
-  var withStyles = function withStyles(stylesOrCreator) {
+  var withStylesOld = function withStylesOld(stylesOrCreator) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return function (Component) {
       var _extends2;
@@ -6830,7 +7215,7 @@
             generateClassName: generateClassName
           }, context[ns.sheetOptions]); // We use || as the function call is lazy evaluated.
 
-          _this.theme = listenToTheme ? themeListener.initial(context) || getDefaultTheme() : noopTheme;
+          _this.theme = listenToTheme ? themeListener.initial(context) || defaultTheme : noopTheme;
 
           _this.attach(_this.theme);
 
@@ -6973,7 +7358,7 @@
 
             if (!meta) {
               // Provide a better DX outside production.
-              meta = getDisplayName$1(Component);
+              meta = getDisplayName(Component);
               warning_1(typeof meta === 'string', ['Material-UI: the component displayName is invalid. It needs to be a string.', "Please fix the following component: ".concat(Component, ".")].join('\n'));
             }
 
@@ -7052,7 +7437,7 @@
       }, defineProperty(_extends2, ns.jss, propTypes.object), defineProperty(_extends2, ns.sheetOptions, propTypes.object), defineProperty(_extends2, ns.sheetsRegistry, propTypes.object), _extends2), listenToTheme ? themeListener.contextTypes : {});
 
       {
-        WithStyles.displayName = wrapDisplayName(Component, 'WithStyles');
+        WithStyles.displayName = "WithStyles(".concat(getDisplayName(Component), ")");
       }
 
       hoistNonReactStatics_cjs(WithStyles, Component);
@@ -7066,20 +7451,40 @@
       return WithStyles;
     };
   };
+  /* istanbul ignore if */
+
+
+  if (!ponyfillGlobal.__MUI_STYLES__) {
+    ponyfillGlobal.__MUI_STYLES__ = {};
+  }
+
+  if (!ponyfillGlobal.__MUI_STYLES__.withStyles) {
+    ponyfillGlobal.__MUI_STYLES__.withStyles = withStylesOld;
+  }
+
+  var withStyles = (function (styles, options) {
+    return ponyfillGlobal.__MUI_STYLES__.withStyles(styles, _extends_1({
+      defaultTheme: defaultTheme
+    }, options));
+  });
 
   var defaultTheme$1;
 
-  function getDefaultTheme$1() {
+  function getDefaultTheme() {
     if (defaultTheme$1) {
       return defaultTheme$1;
     }
 
-    defaultTheme$1 = createMuiTheme();
+    defaultTheme$1 = createMuiTheme({
+      typography: {
+        suppressWarning: true
+      }
+    });
     return defaultTheme$1;
   } // Provide the theme object as a property to the input component.
 
 
-  var withTheme = function withTheme() {
+  var withThemeOld = function withThemeOld() {
     return function (Component) {
       var WithTheme =
       /*#__PURE__*/
@@ -7094,7 +7499,7 @@
           _this = possibleConstructorReturn(this, getPrototypeOf(WithTheme).call(this));
           _this.state = {
             // We use || as the function call is lazy evaluated.
-            theme: themeListener.initial(context) || getDefaultTheme$1()
+            theme: themeListener.initial(context) || getDefaultTheme()
           };
           return _this;
         }
@@ -7143,7 +7548,7 @@
       WithTheme.contextTypes = themeListener.contextTypes;
 
       {
-        WithTheme.displayName = wrapDisplayName(Component, 'WithTheme');
+        WithTheme.displayName = "WithTheme(".concat(getDisplayName(Component), ")");
       }
 
       hoistNonReactStatics_cjs(WithTheme, Component);
@@ -7156,6 +7561,18 @@
       return WithTheme;
     };
   };
+  /* istanbul ignore if */
+
+
+  if (!ponyfillGlobal.__MUI_STYLES__) {
+    ponyfillGlobal.__MUI_STYLES__ = {};
+  }
+
+  if (!ponyfillGlobal.__MUI_STYLES__.withTheme) {
+    ponyfillGlobal.__MUI_STYLES__.withTheme = withThemeOld;
+  }
+
+  var withTheme = ponyfillGlobal.__MUI_STYLES__.withTheme;
 
   var classnames = createCommonjsModule(function (module) {
   /*!
@@ -7206,6 +7623,10 @@
   }());
   });
 
+  //
+  // A strict capitalization should uppercase the first letter of each word a the sentence.
+  // We only handle the first word.
+
   function capitalize(string) {
     if (typeof string !== 'string') {
       throw new Error('Material-UI: capitalize(string) expects a string argument.');
@@ -7219,7 +7640,7 @@
     });
   }
   function findIndex(arr, pred) {
-    var predType = _typeof_1(pred);
+    var predType = _typeof_1$1(pred);
 
     for (var i = 0; i < arr.length; i += 1) {
       if (predType === 'function' && !!pred(arr[i], i, arr) === true) {
@@ -7329,7 +7750,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * Shadow depth, corresponds to `dp` in the spec.
@@ -7494,8 +7915,6 @@
       },
 
       /* Styles applied to the root element if there are children and not `src` or `srcSet` */
-
-      /* Styles applied to the root element if `color="default"`. */
       colorDefault: {
         color: theme.palette.background.default,
         backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[600]
@@ -7525,10 +7944,10 @@
         srcSet = props.srcSet,
         other = objectWithoutProperties(props, ["alt", "children", "childrenClassName", "classes", "className", "component", "imgProps", "sizes", "src", "srcSet"]);
 
-    var className = classnames(classes.root, defineProperty({}, classes.colorDefault, childrenProp && !src && !srcSet), classNameProp);
     var children = null;
+    var img = src || srcSet;
 
-    if (src || srcSet) {
+    if (img) {
       children = React.createElement("img", _extends_1({
         alt: alt,
         src: src,
@@ -7537,16 +7956,15 @@
         className: classes.img
       }, imgProps));
     } else if (childrenClassNameProp && React.isValidElement(childrenProp)) {
-      var childrenClassName = classnames(childrenClassNameProp, childrenProp.props.className);
       children = React.cloneElement(childrenProp, {
-        className: childrenClassName
+        className: classnames(childrenClassNameProp, childrenProp.props.className)
       });
     } else {
       children = childrenProp;
     }
 
     return React.createElement(Component, _extends_1({
-      className: className
+      className: classnames(classes.root, defineProperty({}, classes.colorDefault, !img), classNameProp)
     }, other), children);
   }
 
@@ -7588,7 +8006,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * Attributes applied to the `img` element if the component
@@ -8707,8 +9125,13 @@
         borderRadius: '50%',
         backgroundColor: theme.palette.color,
         color: theme.palette.textColor,
-        zIndex: 1 // Render the badge on top of potential ripples.
-
+        zIndex: 1,
+        // Render the badge on top of potential ripples.
+        transition: theme.transitions.create('transform', {
+          easing: theme.transitions.easing.easeInOut,
+          duration: theme.transitions.duration.enteringScreen
+        }),
+        transform: 'scale(1)'
       },
 
       /* Styles applied to the root element if `color="primary"`. */
@@ -8727,22 +9150,34 @@
       colorError: {
         backgroundColor: theme.palette.error.main,
         color: theme.palette.error.contrastText
+      },
+
+      /* Styles applied to the badge `span` element if `invisible={true}`. */
+      invisible: {
+        transition: theme.transitions.create('transform', {
+          easing: theme.transitions.easing.easeInOut,
+          duration: theme.transitions.duration.leavingScreen
+        }),
+        transform: 'scale(0)'
       }
     };
   };
 
   function Badge(props) {
+    var _classNames;
+
     var badgeContent = props.badgeContent,
         children = props.children,
         classes = props.classes,
-        classNameProp = props.className,
+        className = props.className,
         color = props.color,
         ComponentProp = props.component,
-        other = objectWithoutProperties(props, ["badgeContent", "children", "classes", "className", "color", "component"]);
+        invisible = props.invisible,
+        other = objectWithoutProperties(props, ["badgeContent", "children", "classes", "className", "color", "component", "invisible"]);
 
-    var badgeClassName = classnames(classes.badge, defineProperty({}, classes["color".concat(capitalize(color))], color !== 'default'));
+    var badgeClassName = classnames(classes.badge, (_classNames = {}, defineProperty(_classNames, classes["color".concat(capitalize(color))], color !== 'default'), defineProperty(_classNames, classes.invisible, invisible), _classNames));
     return React.createElement(ComponentProp, _extends_1({
-      className: classnames(classes.root, classNameProp)
+      className: classnames(classes.root, className)
     }, other), children, React.createElement("span", {
       className: badgeClassName
     }, badgeContent));
@@ -8779,11 +9214,17 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object])
+    component: componentPropType,
+
+    /**
+     * If `true`, the badge will be invisible.
+     */
+    invisible: propTypes.bool
   };
   Badge.defaultProps = {
     color: 'default',
-    component: 'span'
+    component: 'span',
+    invisible: false
   };
   var Badge$1 = withStyles(styles$5, {
     name: 'MuiBadge'
@@ -9124,7 +9565,7 @@
         } else {
           this.setState({
             mounted: true
-          }); // eslint-disable-line react/no-did-mount-set-state
+          });
         }
       }
     }, {
@@ -9159,7 +9600,11 @@
      */
     fallback: propTypes.node
   };
-  NoSsr.propTypes = exactProp(NoSsr.propTypes);
+
+  {
+    NoSsr.propTypes = exactProp(NoSsr.propTypes);
+  }
+
   NoSsr.defaultProps = {
     defer: false,
     fallback: null
@@ -9169,14 +9614,26 @@
     focusKeyPressed: false,
     keyUpEventTimeout: -1
   };
+
+  function findActiveElement(doc) {
+    var activeElement = doc.activeElement;
+
+    while (activeElement && activeElement.shadowRoot && activeElement.shadowRoot.activeElement) {
+      activeElement = activeElement.shadowRoot.activeElement;
+    }
+
+    return activeElement;
+  }
+
   function detectFocusVisible(instance, element, callback) {
     var attempt = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
     warning_1(instance.focusVisibleCheckTime, 'Material-UI: missing instance.focusVisibleCheckTime.');
     warning_1(instance.focusVisibleMaxCheckTimes, 'Material-UI: missing instance.focusVisibleMaxCheckTimes.');
     instance.focusVisibleTimeout = setTimeout(function () {
       var doc = ownerDocument(element);
+      var activeElement = findActiveElement(doc);
 
-      if (internal.focusKeyPressed && (doc.activeElement === element || element.contains(doc.activeElement))) {
+      if (internal.focusKeyPressed && (activeElement === element || element.contains(activeElement))) {
         callback();
       } else if (attempt < instance.focusVisibleMaxCheckTimes) {
         detectFocusVisible(instance, element, callback, attempt + 1);
@@ -10429,7 +10886,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the base button will be disabled.
@@ -10574,10 +11031,7 @@
         transition: theme.transitions.create(['color', 'padding-top'], {
           duration: theme.transitions.duration.short
         }),
-        paddingTop: 8,
-        paddingBottom: 10,
-        paddingLeft: 12,
-        paddingRight: 12,
+        padding: '6px 12px 8px',
         minWidth: 80,
         maxWidth: 168,
         color: theme.palette.text.secondary,
@@ -10799,7 +11253,9 @@
       },
 
       /* Styles applied to the root element if `variant="text"`. */
-      text: {},
+      text: {
+        padding: theme.spacing.unit
+      },
 
       /* Styles applied to the root element if `variant="text"` and `color="primary"`. */
       textPrimary: {
@@ -10972,7 +11428,7 @@
         color: 'inherit'
       },
 
-      /* Styles applied to the root element if `size="mini"` & `variant="[fab | extendedFab]"`. */
+      /* Styles applied to the root element if `mini={true}` & `variant="[fab | extendedFab]"`. */
       mini: {
         width: 40,
         height: 40
@@ -11020,7 +11476,7 @@
     var fab = variant === 'fab' || variant === 'extendedFab';
     var contained = variant === 'contained' || variant === 'raised';
     var text = variant === 'text' || variant === 'flat';
-    var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.fab, fab), defineProperty(_classNames, classes.mini, fab && mini), defineProperty(_classNames, classes.extendedFab, variant === 'extendedFab'), defineProperty(_classNames, classes.text, text), defineProperty(_classNames, classes.textPrimary, text && color === 'primary'), defineProperty(_classNames, classes.textSecondary, text && color === 'secondary'), defineProperty(_classNames, classes.flat, variant === 'text' || variant === 'flat'), defineProperty(_classNames, classes.flatPrimary, (variant === 'text' || variant === 'flat') && color === 'primary'), defineProperty(_classNames, classes.flatSecondary, (variant === 'text' || variant === 'flat') && color === 'secondary'), defineProperty(_classNames, classes.contained, contained || fab), defineProperty(_classNames, classes.containedPrimary, (contained || fab) && color === 'primary'), defineProperty(_classNames, classes.containedSecondary, (contained || fab) && color === 'secondary'), defineProperty(_classNames, classes.raised, contained || fab), defineProperty(_classNames, classes.raisedPrimary, (contained || fab) && color === 'primary'), defineProperty(_classNames, classes.raisedSecondary, (contained || fab) && color === 'secondary'), defineProperty(_classNames, classes.outlined, variant === 'outlined'), defineProperty(_classNames, classes.outlinedPrimary, variant === 'outlined' && color === 'primary'), defineProperty(_classNames, classes.outlinedSecondary, variant === 'outlined' && color === 'secondary'), defineProperty(_classNames, classes["size".concat(capitalize(size))], size !== 'medium'), defineProperty(_classNames, classes.disabled, disabled), defineProperty(_classNames, classes.fullWidth, fullWidth), defineProperty(_classNames, classes.colorInherit, color === 'inherit'), _classNames), classNameProp);
+    var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.fab, fab), defineProperty(_classNames, classes.mini, fab && mini), defineProperty(_classNames, classes.extendedFab, variant === 'extendedFab'), defineProperty(_classNames, classes.text, text), defineProperty(_classNames, classes.textPrimary, text && color === 'primary'), defineProperty(_classNames, classes.textSecondary, text && color === 'secondary'), defineProperty(_classNames, classes.flat, text), defineProperty(_classNames, classes.flatPrimary, text && color === 'primary'), defineProperty(_classNames, classes.flatSecondary, text && color === 'secondary'), defineProperty(_classNames, classes.contained, contained || fab), defineProperty(_classNames, classes.containedPrimary, (contained || fab) && color === 'primary'), defineProperty(_classNames, classes.containedSecondary, (contained || fab) && color === 'secondary'), defineProperty(_classNames, classes.raised, contained || fab), defineProperty(_classNames, classes.raisedPrimary, (contained || fab) && color === 'primary'), defineProperty(_classNames, classes.raisedSecondary, (contained || fab) && color === 'secondary'), defineProperty(_classNames, classes.outlined, variant === 'outlined'), defineProperty(_classNames, classes.outlinedPrimary, variant === 'outlined' && color === 'primary'), defineProperty(_classNames, classes.outlinedSecondary, variant === 'outlined' && color === 'secondary'), defineProperty(_classNames, classes["size".concat(capitalize(size))], size !== 'medium'), defineProperty(_classNames, classes.disabled, disabled), defineProperty(_classNames, classes.fullWidth, fullWidth), defineProperty(_classNames, classes.colorInherit, color === 'inherit'), _classNames), classNameProp);
     return React.createElement(ButtonBase$1, _extends_1({
       className: className,
       disabled: disabled,
@@ -11057,7 +11513,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the button will be disabled.
@@ -11111,14 +11567,24 @@
      * The variant to use.
      * __WARNING__: `flat` and `raised` are deprecated.
      * Instead use `text` and `contained` respectively.
+     * `fab` and `extendedFab` are deprecated.
+     * Instead use `<Fab>` and `<Fab variant="extended">`
      */
-    variant: chainPropTypes(propTypes.oneOf(['text', 'flat', 'outlined', 'contained', 'raised', 'fab', 'extendedFab']), function (props) {
+    variant: chainPropTypes(propTypes.oneOf(['text', 'outlined', 'contained', 'fab', 'extendedFab', 'flat', 'raised']), function (props) {
       if (props.variant === 'flat') {
         return new Error('The `flat` variant will be removed in the next major release. ' + '`text` is equivalent and should be used instead.');
       }
 
       if (props.variant === 'raised') {
         return new Error('The `raised` variant will be removed in the next major release. ' + '`contained` is equivalent and should be used instead.');
+      }
+
+      if (props.variant === 'fab') {
+        return new Error('The `fab` variant will be removed in the next major release. ' + 'The `<Fab>` component is equivalent and should be used instead.');
+      }
+
+      if (props.variant === 'extendedFab') {
+        return new Error('The `fab` variant will be removed in the next major release. ' + 'The `<Fab>` component with `variant="extended"` is equivalent ' + 'and should be used instead.');
       }
 
       return null;
@@ -11258,7 +11724,6 @@
     name: 'MuiCardActionArea'
   })(CardActionArea);
 
-  /* eslint-disable import/prefer-default-export */
   function cloneElementWithClassName(child, className) {
     return React.cloneElement(child, {
       className: classnames(child.props.className, className)
@@ -11340,17 +11805,14 @@
     name: 'MuiCardActions'
   })(CardActions);
 
-  var styles$e = function styles(theme) {
-    return {
-      /* Styles applied to the root element. */
-      root: theme.mixins.gutters({
-        paddingTop: 16,
-        paddingBottom: 16,
-        '&:last-child': {
-          paddingBottom: 24
-        }
-      })
-    };
+  var styles$e = {
+    /* Styles applied to the root element. */
+    root: {
+      padding: 16,
+      '&:last-child': {
+        paddingBottom: 24
+      }
+    }
   };
 
   function CardContent(props) {
@@ -11380,7 +11842,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object])
+    component: componentPropType
   };
   CardContent.defaultProps = {
     component: 'div'
@@ -11637,7 +12099,7 @@
      * Either a string to use a DOM element or a component.
      * By default, it maps the variant to a good default headline component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the text will have a bottom margin.
@@ -11703,12 +12165,11 @@
   var styles$g = function styles(theme) {
     return {
       /* Styles applied to the root element. */
-      root: theme.mixins.gutters({
+      root: {
         display: 'flex',
         alignItems: 'center',
-        paddingTop: 16,
-        paddingBottom: 16
-      }),
+        padding: 16
+      },
 
       /* Styles applied to the avatar element. */
       avatar: {
@@ -11811,7 +12272,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the children won't be wrapped by a Typography component.
@@ -11904,7 +12365,7 @@
      * Component for rendering image.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * Image to be displayed as a background image.
@@ -11931,6 +12392,29 @@
   var CardMedia$1 = withStyles(styles$h, {
     name: 'MuiCardMedia'
   })(CardMedia);
+
+  /**
+   * @ignore - internal component.
+   */
+
+  var FormControlContext = React.createContext();
+
+  function withFormControlContext(Component) {
+    var EnhancedComponent = function EnhancedComponent(props) {
+      return React.createElement(FormControlContext.Consumer, null, function (context) {
+        return React.createElement(Component, _extends_1({
+          muiFormControl: context
+        }, props));
+      });
+    };
+
+    {
+      EnhancedComponent.displayName = "WithFormControlContext(".concat(getDisplayName(Component), ")");
+    }
+
+    hoistNonReactStatics_cjs(EnhancedComponent, Component);
+    return EnhancedComponent;
+  }
 
   var styles$i = function styles(theme) {
     return {
@@ -12113,7 +12597,7 @@
           _this.props.onFocus(event);
         }
 
-        var muiFormControl = _this.context.muiFormControl;
+        var muiFormControl = _this.props.muiFormControl;
 
         if (muiFormControl && muiFormControl.onFocus) {
           muiFormControl.onFocus(event);
@@ -12125,7 +12609,7 @@
           _this.props.onBlur(event);
         }
 
-        var muiFormControl = _this.context.muiFormControl;
+        var muiFormControl = _this.props.muiFormControl;
 
         if (muiFormControl && muiFormControl.onBlur) {
           muiFormControl.onBlur(event);
@@ -12168,11 +12652,13 @@
             checkedIcon = _this$props.checkedIcon,
             classes = _this$props.classes,
             classNameProp = _this$props.className,
+            defaultChecked = _this$props.defaultChecked,
             disabledProp = _this$props.disabled,
             icon = _this$props.icon,
             id = _this$props.id,
             inputProps = _this$props.inputProps,
             inputRef = _this$props.inputRef,
+            muiFormControl = _this$props.muiFormControl,
             name = _this$props.name,
             onBlur = _this$props.onBlur,
             onChange = _this$props.onChange,
@@ -12182,9 +12668,8 @@
             tabIndex = _this$props.tabIndex,
             type = _this$props.type,
             value = _this$props.value,
-            other = objectWithoutProperties(_this$props, ["autoFocus", "checked", "checkedIcon", "classes", "className", "disabled", "icon", "id", "inputProps", "inputRef", "name", "onBlur", "onChange", "onFocus", "readOnly", "required", "tabIndex", "type", "value"]);
+            other = objectWithoutProperties(_this$props, ["autoFocus", "checked", "checkedIcon", "classes", "className", "defaultChecked", "disabled", "icon", "id", "inputProps", "inputRef", "muiFormControl", "name", "onBlur", "onChange", "onFocus", "readOnly", "required", "tabIndex", "type", "value"]);
 
-        var muiFormControl = this.context.muiFormControl;
         var disabled = disabledProp;
 
         if (muiFormControl) {
@@ -12205,7 +12690,8 @@
           onBlur: this.handleBlur
         }, other), checked ? checkedIcon : icon, React.createElement("input", _extends_1({
           autoFocus: autoFocus,
-          checked: checked,
+          checked: checkedProp,
+          defaultChecked: defaultChecked,
           className: classes.input,
           disabled: disabled,
           id: hasLabelFor && id,
@@ -12288,6 +12774,11 @@
      */
     inputRef: propTypes.oneOfType([propTypes.func, propTypes.object]),
 
+    /**
+     * @ignore
+     */
+    muiFormControl: propTypes.object,
+
     /*
      * @ignore
      */
@@ -12338,12 +12829,21 @@
      */
     value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool])
   };
-  SwitchBase.contextTypes = {
-    muiFormControl: propTypes.object
-  };
   var SwitchBase$1 = withStyles(styles$j, {
-    name: 'MuiSwitchBase'
-  })(SwitchBase);
+    name: 'MuiPrivateSwitchBase'
+  })(withFormControlContext(SwitchBase));
+
+  var interopRequireDefault = createCommonjsModule(function (module) {
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      default: obj
+    };
+  }
+
+  module.exports = _interopRequireDefault;
+  });
+
+  unwrapExports(interopRequireDefault);
 
   function _inheritsLoose(subClass, superClass) {
     subClass.prototype = Object.create(superClass.prototype);
@@ -12392,6 +12892,48 @@
   });
 
   unwrapExports(setDisplayName_1);
+
+  var getDisplayName_1 = createCommonjsModule(function (module, exports) {
+
+  exports.__esModule = true;
+  exports.default = void 0;
+
+  var getDisplayName = function getDisplayName(Component) {
+    if (typeof Component === 'string') {
+      return Component;
+    }
+
+    if (!Component) {
+      return undefined;
+    }
+
+    return Component.displayName || Component.name || 'Component';
+  };
+
+  var _default = getDisplayName;
+  exports.default = _default;
+  });
+
+  unwrapExports(getDisplayName_1);
+
+  var wrapDisplayName_1 = createCommonjsModule(function (module, exports) {
+
+
+
+  exports.__esModule = true;
+  exports.default = void 0;
+
+  var _getDisplayName = interopRequireDefault(getDisplayName_1);
+
+  var wrapDisplayName = function wrapDisplayName(BaseComponent, hocName) {
+    return hocName + "(" + (0, _getDisplayName.default)(BaseComponent) + ")";
+  };
+
+  var _default = wrapDisplayName;
+  exports.default = _default;
+  });
+
+  unwrapExports(wrapDisplayName_1);
 
   var shouldUpdate_1 = createCommonjsModule(function (module, exports) {
 
@@ -12611,7 +13153,7 @@
 
       /* Styles applied to the root element if `fontSize="large"`. */
       fontSizeLarge: {
-        fontSize: 36
+        fontSize: 35
       }
     };
   };
@@ -12667,7 +13209,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
@@ -12678,6 +13220,13 @@
      * Applies a color attribute to the SVG element.
      */
     nativeColor: propTypes.string,
+
+    /**
+     * The shape-rendering attribute. The behavior of the different options is described
+     * [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering).
+     * If you are having issues with blurry icons you should investigate this property.
+     */
+    shapeRendering: propTypes.string,
 
     /**
      * Provides a human-readable title for the element that contains it.
@@ -12961,7 +13510,8 @@
         // Remove `button` border
         padding: 0,
         // Remove `button` padding
-        verticalAlign: 'middle'
+        verticalAlign: 'middle',
+        boxSizing: 'border-box'
       },
 
       /* Styles applied to the root element if `color="primary"`. */
@@ -13043,6 +13593,9 @@
         border: "1px solid ".concat(theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'),
         '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
           backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity)
+        },
+        '& $avatar': {
+          marginLeft: -1
         }
       },
 
@@ -13370,7 +13923,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * Override the default delete icon element. Shown only if `onDelete` is set.
@@ -13515,6 +14068,11 @@
           strokeDasharray: '100px, 200px',
           strokeDashoffset: '-120px'
         }
+      },
+
+      /* Styles applied to the `circle` svg path if `disableShrink={true}`. */
+      circleDisableShrink: {
+        animation: 'none'
       }
     };
   };
@@ -13532,12 +14090,13 @@
     var classes = props.classes,
         className = props.className,
         color = props.color,
+        disableShrink = props.disableShrink,
         size = props.size,
         style = props.style,
         thickness = props.thickness,
         value = props.value,
         variant = props.variant,
-        other = objectWithoutProperties(props, ["classes", "className", "color", "size", "style", "thickness", "value", "variant"]);
+        other = objectWithoutProperties(props, ["classes", "className", "color", "disableShrink", "size", "style", "thickness", "value", "variant"]);
 
     var circleStyle = {};
     var rootStyle = {};
@@ -13568,7 +14127,7 @@
       className: classes.svg,
       viewBox: "".concat(SIZE / 2, " ").concat(SIZE / 2, " ").concat(SIZE, " ").concat(SIZE)
     }, React.createElement("circle", {
-      className: classnames(classes.circle, (_classNames2 = {}, defineProperty(_classNames2, classes.circleIndeterminate, variant === 'indeterminate'), defineProperty(_classNames2, classes.circleStatic, variant === 'static'), _classNames2)),
+      className: classnames(classes.circle, (_classNames2 = {}, defineProperty(_classNames2, classes.circleIndeterminate, variant === 'indeterminate'), defineProperty(_classNames2, classes.circleStatic, variant === 'static'), defineProperty(_classNames2, classes.circleDisableShrink, disableShrink), _classNames2)),
       style: circleStyle,
       cx: SIZE,
       cy: SIZE,
@@ -13594,6 +14153,19 @@
      * The color of the component. It supports those theme colors that make sense for this component.
      */
     color: propTypes.oneOf(['primary', 'secondary', 'inherit']),
+
+    /**
+     * If `true`, the shrink animation is disabled.
+     * This only works if variant is `indeterminate`.
+     */
+    disableShrink: chainPropTypes(propTypes.bool, function (props) {
+      /* istanbul ignore if */
+      if (props.disableShrink && props.variant !== 'indeterminate') {
+        return new Error('Material-UI: you have provided the `disableShrink` property ' + 'with a variant other than `indeterminate`. This will have no effect.');
+      }
+
+      return null;
+    }),
 
     /**
      * The size of the circle.
@@ -13624,6 +14196,7 @@
   };
   CircularProgress.defaultProps = {
     color: 'primary',
+    disableShrink: false,
     size: 40,
     thickness: 3.6,
     value: 0,
@@ -13660,7 +14233,7 @@
 
   var createClass$1 = _createClass$1;
 
-  var _typeof_1$1 = createCommonjsModule(function (module) {
+  var _typeof_1$2 = createCommonjsModule(function (module) {
   function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
 
   function _typeof(obj) {
@@ -13691,7 +14264,7 @@
   var assertThisInitialized$1 = _assertThisInitialized$1;
 
   function _possibleConstructorReturn$1(self, call) {
-    if (call && (_typeof_1$1(call) === "object" || typeof call === "function")) {
+    if (call && (_typeof_1$2(call) === "object" || typeof call === "function")) {
       return call;
     }
 
@@ -13779,7 +14352,7 @@
 
   var objectWithoutProperties$1 = _objectWithoutProperties$1;
 
-  var _extends_1$1 = createCommonjsModule(function (module) {
+  var _extends_1$2 = createCommonjsModule(function (module) {
   function _extends() {
     module.exports = _extends = Object.assign || function (target) {
       for (var i = 1; i < arguments.length; i++) {
@@ -13801,51 +14374,6 @@
   module.exports = _extends;
   });
 
-  var warning$2 = function() {};
-
-  {
-    var printWarning$3 = function printWarning(format, args) {
-      var len = arguments.length;
-      args = new Array(len > 2 ? len - 2 : 0);
-      for (var key = 2; key < len; key++) {
-        args[key - 2] = arguments[key];
-      }
-      var argIndex = 0;
-      var message = 'Warning: ' +
-        format.replace(/%s/g, function() {
-          return args[argIndex++];
-        });
-      if (typeof console !== 'undefined') {
-        console.error(message);
-      }
-      try {
-        // --- Welcome to debugging React ---
-        // This error was thrown as a convenience so that you can use this stack
-        // to find the callsite that caused this warning to fire.
-        throw new Error(message);
-      } catch (x) {}
-    };
-
-    warning$2 = function(condition, format, args) {
-      var len = arguments.length;
-      args = new Array(len > 2 ? len - 2 : 0);
-      for (var key = 2; key < len; key++) {
-        args[key - 2] = arguments[key];
-      }
-      if (format === undefined) {
-        throw new Error(
-            '`warning(condition, format, ...args)` requires a warning ' +
-            'message argument'
-        );
-      }
-      if (!condition) {
-        printWarning$3.apply(null, [format].concat(args));
-      }
-    };
-  }
-
-  var warning_1$2 = warning$2;
-
   var reactEventListener_cjs = createCommonjsModule(function (module, exports) {
 
   Object.defineProperty(exports, '__esModule', { value: true });
@@ -13857,12 +14385,12 @@
   var _possibleConstructorReturn = _interopDefault(possibleConstructorReturn$1);
   var _getPrototypeOf = _interopDefault(getPrototypeOf$2);
   var _inherits = _interopDefault(inherits$1);
-  var _typeof = _interopDefault(_typeof_1$1);
+  var _typeof = _interopDefault(_typeof_1$2);
   var _objectWithoutProperties = _interopDefault(objectWithoutProperties$1);
-  var _extends = _interopDefault(_extends_1$1);
+  var _extends = _interopDefault(_extends_1$2);
   var React$$1 = _interopDefault(React);
   var PropTypes = _interopDefault(propTypes);
-  var warning = _interopDefault(warning_1$2);
+  var warning = _interopDefault(warning_1);
 
   function defineProperty(object, property, attr) {
     return Object.defineProperty(object, property, attr);
@@ -14056,6 +14584,7 @@
 
       _this = possibleConstructorReturn(this, (_getPrototypeOf2 = getPrototypeOf(ClickAwayListener)).call.apply(_getPrototypeOf2, [this].concat(args)));
       _this.mounted = false;
+      _this.moved = false;
 
       _this.handleClickAway = function (event) {
         // Ignore events that have been `event.preventDefault()` marked.
@@ -14065,6 +14594,12 @@
 
 
         if (!_this.mounted) {
+          return;
+        } // Do not act if user performed touchmove
+
+
+        if (_this.moved) {
+          _this.moved = false;
           return;
         } // The child might render null.
 
@@ -14078,6 +14613,10 @@
         if (doc.documentElement && doc.documentElement.contains(event.target) && !_this.node.contains(event.target)) {
           _this.props.onClickAway(event);
         }
+      };
+
+      _this.handleTouchMove = function () {
+        _this.moved = true;
       };
 
       return _this;
@@ -14114,6 +14653,7 @@
 
         if (touchEvent !== false) {
           listenerProps[touchEvent] = this.handleClickAway;
+          listenerProps.onTouchMove = this.handleTouchMove;
         }
 
         return React.createElement(React.Fragment, null, children, React.createElement(EventListener, _extends_1({
@@ -14369,7 +14909,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the component will transition in.
@@ -14497,7 +15037,11 @@
      */
     classes: propTypes.object.isRequired
   };
-  CssBaseline.propTypes = exactProp(CssBaseline.propTypes);
+
+  {
+    CssBaseline.propTypes = exactProp(CssBaseline.propTypes);
+  }
+
   CssBaseline.defaultProps = {
     children: null
   };
@@ -14595,7 +15139,10 @@
      */
     rootRef: propTypes.oneOfType([propTypes.func, propTypes.object]).isRequired
   };
-  RootRef.propTypes = exactProp(RootRef.propTypes);
+
+  {
+    RootRef.propTypes = exactProp(RootRef.propTypes);
+  }
 
   function getContainer(container, defaultContainer) {
     container = typeof container === 'function' ? container() : container;
@@ -14721,13 +15268,14 @@
   Portal.defaultProps = {
     disablePortal: false
   };
-  Portal.propTypes = exactProp(Portal.propTypes);
+
+  {
+    Portal.propTypes = exactProp(Portal.propTypes);
+  }
 
   var camelize_1$1 = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+  exports.__esModule = true;
   exports.default = camelize;
   var rHyphen = /-(.)/g;
 
@@ -14736,6 +15284,7 @@
       return chr.toUpperCase();
     });
   }
+
   module.exports = exports["default"];
   });
 
@@ -14743,86 +15292,77 @@
 
   var camelizeStyle = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+
+
+  exports.__esModule = true;
   exports.default = camelizeStyleName;
 
+  var _camelize = interopRequireDefault(camelize_1$1);
 
+  /**
+   * Copyright 2014-2015, Facebook, Inc.
+   * All rights reserved.
+   * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/camelizeStyleName.js
+   */
+  var msPattern = /^-ms-/;
 
-  var _camelize2 = _interopRequireDefault(camelize_1$1);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var msPattern = /^-ms-/; /**
-                            * Copyright 2014-2015, Facebook, Inc.
-                            * All rights reserved.
-                            * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/camelizeStyleName.js
-                            */
   function camelizeStyleName(string) {
-    return (0, _camelize2.default)(string.replace(msPattern, 'ms-'));
+    return (0, _camelize.default)(string.replace(msPattern, 'ms-'));
   }
-  module.exports = exports['default'];
+
+  module.exports = exports["default"];
   });
 
   unwrapExports(camelizeStyle);
 
   var hyphenate_1 = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+  exports.__esModule = true;
   exports.default = hyphenate;
-
   var rUpper = /([A-Z])/g;
 
   function hyphenate(string) {
     return string.replace(rUpper, '-$1').toLowerCase();
   }
-  module.exports = exports['default'];
+
+  module.exports = exports["default"];
   });
 
   unwrapExports(hyphenate_1);
 
   var hyphenateStyle = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+
+
+  exports.__esModule = true;
   exports.default = hyphenateStyleName;
 
+  var _hyphenate = interopRequireDefault(hyphenate_1);
 
-
-  var _hyphenate2 = _interopRequireDefault(hyphenate_1);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var msPattern = /^ms-/; /**
-                           * Copyright 2013-2014, Facebook, Inc.
-                           * All rights reserved.
-                           * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/hyphenateStyleName.js
-                           */
+  /**
+   * Copyright 2013-2014, Facebook, Inc.
+   * All rights reserved.
+   * https://github.com/facebook/react/blob/2aeb8a2a6beb00617a4217f7f8284924fa2ad819/src/vendor/core/hyphenateStyleName.js
+   */
+  var msPattern = /^ms-/;
 
   function hyphenateStyleName(string) {
-    return (0, _hyphenate2.default)(string).replace(msPattern, '-ms-');
+    return (0, _hyphenate.default)(string).replace(msPattern, '-ms-');
   }
-  module.exports = exports['default'];
+
+  module.exports = exports["default"];
   });
 
   unwrapExports(hyphenateStyle);
 
   var getComputedStyle$1 = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+
+
+  exports.__esModule = true;
   exports.default = _getComputedStyle;
 
-
-
-  var _camelizeStyle2 = _interopRequireDefault(camelizeStyle);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  var _camelizeStyle = interopRequireDefault(camelizeStyle);
 
   var rposition = /^(top|right|bottom|left)$/;
   var rnumnonpx = /^([+-]?(?:\d*\.|)\d+(?:[eE][+-]?\d+|))(?!px)[a-z%]+$/i;
@@ -14830,33 +15370,25 @@
   function _getComputedStyle(node) {
     if (!node) throw new TypeError('No Element passed to `getComputedStyle()`');
     var doc = node.ownerDocument;
-
     return 'defaultView' in doc ? doc.defaultView.opener ? node.ownerDocument.defaultView.getComputedStyle(node, null) : window.getComputedStyle(node, null) : {
       //ie 8 "magic" from: https://github.com/jquery/jquery/blob/1.11-stable/src/css/curCSS.js#L72
       getPropertyValue: function getPropertyValue(prop) {
         var style = node.style;
-
-        prop = (0, _camelizeStyle2.default)(prop);
-
+        prop = (0, _camelizeStyle.default)(prop);
         if (prop == 'float') prop = 'styleFloat';
-
         var current = node.currentStyle[prop] || null;
-
         if (current == null && style && style[prop]) current = style[prop];
 
         if (rnumnonpx.test(current) && !rposition.test(prop)) {
           // Remember the original values
           var left = style.left;
           var runStyle = node.runtimeStyle;
-          var rsLeft = runStyle && runStyle.left;
+          var rsLeft = runStyle && runStyle.left; // Put in the new values to get a computed value out
 
-          // Put in the new values to get a computed value out
           if (rsLeft) runStyle.left = node.currentStyle.left;
-
           style.left = prop === 'fontSize' ? '1em' : current;
-          current = style.pixelLeft + 'px';
+          current = style.pixelLeft + 'px'; // Revert the changed values
 
-          // Revert the changed values
           style.left = left;
           if (rsLeft) runStyle.left = rsLeft;
         }
@@ -14865,94 +15397,82 @@
       }
     };
   }
-  module.exports = exports['default'];
+
+  module.exports = exports["default"];
   });
 
   unwrapExports(getComputedStyle$1);
 
   var removeStyle_1 = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+  exports.__esModule = true;
   exports.default = removeStyle;
+
   function removeStyle(node, key) {
     return 'removeProperty' in node.style ? node.style.removeProperty(key) : node.style.removeAttribute(key);
   }
-  module.exports = exports['default'];
+
+  module.exports = exports["default"];
   });
 
   unwrapExports(removeStyle_1);
 
   var inDOM = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.default = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
-  module.exports = exports['default'];
+  exports.__esModule = true;
+  exports.default = void 0;
+
+  var _default = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
+
+  exports.default = _default;
+  module.exports = exports["default"];
   });
 
   unwrapExports(inDOM);
 
   var properties = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = undefined;
 
 
+  exports.__esModule = true;
+  exports.default = exports.animationEnd = exports.animationDelay = exports.animationTiming = exports.animationDuration = exports.animationName = exports.transitionEnd = exports.transitionDuration = exports.transitionDelay = exports.transitionTiming = exports.transitionProperty = exports.transform = void 0;
 
-  var _inDOM2 = _interopRequireDefault(inDOM);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  var _inDOM = interopRequireDefault(inDOM);
 
   var transform = 'transform';
-  var prefix = void 0,
-      transitionEnd = void 0,
-      animationEnd = void 0;
-  var transitionProperty = void 0,
-      transitionDuration = void 0,
-      transitionTiming = void 0,
-      transitionDelay = void 0;
-  var animationName = void 0,
-      animationDuration = void 0,
-      animationTiming = void 0,
-      animationDelay = void 0;
+  exports.transform = transform;
+  var prefix, transitionEnd, animationEnd;
+  exports.animationEnd = animationEnd;
+  exports.transitionEnd = transitionEnd;
+  var transitionProperty, transitionDuration, transitionTiming, transitionDelay;
+  exports.transitionDelay = transitionDelay;
+  exports.transitionTiming = transitionTiming;
+  exports.transitionDuration = transitionDuration;
+  exports.transitionProperty = transitionProperty;
+  var animationName, animationDuration, animationTiming, animationDelay;
+  exports.animationDelay = animationDelay;
+  exports.animationTiming = animationTiming;
+  exports.animationDuration = animationDuration;
+  exports.animationName = animationName;
 
-  if (_inDOM2.default) {
+  if (_inDOM.default) {
     var _getTransitionPropert = getTransitionProperties();
 
     prefix = _getTransitionPropert.prefix;
     exports.transitionEnd = transitionEnd = _getTransitionPropert.transitionEnd;
     exports.animationEnd = animationEnd = _getTransitionPropert.animationEnd;
-
-
-    exports.transform = transform = prefix + '-' + transform;
-    exports.transitionProperty = transitionProperty = prefix + '-transition-property';
-    exports.transitionDuration = transitionDuration = prefix + '-transition-duration';
-    exports.transitionDelay = transitionDelay = prefix + '-transition-delay';
-    exports.transitionTiming = transitionTiming = prefix + '-transition-timing-function';
-
-    exports.animationName = animationName = prefix + '-animation-name';
-    exports.animationDuration = animationDuration = prefix + '-animation-duration';
-    exports.animationTiming = animationTiming = prefix + '-animation-delay';
-    exports.animationDelay = animationDelay = prefix + '-animation-timing-function';
+    exports.transform = transform = prefix + "-" + transform;
+    exports.transitionProperty = transitionProperty = prefix + "-transition-property";
+    exports.transitionDuration = transitionDuration = prefix + "-transition-duration";
+    exports.transitionDelay = transitionDelay = prefix + "-transition-delay";
+    exports.transitionTiming = transitionTiming = prefix + "-transition-timing-function";
+    exports.animationName = animationName = prefix + "-animation-name";
+    exports.animationDuration = animationDuration = prefix + "-animation-duration";
+    exports.animationTiming = animationTiming = prefix + "-animation-delay";
+    exports.animationDelay = animationDelay = prefix + "-animation-timing-function";
   }
 
-  exports.transform = transform;
-  exports.transitionProperty = transitionProperty;
-  exports.transitionTiming = transitionTiming;
-  exports.transitionDelay = transitionDelay;
-  exports.transitionDuration = transitionDuration;
-  exports.transitionEnd = transitionEnd;
-  exports.animationName = animationName;
-  exports.animationDuration = animationDuration;
-  exports.animationTiming = animationTiming;
-  exports.animationDelay = animationDelay;
-  exports.animationEnd = animationEnd;
-  exports.default = {
+  var _default = {
     transform: transform,
     end: transitionEnd,
     property: transitionProperty,
@@ -14960,37 +15480,33 @@
     delay: transitionDelay,
     duration: transitionDuration
   };
-
+  exports.default = _default;
 
   function getTransitionProperties() {
     var style = document.createElement('div').style;
-
     var vendorMap = {
       O: function O(e) {
-        return 'o' + e.toLowerCase();
+        return "o" + e.toLowerCase();
       },
       Moz: function Moz(e) {
         return e.toLowerCase();
       },
       Webkit: function Webkit(e) {
-        return 'webkit' + e;
+        return "webkit" + e;
       },
       ms: function ms(e) {
-        return 'MS' + e;
+        return "MS" + e;
       }
     };
-
     var vendors = Object.keys(vendorMap);
-
-    var transitionEnd = void 0,
-        animationEnd = void 0;
+    var transitionEnd, animationEnd;
     var prefix = '';
 
     for (var i = 0; i < vendors.length; i++) {
       var vendor = vendors[i];
 
-      if (vendor + 'TransitionProperty' in style) {
-        prefix = '-' + vendor.toLowerCase();
+      if (vendor + "TransitionProperty" in style) {
+        prefix = "-" + vendor.toLowerCase();
         transitionEnd = vendorMap[vendor]('TransitionEnd');
         animationEnd = vendorMap[vendor]('AnimationEnd');
         break;
@@ -14998,12 +15514,13 @@
     }
 
     if (!transitionEnd && 'transitionProperty' in style) transitionEnd = 'transitionend';
-
     if (!animationEnd && 'animationName' in style) animationEnd = 'animationend';
-
     style = null;
-
-    return { animationEnd: animationEnd, transitionEnd: transitionEnd, prefix: prefix };
+    return {
+      animationEnd: animationEnd,
+      transitionEnd: transitionEnd,
+      prefix: prefix
+    };
   }
   });
 
@@ -15022,15 +15539,14 @@
 
   var isTransform_1 = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+  exports.__esModule = true;
   exports.default = isTransform;
   var supportedTransforms = /^((translate|rotate|scale)(X|Y|Z|3d)?|matrix(3d)?|perspective|skew(X|Y)?)$/i;
 
   function isTransform(property) {
     return !!(property && supportedTransforms.test(property));
   }
+
   module.exports = exports["default"];
   });
 
@@ -15038,34 +15554,22 @@
 
   var style_1 = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+
+
+  exports.__esModule = true;
   exports.default = style;
 
+  var _camelizeStyle = interopRequireDefault(camelizeStyle);
 
+  var _hyphenateStyle = interopRequireDefault(hyphenateStyle);
 
-  var _camelizeStyle2 = _interopRequireDefault(camelizeStyle);
+  var _getComputedStyle2 = interopRequireDefault(getComputedStyle$1);
 
-
-
-  var _hyphenateStyle2 = _interopRequireDefault(hyphenateStyle);
-
-
-
-  var _getComputedStyle3 = _interopRequireDefault(getComputedStyle$1);
+  var _removeStyle = interopRequireDefault(removeStyle_1);
 
 
 
-  var _removeStyle2 = _interopRequireDefault(removeStyle_1);
-
-
-
-
-
-  var _isTransform2 = _interopRequireDefault(isTransform_1);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+  var _isTransform = interopRequireDefault(isTransform_1);
 
   function style(node, property, value) {
     var css = '';
@@ -15074,7 +15578,7 @@
 
     if (typeof property === 'string') {
       if (value === undefined) {
-        return node.style[(0, _camelizeStyle2.default)(property)] || (0, _getComputedStyle3.default)(node).getPropertyValue((0, _hyphenateStyle2.default)(property));
+        return node.style[(0, _camelizeStyle.default)(property)] || (0, _getComputedStyle2.default)(node).getPropertyValue((0, _hyphenateStyle.default)(property));
       } else {
         (props = {})[property] = value;
       }
@@ -15082,43 +15586,48 @@
 
     Object.keys(props).forEach(function (key) {
       var value = props[key];
+
       if (!value && value !== 0) {
-        (0, _removeStyle2.default)(node, (0, _hyphenateStyle2.default)(key));
-      } else if ((0, _isTransform2.default)(key)) {
-        transforms += key + '(' + value + ') ';
+        (0, _removeStyle.default)(node, (0, _hyphenateStyle.default)(key));
+      } else if ((0, _isTransform.default)(key)) {
+        transforms += key + "(" + value + ") ";
       } else {
-        css += (0, _hyphenateStyle2.default)(key) + ': ' + value + ';';
+        css += (0, _hyphenateStyle.default)(key) + ": " + value + ";";
       }
     });
 
     if (transforms) {
-      css += properties.transform + ': ' + transforms + ';';
+      css += properties.transform + ": " + transforms + ";";
     }
 
     node.style.cssText += ';' + css;
   }
-  module.exports = exports['default'];
+
+  module.exports = exports["default"];
   });
 
   var css = unwrapExports(style_1);
 
-  var scrollbarSize = createCommonjsModule(function (module, exports) {
+  var scrollbarSize_1 = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
 
-  exports.default = function (recalc) {
+
+  exports.__esModule = true;
+  exports.default = scrollbarSize;
+
+  var _inDOM = interopRequireDefault(inDOM);
+
+  var size;
+
+  function scrollbarSize(recalc) {
     if (!size && size !== 0 || recalc) {
-      if (_inDOM2.default) {
+      if (_inDOM.default) {
         var scrollDiv = document.createElement('div');
-
         scrollDiv.style.position = 'absolute';
         scrollDiv.style.top = '-9999px';
         scrollDiv.style.width = '50px';
         scrollDiv.style.height = '50px';
         scrollDiv.style.overflow = 'scroll';
-
         document.body.appendChild(scrollDiv);
         size = scrollDiv.offsetWidth - scrollDiv.clientWidth;
         document.body.removeChild(scrollDiv);
@@ -15126,30 +15635,22 @@
     }
 
     return size;
-  };
+  }
 
-
-
-  var _inDOM2 = _interopRequireDefault(inDOM);
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-  var size = void 0;
-
-  module.exports = exports['default'];
+  module.exports = exports["default"];
   });
 
-  var getScrollbarSize = unwrapExports(scrollbarSize);
+  var getScrollbarSize = unwrapExports(scrollbarSize_1);
 
   var isWindow = createCommonjsModule(function (module, exports) {
 
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
+  exports.__esModule = true;
   exports.default = getWindow;
+
   function getWindow(node) {
     return node === node.window ? node : node.nodeType === 9 ? node.defaultView || node.parentWindow : false;
   }
+
   module.exports = exports["default"];
   });
 
@@ -15182,8 +15683,7 @@
   }
 
   function siblings(container, mount, currentNode, callback) {
-    var blacklist = [mount, currentNode]; // eslint-disable-line no-param-reassign
-
+    var blacklist = [mount, currentNode];
     [].forEach.call(container.children, function (node) {
       if (blacklist.indexOf(node) === -1 && isHidable(node)) {
         callback(node);
@@ -15221,39 +15721,43 @@
     return parseInt(css(node, 'paddingRight') || 0, 10);
   }
 
-  function setContainerStyle(data, container) {
+  function setContainerStyle(data) {
     var style = {
       overflow: 'hidden'
     }; // We are only interested in the actual `style` here because we will override it.
 
     data.style = {
-      overflow: container.style.overflow,
-      paddingRight: container.style.paddingRight
+      overflow: data.container.style.overflow,
+      paddingRight: data.container.style.paddingRight
     };
 
     if (data.overflowing) {
-      var scrollbarSize$$1 = getScrollbarSize(); // Use computed style, here to get the real padding to add our scrollbar width.
+      var scrollbarSize = getScrollbarSize(); // Use computed style, here to get the real padding to add our scrollbar width.
 
-      style.paddingRight = "".concat(getPaddingRight(container) + scrollbarSize$$1, "px"); // .mui-fixed is a global helper.
+      style.paddingRight = "".concat(getPaddingRight(data.container) + scrollbarSize, "px"); // .mui-fixed is a global helper.
 
-      var fixedNodes = ownerDocument(container).querySelectorAll('.mui-fixed');
+      var fixedNodes = ownerDocument(data.container).querySelectorAll('.mui-fixed');
 
       for (var i = 0; i < fixedNodes.length; i += 1) {
         var paddingRight = getPaddingRight(fixedNodes[i]);
         data.prevPaddings.push(paddingRight);
-        fixedNodes[i].style.paddingRight = "".concat(paddingRight + scrollbarSize$$1, "px");
+        fixedNodes[i].style.paddingRight = "".concat(paddingRight + scrollbarSize, "px");
       }
     }
 
     Object.keys(style).forEach(function (key) {
-      container.style[key] = style[key];
+      data.container.style[key] = style[key];
     });
   }
 
   function removeContainerStyle(data) {
-    Object.keys(data.style).forEach(function (key) {
-      data.container.style[key] = data.style[key];
-    });
+    // The modal might be closed before it had the chance to be mounted in the DOM.
+    if (data.style) {
+      Object.keys(data.style).forEach(function (key) {
+        data.container.style[key] = data.style[key];
+      });
+    }
+
     var fixedNodes = ownerDocument(data.container).querySelectorAll('.mui-fixed');
 
     for (var i = 0; i < fixedNodes.length; i += 1) {
@@ -15329,13 +15833,20 @@
           overflowing: isOverflowing(container),
           prevPaddings: []
         };
-
-        if (this.handleContainerOverflow) {
-          setContainerStyle(data, container);
-        }
-
         this.data.push(data);
         return modalIdx;
+      }
+    }, {
+      key: "mount",
+      value: function mount(modal) {
+        var containerIdx = findIndexOf(this.data, function (item) {
+          return item.modals.indexOf(modal) !== -1;
+        });
+        var data = this.data[containerIdx];
+
+        if (!data.style && this.handleContainerOverflow) {
+          setContainerStyle(data);
+        }
       }
     }, {
       key: "remove",
@@ -15370,7 +15881,13 @@
           this.data.splice(containerIdx, 1);
         } else if (this.hideSiblingNodes) {
           // Otherwise make sure the next top modal is visible to a screan reader.
-          ariaHidden(data.modals[data.modals.length - 1].modalRef, false);
+          var nextTop = data.modals[data.modals.length - 1]; // as soon as a modal is adding its modalRef is undefined. it can't set
+          // aria-hidden because the dom element doesn't exist either
+          // when modal was unmounted before modalRef gets null
+
+          if (nextTop.modalRef) {
+            ariaHidden(nextTop.modalRef, false);
+          }
         }
 
         return modalIdx;
@@ -15457,17 +15974,14 @@
         if (_this.props.open) {
           _this.handleOpened();
         } else {
-          var doc = ownerDocument(_this.mountNode);
-          var container = getContainer$1(_this.props.container, doc.body);
-
-          _this.props.manager.add(assertThisInitialized(assertThisInitialized(_this)), container);
-
-          _this.props.manager.remove(assertThisInitialized(assertThisInitialized(_this)));
+          ariaHidden(_this.modalRef, true);
         }
       };
 
       _this.handleOpened = function () {
-        _this.autoFocus(); // Fix a bug on Chrome where the scroll isn't initially 0.
+        _this.autoFocus();
+
+        _this.props.manager.mount(assertThisInitialized(assertThisInitialized(_this))); // Fix a bug on Chrome where the scroll isn't initially 0.
 
 
         _this.modalRef.scrollTop = 0;
@@ -15539,6 +16053,10 @@
         _this.modalRef = ref;
       };
 
+      _this.onRootRef = function (ref) {
+        _this.dialogRef = ref;
+      };
+
       _this.state = {
         exited: !props.open
       };
@@ -15560,7 +16078,6 @@
         if (prevProps.open && !this.props.open) {
           this.handleClose();
         } else if (!prevProps.open && this.props.open) {
-          // check for focus
           this.lastFocus = ownerDocument(this.mountNode).activeElement;
           this.handleOpen();
         }
@@ -15618,8 +16135,6 @@
     }, {
       key: "render",
       value: function render() {
-        var _this2 = this;
-
         var _this$props = this.props,
             BackdropComponent = _this$props.BackdropComponent,
             BackdropProps = _this$props.BackdropProps,
@@ -15671,14 +16186,12 @@
           onRendered: this.handleRendered
         }, React.createElement("div", _extends_1({
           ref: this.handleModalRef,
-          className: classnames(classes.root, className, defineProperty({}, classes.hidden, exited))
+          className: classnames('mui-fixed', classes.root, className, defineProperty({}, classes.hidden, exited))
         }, other), hideBackdrop ? null : React.createElement(BackdropComponent, _extends_1({
           open: open,
           onClick: this.handleBackdropClick
         }, BackdropProps)), React.createElement(RootRef, {
-          rootRef: function rootRef(ref) {
-            _this2.dialogRef = ref;
-          }
+          rootRef: this.onRootRef
         }, React.cloneElement(children, childProps))));
       }
     }], [{
@@ -15862,16 +16375,21 @@
         overflowX: 'hidden'
       },
 
+      /* Styles applied to the container element. */
+      container: {
+        height: '100%',
+        // We disable the focus ring for mouse, touch and keyboard users.
+        outline: 'none'
+      },
+
       /* Styles applied to the `Paper` component. */
       paper: {
         display: 'flex',
         flexDirection: 'column',
         margin: 48,
         position: 'relative',
-        overflowY: 'auto',
-        // Fix IE 11 issue, to remove at some point.
-        // We disable the focus ring for mouse, touch and keyboard users.
-        outline: 'none'
+        overflowY: 'auto' // Fix IE 11 issue, to remove at some point.
+
       },
 
       /* Styles applied to the `Paper` component if `scroll="paper"`. */
@@ -15917,6 +16435,14 @@
         })
       },
 
+      /* Styles applied to the `Paper` component if `maxWidth="xl"`. */
+      paperWidthXl: {
+        maxWidth: theme.breakpoints.values.xl,
+        '&$paperScrollBody': defineProperty({}, theme.breakpoints.down(theme.breakpoints.values.xl + 48 * 2), {
+          margin: 48
+        })
+      },
+
       /* Styles applied to the `Paper` component if `fullWidth={true}`. */
       paperFullWidth: {
         width: '100%'
@@ -15940,62 +16466,108 @@
    * Dialogs are overlaid modal paper based components with a backdrop.
    */
 
-  function Dialog(props) {
-    var _classNames;
+  var Dialog =
+  /*#__PURE__*/
+  function (_React$Component) {
+    inherits(Dialog, _React$Component);
 
-    var BackdropProps = props.BackdropProps,
-        children = props.children,
-        classes = props.classes,
-        className = props.className,
-        disableBackdropClick = props.disableBackdropClick,
-        disableEscapeKeyDown = props.disableEscapeKeyDown,
-        fullScreen = props.fullScreen,
-        fullWidth = props.fullWidth,
-        maxWidth = props.maxWidth,
-        onBackdropClick = props.onBackdropClick,
-        onClose = props.onClose,
-        onEnter = props.onEnter,
-        onEntered = props.onEntered,
-        onEntering = props.onEntering,
-        onEscapeKeyDown = props.onEscapeKeyDown,
-        onExit = props.onExit,
-        onExited = props.onExited,
-        onExiting = props.onExiting,
-        open = props.open,
-        PaperProps = props.PaperProps,
-        scroll = props.scroll,
-        TransitionComponent = props.TransitionComponent,
-        transitionDuration = props.transitionDuration,
-        TransitionProps = props.TransitionProps,
-        other = objectWithoutProperties(props, ["BackdropProps", "children", "classes", "className", "disableBackdropClick", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClose", "onEnter", "onEntered", "onEntering", "onEscapeKeyDown", "onExit", "onExited", "onExiting", "open", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"]);
+    function Dialog() {
+      var _getPrototypeOf2;
 
-    return React.createElement(Modal$1, _extends_1({
-      className: classnames(classes.root, classes["scroll".concat(capitalize(scroll))], className),
-      BackdropProps: _extends_1({
-        transitionDuration: transitionDuration
-      }, BackdropProps),
-      disableBackdropClick: disableBackdropClick,
-      disableEscapeKeyDown: disableEscapeKeyDown,
-      onBackdropClick: onBackdropClick,
-      onEscapeKeyDown: onEscapeKeyDown,
-      onClose: onClose,
-      open: open,
-      role: "dialog"
-    }, other), React.createElement(TransitionComponent, _extends_1({
-      appear: true,
-      in: open,
-      timeout: transitionDuration,
-      onEnter: onEnter,
-      onEntering: onEntering,
-      onEntered: onEntered,
-      onExit: onExit,
-      onExiting: onExiting,
-      onExited: onExited
-    }, TransitionProps), React.createElement(Paper$1, _extends_1({
-      elevation: 24,
-      className: classnames(classes.paper, classes["paperScroll".concat(capitalize(scroll))], (_classNames = {}, defineProperty(_classNames, classes["paperWidth".concat(maxWidth ? capitalize(maxWidth) : '')], maxWidth), defineProperty(_classNames, classes.paperFullScreen, fullScreen), defineProperty(_classNames, classes.paperFullWidth, fullWidth), _classNames))
-    }, PaperProps), children)));
-  }
+      var _this;
+
+      classCallCheck(this, Dialog);
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = possibleConstructorReturn(this, (_getPrototypeOf2 = getPrototypeOf(Dialog)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+      _this.handleBackdropClick = function (event) {
+        if (event.target !== event.currentTarget) {
+          return;
+        }
+
+        if (_this.props.onBackdropClick) {
+          _this.props.onBackdropClick(event);
+        }
+
+        if (!_this.props.disableBackdropClick && _this.props.onClose) {
+          _this.props.onClose(event, 'backdropClick');
+        }
+      };
+
+      return _this;
+    }
+
+    createClass(Dialog, [{
+      key: "render",
+      value: function render() {
+        var _classNames;
+
+        var _this$props = this.props,
+            BackdropProps = _this$props.BackdropProps,
+            children = _this$props.children,
+            classes = _this$props.classes,
+            className = _this$props.className,
+            disableBackdropClick = _this$props.disableBackdropClick,
+            disableEscapeKeyDown = _this$props.disableEscapeKeyDown,
+            fullScreen = _this$props.fullScreen,
+            fullWidth = _this$props.fullWidth,
+            maxWidth = _this$props.maxWidth,
+            onBackdropClick = _this$props.onBackdropClick,
+            onClose = _this$props.onClose,
+            onEnter = _this$props.onEnter,
+            onEntered = _this$props.onEntered,
+            onEntering = _this$props.onEntering,
+            onEscapeKeyDown = _this$props.onEscapeKeyDown,
+            onExit = _this$props.onExit,
+            onExited = _this$props.onExited,
+            onExiting = _this$props.onExiting,
+            open = _this$props.open,
+            PaperProps = _this$props.PaperProps,
+            scroll = _this$props.scroll,
+            TransitionComponent = _this$props.TransitionComponent,
+            transitionDuration = _this$props.transitionDuration,
+            TransitionProps = _this$props.TransitionProps,
+            other = objectWithoutProperties(_this$props, ["BackdropProps", "children", "classes", "className", "disableBackdropClick", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClose", "onEnter", "onEntered", "onEntering", "onEscapeKeyDown", "onExit", "onExited", "onExiting", "open", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"]);
+
+        return React.createElement(Modal$1, _extends_1({
+          className: classnames(classes.root, className),
+          BackdropProps: _extends_1({
+            transitionDuration: transitionDuration
+          }, BackdropProps),
+          disableBackdropClick: disableBackdropClick,
+          disableEscapeKeyDown: disableEscapeKeyDown,
+          onBackdropClick: onBackdropClick,
+          onEscapeKeyDown: onEscapeKeyDown,
+          onClose: onClose,
+          open: open,
+          role: "dialog"
+        }, other), React.createElement(TransitionComponent, _extends_1({
+          appear: true,
+          in: open,
+          timeout: transitionDuration,
+          onEnter: onEnter,
+          onEntering: onEntering,
+          onEntered: onEntered,
+          onExit: onExit,
+          onExiting: onExiting,
+          onExited: onExited
+        }, TransitionProps), React.createElement("div", {
+          className: classnames(classes.container, classes["scroll".concat(capitalize(scroll))]),
+          onClick: this.handleBackdropClick,
+          role: "document"
+        }, React.createElement(Paper$1, _extends_1({
+          elevation: 24,
+          className: classnames(classes.paper, classes["paperScroll".concat(capitalize(scroll))], (_classNames = {}, defineProperty(_classNames, classes["paperWidth".concat(maxWidth ? capitalize(maxWidth) : '')], maxWidth), defineProperty(_classNames, classes.paperFullScreen, fullScreen), defineProperty(_classNames, classes.paperFullWidth, fullWidth), _classNames))
+        }, PaperProps), children))));
+      }
+    }]);
+
+    return Dialog;
+  }(React.Component);
 
   Dialog.propTypes = {
     /**
@@ -16045,7 +16617,7 @@
      * on the desktop where you might need some coherent different width size across your
      * application. Set to `false` to disable `maxWidth`.
      */
-    maxWidth: propTypes.oneOf(['xs', 'sm', 'md', 'lg', false]),
+    maxWidth: propTypes.oneOf(['xs', 'sm', 'md', 'lg', 'xl', false]),
 
     /**
      * Callback fired when the backdrop is clicked.
@@ -16102,8 +16674,19 @@
 
     /**
      * Properties applied to the [`Paper`](/api/paper/) element.
+     * If you want to add a class to the `Paper` component use
+     * `classes.paper` in the `Dialog` props instead.
      */
-    PaperProps: propTypes.object,
+    PaperProps: chainPropTypes(propTypes.object, function (props) {
+      var _props$PaperProps = props.PaperProps,
+          PaperProps = _props$PaperProps === void 0 ? {} : _props$PaperProps;
+
+      if ('className' in PaperProps) {
+        return new Error('`className` overrides all `Dialog` specific styles in `Paper`. If you wanted to add ' + 'styles to the `Paper` component use `classes.paper` in the `Dialog` props ' + "instead.".concat(''));
+      }
+
+      return null;
+    }),
 
     /**
      * Determine the container for scrolling the dialog.
@@ -16356,7 +16939,7 @@
         width: '100%'
       },
 
-      /* Styles applied to the root element if `inset={true}`. */
+      /* Styles applied to the root element if `variant="inset"`. */
       inset: {
         marginLeft: 72
       },
@@ -16364,6 +16947,12 @@
       /* Styles applied to the root element if `light={true}`. */
       light: {
         backgroundColor: fade(theme.palette.divider, 0.08)
+      },
+
+      /* Styles applied to the root element if `variant="middle"`. */
+      middle: {
+        marginLeft: theme.spacing.unit * 2,
+        marginRight: theme.spacing.unit * 2
       }
     };
   };
@@ -16373,19 +16962,22 @@
 
     var absolute = props.absolute,
         classes = props.classes,
-        classNameProp = props.className,
+        className = props.className,
         Component = props.component,
         inset = props.inset,
         light = props.light,
-        other = objectWithoutProperties(props, ["absolute", "classes", "className", "component", "inset", "light"]);
+        variant = props.variant,
+        other = objectWithoutProperties(props, ["absolute", "classes", "className", "component", "inset", "light", "variant"]);
 
-    var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.absolute, absolute), defineProperty(_classNames, classes.inset, inset), defineProperty(_classNames, classes.light, light), _classNames), classNameProp);
     return React.createElement(Component, _extends_1({
-      className: className
+      className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.inset, inset || variant === 'inset'), defineProperty(_classNames, classes.middle, variant === 'middle'), defineProperty(_classNames, classes.absolute, absolute), defineProperty(_classNames, classes.light, light), _classNames), className)
     }, other));
   }
 
   Divider.propTypes = {
+    /**
+     * Absolutely position the element.
+     */
     absolute: propTypes.bool,
 
     /**
@@ -16403,23 +16995,37 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the divider will be indented.
+     * __WARNING__: `inset` is deprecated.
+     * Instead use `variant="inset"`.
      */
-    inset: propTypes.bool,
+    inset: chainPropTypes(propTypes.bool, function (props) {
+      /* istanbul ignore if */
+      if (props.inset) {
+        return new Error('Material-UI: you are using the deprecated `inset` property ' + 'that will be removed in the next major release. The property `variant="inset"` ' + 'is equivalent and should be used instead.');
+      }
+
+      return null;
+    }),
 
     /**
      * If `true`, the divider will have a lighter color.
      */
-    light: propTypes.bool
+    light: propTypes.bool,
+
+    /**
+     *  The variant to use.
+     */
+    variant: propTypes.oneOf(['fullWidth', 'inset', 'middle'])
   };
   Divider.defaultProps = {
     absolute: false,
     component: 'hr',
-    inset: false,
-    light: false
+    light: false,
+    variant: 'fullWidth'
   };
   var Divider$1 = withStyles(styles$w, {
     name: 'MuiDivider'
@@ -16789,6 +17395,9 @@
   }
   var styles$x = function styles(theme) {
     return {
+      /* Styles applied to the root element. */
+      root: {},
+
       /* Styles applied to the root element if `variant="permanent or persistent"`. */
       docked: {
         flex: '0 0 auto'
@@ -16933,7 +17542,7 @@
 
         if (variant === 'permanent') {
           return React.createElement("div", _extends_1({
-            className: classnames(classes.docked, className)
+            className: classnames(classes.root, classes.docked, className)
           }, other), drawer);
         }
 
@@ -16946,7 +17555,7 @@
 
         if (variant === 'persistent') {
           return React.createElement("div", _extends_1({
-            className: classnames(classes.docked, className)
+            className: classnames(classes.root, classes.docked, className)
           }, other), slidingDrawer);
         } // variant === temporary
 
@@ -16955,7 +17564,7 @@
           BackdropProps: _extends_1({}, BackdropProps, BackdropPropsProp, {
             transitionDuration: transitionDuration
           }),
-          className: classnames(classes.modal, className),
+          className: classnames(classes.root, classes.modal, className),
           open: open,
           onClose: onClose
         }, other, ModalProps), slidingDrawer);
@@ -17443,16 +18052,24 @@
         focused: false
       };
 
-      _this.handleFocus = function () {
+      _this.handleFocusVisible = function (event) {
         _this.setState({
           focused: true
         });
+
+        if (_this.props.onFocusVisible) {
+          _this.props.onFocusVisible(event);
+        }
       };
 
-      _this.handleBlur = function () {
+      _this.handleBlur = function (event) {
         _this.setState({
           focused: false
         });
+
+        if (_this.props.onBlur) {
+          _this.props.onBlur(event);
+        }
       };
 
       _this.handleChange = function (event) {
@@ -17485,8 +18102,11 @@
             expanded = _this$props2.expanded,
             expandIcon = _this$props2.expandIcon,
             IconButtonProps = _this$props2.IconButtonProps,
+            onBlur = _this$props2.onBlur,
             onChange = _this$props2.onChange,
-            other = objectWithoutProperties(_this$props2, ["children", "classes", "className", "disabled", "expanded", "expandIcon", "IconButtonProps", "onChange"]);
+            onClick = _this$props2.onClick,
+            onFocusVisible = _this$props2.onFocusVisible,
+            other = objectWithoutProperties(_this$props2, ["children", "classes", "className", "disabled", "expanded", "expandIcon", "IconButtonProps", "onBlur", "onChange", "onClick", "onFocusVisible"]);
 
         var focused = this.state.focused;
         return React.createElement(ButtonBase$1, _extends_1({
@@ -17495,12 +18115,11 @@
           disabled: disabled,
           component: "div",
           "aria-expanded": expanded,
-          className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.disabled, disabled), defineProperty(_classNames, classes.expanded, expanded), defineProperty(_classNames, classes.focused, focused), _classNames), className)
-        }, other, {
-          onFocusVisible: this.handleFocus,
+          className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.disabled, disabled), defineProperty(_classNames, classes.expanded, expanded), defineProperty(_classNames, classes.focused, focused), _classNames), className),
+          onFocusVisible: this.handleFocusVisible,
           onBlur: this.handleBlur,
           onClick: this.handleChange
-        }), React.createElement("div", {
+        }, other), React.createElement("div", {
           className: classnames(classes.content, defineProperty({}, classes.expanded, expanded))
         }, children), expandIcon && React.createElement(IconButton$1, _extends_1({
           disabled: disabled,
@@ -17572,8 +18191,243 @@
     name: 'MuiExpansionPanelSummary'
   })(ExpansionPanelSummary);
 
+  var styles$C = function styles(theme) {
+    return {
+      /* Styles applied to the root element. */
+      root: _extends_1({}, theme.typography.button, {
+        boxSizing: 'border-box',
+        minHeight: 36,
+        transition: theme.transitions.create(['background-color', 'box-shadow', 'border'], {
+          duration: theme.transitions.duration.short
+        }),
+        borderRadius: '50%',
+        padding: 0,
+        minWidth: 0,
+        width: 56,
+        height: 56,
+        boxShadow: theme.shadows[6],
+        '&:active': {
+          boxShadow: theme.shadows[12]
+        },
+        color: theme.palette.getContrastText(theme.palette.grey[300]),
+        backgroundColor: theme.palette.grey[300],
+        '&$focusVisible': {
+          boxShadow: theme.shadows[6]
+        },
+        '&:hover': {
+          backgroundColor: theme.palette.grey.A100,
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            backgroundColor: theme.palette.grey[300]
+          },
+          '&$disabled': {
+            backgroundColor: theme.palette.action.disabledBackground
+          },
+          textDecoration: 'none'
+        },
+        '&$disabled': {
+          color: theme.palette.action.disabled,
+          boxShadow: theme.shadows[0],
+          backgroundColor: theme.palette.action.disabledBackground
+        }
+      }),
+
+      /* Styles applied to the span element that wraps the children. */
+      label: {
+        width: '100%',
+        // assure the correct width for iOS Safari
+        display: 'inherit',
+        alignItems: 'inherit',
+        justifyContent: 'inherit'
+      },
+
+      /* Styles applied to the root element if `color="primary"`. */
+      primary: {
+        color: theme.palette.primary.contrastText,
+        backgroundColor: theme.palette.primary.main,
+        '&:hover': {
+          backgroundColor: theme.palette.primary.dark,
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            backgroundColor: theme.palette.primary.main
+          }
+        }
+      },
+
+      /* Styles applied to the root element if `color="secondary"`. */
+      secondary: {
+        color: theme.palette.secondary.contrastText,
+        backgroundColor: theme.palette.secondary.main,
+        '&:hover': {
+          backgroundColor: theme.palette.secondary.dark,
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            backgroundColor: theme.palette.secondary.main
+          }
+        }
+      },
+
+      /* Styles applied to the root element if `variant="extended"`. */
+      extended: {
+        borderRadius: 48 / 2,
+        padding: '0 16px',
+        width: 'auto',
+        minWidth: 48,
+        height: 48
+      },
+
+      /* Styles applied to the ButtonBase root element if the button is keyboard focused. */
+      focusVisible: {},
+
+      /* Styles applied to the root element if `disabled={true}`. */
+      disabled: {},
+
+      /* Styles applied to the root element if `color="inherit"`. */
+      colorInherit: {
+        color: 'inherit'
+      },
+
+      /* Styles applied to the root element if `size="small"``. */
+      sizeSmall: {
+        width: 40,
+        height: 40
+      },
+
+      /* Styles applied to the root element if `size="medium"``. */
+      sizeMedium: {
+        width: 48,
+        height: 48
+      }
+    };
+  };
+
+  function Fab(props) {
+    var _classNames;
+
+    var children = props.children,
+        classes = props.classes,
+        className = props.className,
+        color = props.color,
+        disabled = props.disabled,
+        disableFocusRipple = props.disableFocusRipple,
+        focusVisibleClassName = props.focusVisibleClassName,
+        size = props.size,
+        variant = props.variant,
+        other = objectWithoutProperties(props, ["children", "classes", "className", "color", "disabled", "disableFocusRipple", "focusVisibleClassName", "size", "variant"]);
+
+    return React.createElement(ButtonBase$1, _extends_1({
+      className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.extended, variant === 'extended'), defineProperty(_classNames, classes.primary, color === 'primary'), defineProperty(_classNames, classes.secondary, color === 'secondary'), defineProperty(_classNames, classes["size".concat(capitalize(size))], size !== 'large'), defineProperty(_classNames, classes.disabled, disabled), defineProperty(_classNames, classes.colorInherit, color === 'inherit'), _classNames), className),
+      disabled: disabled,
+      focusRipple: !disableFocusRipple,
+      focusVisibleClassName: classnames(classes.focusVisible, focusVisibleClassName)
+    }, other), React.createElement("span", {
+      className: classes.label
+    }, children));
+  }
+
+  Fab.propTypes = {
+    /**
+     * The content of the button.
+     */
+    children: propTypes.node.isRequired,
+
+    /**
+     * Override or extend the styles applied to the component.
+     * See [CSS API](#css-api) below for more details.
+     */
+    classes: propTypes.object.isRequired,
+
+    /**
+     * @ignore
+     */
+    className: propTypes.string,
+
+    /**
+     * The color of the component. It supports those theme colors that make sense for this component.
+     */
+    color: propTypes.oneOf(['default', 'inherit', 'primary', 'secondary']),
+
+    /**
+     * The component used for the root node.
+     * Either a string to use a DOM element or a component.
+     */
+    component: componentPropType,
+
+    /**
+     * If `true`, the button will be disabled.
+     */
+    disabled: propTypes.bool,
+
+    /**
+     * If `true`, the  keyboard focus ripple will be disabled.
+     * `disableRipple` must also be true.
+     */
+    disableFocusRipple: propTypes.bool,
+
+    /**
+     * If `true`, the ripple effect will be disabled.
+     */
+    disableRipple: propTypes.bool,
+
+    /**
+     * @ignore
+     */
+    focusVisibleClassName: propTypes.string,
+
+    /**
+     * The URL to link to when the button is clicked.
+     * If defined, an `a` element will be used as the root node.
+     */
+    href: propTypes.string,
+
+    /**
+     * The size of the button.
+     * `small` is equivalent to the dense button styling.
+     */
+    size: propTypes.oneOf(['small', 'medium', 'large']),
+
+    /**
+     * @ignore
+     */
+    type: propTypes.string,
+
+    /**
+     * The variant to use.
+     */
+    variant: propTypes.oneOf(['round', 'extended'])
+  };
+  Fab.defaultProps = {
+    color: 'default',
+    component: 'button',
+    disabled: false,
+    disableFocusRipple: false,
+    size: 'large',
+    type: 'button',
+    variant: 'round'
+  };
+  var Fab$1 = withStyles(styles$C, {
+    name: 'MuiFab'
+  })(Fab);
+
+  function formControlState(_ref) {
+    var props = _ref.props,
+        states = _ref.states,
+        muiFormControl = _ref.muiFormControl;
+    return states.reduce(function (acc, state) {
+      acc[state] = props[state];
+
+      if (muiFormControl) {
+        if (typeof props[state] === 'undefined') {
+          acc[state] = muiFormControl[state];
+        }
+      }
+
+      return acc;
+    }, {});
+  }
+
   var ROWS_HEIGHT = 19;
-  var styles$C = {
+  var styles$D = {
     /* Styles applied to the root element. */
     root: {
       position: 'relative',
@@ -17821,8 +18675,8 @@
   Textarea.defaultProps = {
     rows: 1
   };
-  var Textarea$1 = withStyles(styles$C, {
-    name: 'MuiTextarea'
+  var Textarea$1 = withStyles(styles$D, {
+    name: 'MuiPrivateTextarea'
   })(Textarea);
 
   // Supports determination of isControlled().
@@ -17855,7 +18709,7 @@
     return obj.startAdornment;
   }
 
-  var styles$D = function styles(theme) {
+  var styles$E = function styles(theme) {
     var light = theme.palette.type === 'light';
     var placeholder = {
       color: 'currentColor',
@@ -18009,22 +18863,6 @@
       inputAdornedEnd: {}
     };
   };
-  function formControlState(_ref) {
-    var props = _ref.props,
-        states = _ref.states,
-        context = _ref.context;
-    return states.reduce(function (acc, state) {
-      acc[state] = props[state];
-
-      if (context && context.muiFormControl) {
-        if (typeof props[state] === 'undefined') {
-          acc[state] = context.muiFormControl[state];
-        }
-      }
-
-      return acc;
-    }, {});
-  }
   /**
    * `InputBase` contains as few styles as possible.
    * It aims to be a simple building block for creating an input.
@@ -18036,22 +18874,38 @@
   function (_React$Component) {
     inherits(InputBase, _React$Component);
 
-    function InputBase(props, context) {
+    createClass(InputBase, null, [{
+      key: "getDerivedStateFromProps",
+      value: function getDerivedStateFromProps(props, state) {
+        // The blur won't fire when the disabled state is set on a focused input.
+        // We need to book keep the focused state manually.
+        if (props.disabled && state.focused) {
+          return {
+            focused: false
+          };
+        }
+
+        return null;
+      }
+    }]);
+
+    function InputBase(props) {
       var _this;
 
       classCallCheck(this, InputBase);
 
-      _this = possibleConstructorReturn(this, getPrototypeOf(InputBase).call(this, props, context));
+      _this = possibleConstructorReturn(this, getPrototypeOf(InputBase).call(this, props));
       _this.state = {
         focused: false
       };
 
       _this.handleFocus = function (event) {
-        // Fix a bug with IE 11 where the focus/blur events are triggered
+        var muiFormControl = _this.props.muiFormControl; // Fix a bug with IE 11 where the focus/blur events are triggered
         // while the input is disabled.
+
         if (formControlState({
           props: _this.props,
-          context: _this.context,
+          muiFormControl: muiFormControl,
           states: ['disabled']
         }).disabled) {
           event.stopPropagation();
@@ -18065,8 +18919,6 @@
         if (_this.props.onFocus) {
           _this.props.onFocus(event);
         }
-
-        var muiFormControl = _this.context.muiFormControl;
 
         if (muiFormControl && muiFormControl.onFocus) {
           muiFormControl.onFocus(event);
@@ -18082,7 +18934,7 @@
           _this.props.onBlur(event);
         }
 
-        var muiFormControl = _this.context.muiFormControl;
+        var muiFormControl = _this.props.muiFormControl;
 
         if (muiFormControl && muiFormControl.onBlur) {
           muiFormControl.onBlur(event);
@@ -18131,64 +18983,10 @@
         _this.checkDirty(props);
       }
 
-      var componentWillReceiveProps = function componentWillReceiveProps(nextProps, nextContext) {
-        // The blur won't fire when the disabled state is set on a focused input.
-        // We need to book keep the focused state manually.
-        if (!formControlState({
-          props: _this.props,
-          context: _this.context,
-          states: ['disabled']
-        }).disabled && formControlState({
-          props: nextProps,
-          context: nextContext,
-          states: ['disabled']
-        }).disabled) {
-          _this.setState({
-            focused: false
-          });
-        }
-      };
-
-      var componentWillUpdate = function componentWillUpdate(nextProps, nextState, nextContext) {
-        // Book keep the focused state.
-        if (!formControlState({
-          props: _this.props,
-          context: _this.context,
-          states: ['disabled']
-        }).disabled && formControlState({
-          props: nextProps,
-          context: nextContext,
-          states: ['disabled']
-        }).disabled) {
-          var muiFormControl = _this.context.muiFormControl;
-
-          if (muiFormControl && muiFormControl.onBlur) {
-            muiFormControl.onBlur();
-          }
-        }
-      };
-      /* eslint-disable no-underscore-dangle */
-
-
-      _this.componentWillReceiveProps = componentWillReceiveProps;
-      _this.componentWillReceiveProps.__suppressDeprecationWarning = true;
-      _this.componentWillUpdate = componentWillUpdate;
-      _this.componentWillUpdate.__suppressDeprecationWarning = true;
-      /* eslint-enable no-underscore-dangle */
-
       return _this;
     }
 
     createClass(InputBase, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        // We are consuming the parent muiFormControl context.
-        // We don't want a child to consume it a second time.
-        return {
-          muiFormControl: null
-        };
-      }
-    }, {
       key: "componentDidMount",
       value: function componentDidMount() {
         if (!this.isControlled) {
@@ -18197,7 +18995,16 @@
       }
     }, {
       key: "componentDidUpdate",
-      value: function componentDidUpdate() {
+      value: function componentDidUpdate(prevProps) {
+        // Book keep the focused state.
+        if (!prevProps.disabled && this.props.disabled) {
+          var muiFormControl = this.props.muiFormControl;
+
+          if (muiFormControl && muiFormControl.onBlur) {
+            muiFormControl.onBlur();
+          }
+        }
+
         if (this.isControlled) {
           this.checkDirty(this.props);
         } // else performed in the onChange
@@ -18206,7 +19013,7 @@
     }, {
       key: "checkDirty",
       value: function checkDirty(obj) {
-        var muiFormControl = this.context.muiFormControl;
+        var muiFormControl = this.props.muiFormControl;
 
         if (isFilled(obj)) {
           if (muiFormControl && muiFormControl.onFilled) {
@@ -18252,6 +19059,7 @@
             inputPropsProp = objectWithoutProperties(_this$props2$inputPro, ["className"]),
             inputRef = _this$props2.inputRef,
             margin = _this$props2.margin,
+            muiFormControl = _this$props2.muiFormControl,
             multiline = _this$props2.multiline,
             name = _this$props2.name,
             onBlur = _this$props2.onBlur,
@@ -18270,15 +19078,15 @@
             startAdornment = _this$props2.startAdornment,
             type = _this$props2.type,
             value = _this$props2.value,
-            other = objectWithoutProperties(_this$props2, ["autoComplete", "autoFocus", "classes", "className", "defaultValue", "disabled", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "multiline", "name", "onBlur", "onChange", "onClick", "onEmpty", "onFilled", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderPrefix", "rows", "rowsMax", "startAdornment", "type", "value"]);
+            other = objectWithoutProperties(_this$props2, ["autoComplete", "autoFocus", "classes", "className", "defaultValue", "disabled", "endAdornment", "error", "fullWidth", "id", "inputComponent", "inputProps", "inputRef", "margin", "muiFormControl", "multiline", "name", "onBlur", "onChange", "onClick", "onEmpty", "onFilled", "onFocus", "onKeyDown", "onKeyUp", "placeholder", "readOnly", "renderPrefix", "rows", "rowsMax", "startAdornment", "type", "value"]);
 
-        var muiFormControl = this.context.muiFormControl;
         var fcs = formControlState({
           props: this.props,
-          context: this.context,
+          muiFormControl: muiFormControl,
           states: ['disabled', 'error', 'margin', 'required', 'filled']
         });
-        var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.disabled, fcs.disabled), defineProperty(_classNames, classes.error, fcs.error), defineProperty(_classNames, classes.fullWidth, fullWidth), defineProperty(_classNames, classes.focused, this.state.focused), defineProperty(_classNames, classes.formControl, muiFormControl), defineProperty(_classNames, classes.marginDense, fcs.margin === 'dense'), defineProperty(_classNames, classes.multiline, multiline), defineProperty(_classNames, classes.adornedStart, startAdornment), defineProperty(_classNames, classes.adornedEnd, endAdornment), _classNames), classNameProp);
+        var focused = muiFormControl ? muiFormControl.focused : this.state.focused;
+        var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.disabled, fcs.disabled), defineProperty(_classNames, classes.error, fcs.error), defineProperty(_classNames, classes.fullWidth, fullWidth), defineProperty(_classNames, classes.focused, focused), defineProperty(_classNames, classes.formControl, muiFormControl), defineProperty(_classNames, classes.marginDense, fcs.margin === 'dense'), defineProperty(_classNames, classes.multiline, multiline), defineProperty(_classNames, classes.adornedStart, startAdornment), defineProperty(_classNames, classes.adornedEnd, endAdornment), _classNames), classNameProp);
         var inputClassName = classnames(classes.input, (_classNames2 = {}, defineProperty(_classNames2, classes.disabled, fcs.disabled), defineProperty(_classNames2, classes.inputType, type !== 'text'), defineProperty(_classNames2, classes.inputTypeSearch, type === 'search'), defineProperty(_classNames2, classes.inputMultiline, multiline), defineProperty(_classNames2, classes.inputMarginDense, fcs.margin === 'dense'), defineProperty(_classNames2, classes.inputAdornedStart, startAdornment), defineProperty(_classNames2, classes.inputAdornedEnd, endAdornment), _classNames2), inputPropsClassName);
         var InputComponent = inputComponent;
 
@@ -18313,12 +19121,14 @@
           }, inputProps);
         }
 
-        return React.createElement("div", _extends_1({
+        return React.createElement(FormControlContext.Provider, {
+          value: null
+        }, React.createElement("div", _extends_1({
           className: className,
           onClick: this.handleClick
         }, other), renderPrefix ? renderPrefix(_extends_1({}, fcs, {
           startAdornment: startAdornment,
-          focused: this.state.focused
+          focused: focused
         })) : null, startAdornment, React.createElement(InputComponent, _extends_1({
           "aria-invalid": fcs.error,
           autoComplete: autoComplete,
@@ -18338,7 +19148,7 @@
           required: fcs.required,
           rows: rows,
           value: value
-        }, inputProps)), endAdornment);
+        }, inputProps)), endAdornment));
       }
     }]);
 
@@ -18373,7 +19183,7 @@
     /**
      * The default input value, useful when not controlling the component.
      */
-    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number]),
+    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))]),
 
     /**
      * If `true`, the input will be disabled.
@@ -18422,6 +19232,11 @@
      * FormControl.
      */
     margin: propTypes.oneOf(['dense', 'none']),
+
+    /**
+     * @ignore
+     */
+    muiFormControl: propTypes.object,
 
     /**
      * If `true`, a textarea element will be rendered.
@@ -18515,7 +19330,7 @@
     /**
      * The input value, required for a controlled component.
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))])
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))])
   };
   InputBase.defaultProps = {
     fullWidth: false,
@@ -18523,24 +19338,19 @@
     multiline: false,
     type: 'text'
   };
-  InputBase.contextTypes = {
-    muiFormControl: propTypes.object
-  };
-  InputBase.childContextTypes = {
-    muiFormControl: propTypes.object
-  };
-  var InputBase$1 = withStyles(styles$D, {
+  var InputBase$1 = withStyles(styles$E, {
     name: 'MuiInputBase'
-  })(InputBase);
+  })(withFormControlContext(InputBase));
 
-  var styles$E = function styles(theme) {
+  var styles$F = function styles(theme) {
     var light = theme.palette.type === 'light';
     var bottomLineColor = light ? 'rgba(0, 0, 0, 0.42)' : 'rgba(255, 255, 255, 0.7)';
+    var backgroundColor = light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)';
     return {
       /* Styles applied to the root element. */
       root: {
         position: 'relative',
-        backgroundColor: light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)',
+        backgroundColor: backgroundColor,
         borderTopLeftRadius: theme.shape.borderRadius,
         borderTopRightRadius: theme.shape.borderRadius,
         transition: theme.transitions.create('background-color', {
@@ -18548,7 +19358,11 @@
           easing: theme.transitions.easing.easeOut
         }),
         '&:hover': {
-          backgroundColor: light ? 'rgba(0, 0, 0, 0.13)' : 'rgba(255, 255, 255, 0.13)'
+          backgroundColor: light ? 'rgba(0, 0, 0, 0.13)' : 'rgba(255, 255, 255, 0.13)',
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            backgroundColor: backgroundColor
+          }
         },
         '&$focused': {
           backgroundColor: light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)'
@@ -18661,12 +19475,13 @@
   };
 
   function FilledInput(props) {
-    var classes = props.classes,
-        other = objectWithoutProperties(props, ["classes"]);
+    var disableUnderline = props.disableUnderline,
+        classes = props.classes,
+        other = objectWithoutProperties(props, ["disableUnderline", "classes"]);
 
     return React.createElement(InputBase$1, _extends_1({
       classes: _extends_1({}, classes, {
-        root: classnames(classes.root, classes.underline, {}),
+        root: classnames(classes.root, defineProperty({}, classes.underline, !disableUnderline)),
         underline: null
       })
     }, other));
@@ -18700,12 +19515,17 @@
     /**
      * The default input value, useful when not controlling the component.
      */
-    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number]),
+    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))]),
 
     /**
      * If `true`, the input will be disabled.
      */
     disabled: propTypes.bool,
+
+    /**
+     * If `true`, the input will not have an underline.
+     */
+    disableUnderline: propTypes.bool,
 
     /**
      * End `InputAdornment` for this component.
@@ -18807,7 +19627,7 @@
     /**
      * The input value, required for a controlled component.
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))])
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))])
   };
   InputBase$1.defaultProps = {
     fullWidth: false,
@@ -18816,11 +19636,11 @@
     type: 'text'
   };
   FilledInput.muiName = 'Input';
-  var FilledInput$1 = withStyles(styles$E, {
+  var FilledInput$1 = withStyles(styles$F, {
     name: 'MuiFilledInput'
   })(FilledInput);
 
-  var styles$F = {
+  var styles$G = {
     /* Styles applied to the root element. */
     root: {
       display: 'inline-flex',
@@ -18831,9 +19651,7 @@
       padding: 0,
       margin: 0,
       border: 0,
-      verticalAlign: 'top',
-      // Fix alignment issue on Safari.
-      zIndex: 0 // Reset the stacking context for the label z-index.
+      verticalAlign: 'top' // Fix alignment issue on Safari.
 
     },
 
@@ -18871,6 +19689,19 @@
   /*#__PURE__*/
   function (_React$Component) {
     inherits(FormControl, _React$Component);
+
+    createClass(FormControl, null, [{
+      key: "getDerivedStateFromProps",
+      value: function getDerivedStateFromProps(props, state) {
+        if (props.disabled && state.focused) {
+          return {
+            focused: false
+          };
+        }
+
+        return null;
+      }
+    }]);
 
     function FormControl(props) {
       var _this;
@@ -18942,55 +19773,45 @@
     }
 
     createClass(FormControl, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        var _this$props = this.props,
-            disabled = _this$props.disabled,
-            error = _this$props.error,
-            required = _this$props.required,
-            margin = _this$props.margin,
-            variant = _this$props.variant;
-        var _this$state = this.state,
-            adornedStart = _this$state.adornedStart,
-            filled = _this$state.filled,
-            focused = _this$state.focused;
-        return {
-          muiFormControl: {
-            adornedStart: adornedStart,
-            disabled: disabled,
-            error: error,
-            filled: filled,
-            focused: focused,
-            margin: margin,
-            onBlur: this.handleBlur,
-            onEmpty: this.handleClean,
-            onFilled: this.handleDirty,
-            onFocus: this.handleFocus,
-            required: required,
-            variant: variant
-          }
-        };
-      }
-    }, {
       key: "render",
       value: function render() {
         var _classNames;
 
-        var _this$props2 = this.props,
-            classes = _this$props2.classes,
-            className = _this$props2.className,
-            Component = _this$props2.component,
-            disabled = _this$props2.disabled,
-            error = _this$props2.error,
-            fullWidth = _this$props2.fullWidth,
-            margin = _this$props2.margin,
-            required = _this$props2.required,
-            variant = _this$props2.variant,
-            other = objectWithoutProperties(_this$props2, ["classes", "className", "component", "disabled", "error", "fullWidth", "margin", "required", "variant"]);
+        var _this$props = this.props,
+            classes = _this$props.classes,
+            className = _this$props.className,
+            Component = _this$props.component,
+            disabled = _this$props.disabled,
+            error = _this$props.error,
+            fullWidth = _this$props.fullWidth,
+            margin = _this$props.margin,
+            required = _this$props.required,
+            variant = _this$props.variant,
+            other = objectWithoutProperties(_this$props, ["classes", "className", "component", "disabled", "error", "fullWidth", "margin", "required", "variant"]);
 
-        return React.createElement(Component, _extends_1({
+        var _this$state = this.state,
+            adornedStart = _this$state.adornedStart,
+            filled = _this$state.filled,
+            focused = _this$state.focused;
+        var childContext = {
+          adornedStart: adornedStart,
+          disabled: disabled,
+          error: error,
+          filled: filled,
+          focused: focused,
+          margin: margin,
+          onBlur: this.handleBlur,
+          onEmpty: this.handleClean,
+          onFilled: this.handleDirty,
+          onFocus: this.handleFocus,
+          required: required,
+          variant: variant
+        };
+        return React.createElement(FormControlContext.Provider, {
+          value: childContext
+        }, React.createElement(Component, _extends_1({
           className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes["margin".concat(capitalize(margin))], margin !== 'none'), defineProperty(_classNames, classes.fullWidth, fullWidth), _classNames), className)
-        }, other));
+        }, other)));
       }
     }]);
 
@@ -19018,7 +19839,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the label, input and helper text should be displayed in a disabled state.
@@ -19059,14 +19880,11 @@
     required: false,
     variant: 'standard'
   };
-  FormControl.childContextTypes = {
-    muiFormControl: propTypes.object
-  };
-  var FormControl$1 = withStyles(styles$F, {
+  var FormControl$1 = withStyles(styles$G, {
     name: 'MuiFormControl'
   })(FormControl);
 
-  var styles$G = function styles(theme) {
+  var styles$H = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -19093,6 +19911,18 @@
         marginRight: -14
       },
 
+      /* Styles applied to the root element if `labelPlacement="top"`. */
+      labelPlacementTop: {
+        flexDirection: 'column-reverse',
+        marginLeft: 16
+      },
+
+      /* Styles applied to the root element if `labelPlacement="bottom"`. */
+      labelPlacementBottom: {
+        flexDirection: 'column',
+        marginLeft: 16
+      },
+
       /* Styles applied to the root element if `disabled={true}`. */
       disabled: {},
 
@@ -19109,7 +19939,7 @@
    * Use this component if you want to display an extra label.
    */
 
-  function FormControlLabel(props, context) {
+  function FormControlLabel(props) {
     var _classNames;
 
     var checked = props.checked,
@@ -19120,12 +19950,12 @@
         inputRef = props.inputRef,
         label = props.label,
         labelPlacement = props.labelPlacement,
+        muiFormControl = props.muiFormControl,
         name = props.name,
         onChange = props.onChange,
         value = props.value,
-        other = objectWithoutProperties(props, ["checked", "classes", "className", "control", "disabled", "inputRef", "label", "labelPlacement", "name", "onChange", "value"]);
+        other = objectWithoutProperties(props, ["checked", "classes", "className", "control", "disabled", "inputRef", "label", "labelPlacement", "muiFormControl", "name", "onChange", "value"]);
 
-    var muiFormControl = context.muiFormControl;
     var disabled = disabledProp;
 
     if (typeof disabled === 'undefined' && typeof control.props.disabled !== 'undefined') {
@@ -19145,7 +19975,7 @@
       }
     });
     return React.createElement("label", _extends_1({
-      className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.labelPlacementStart, labelPlacement === 'start'), defineProperty(_classNames, classes.disabled, disabled), _classNames), classNameProp)
+      className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes["labelPlacement".concat(capitalize(labelPlacement))], labelPlacement !== 'end'), defineProperty(_classNames, classes.disabled, disabled), _classNames), classNameProp)
     }, other), React.cloneElement(control, controlProps), React.createElement(Typography$1, {
       component: "span",
       className: classnames(classes.label, defineProperty({}, classes.disabled, disabled))
@@ -19192,7 +20022,12 @@
     /**
      * The position of the label.
      */
-    labelPlacement: propTypes.oneOf(['end', 'start']),
+    labelPlacement: propTypes.oneOf(['end', 'start', 'top', 'bottom']),
+
+    /**
+     * @ignore
+     */
+    muiFormControl: propTypes.object,
 
     /*
      * @ignore
@@ -19216,14 +20051,11 @@
   FormControlLabel.defaultProps = {
     labelPlacement: 'end'
   };
-  FormControlLabel.contextTypes = {
-    muiFormControl: propTypes.object
-  };
-  var FormControlLabel$1 = withStyles(styles$G, {
+  var FormControlLabel$1 = withStyles(styles$H, {
     name: 'MuiFormControlLabel'
-  })(FormControlLabel);
+  })(withFormControlContext(FormControlLabel));
 
-  var styles$H = {
+  var styles$I = {
     /* Styles applied to the root element. */
     root: {
       display: 'flex',
@@ -19279,11 +20111,11 @@
   FormGroup.defaultProps = {
     row: false
   };
-  var FormGroup$1 = withStyles(styles$H, {
+  var FormGroup$1 = withStyles(styles$I, {
     name: 'MuiFormGroup'
   })(FormGroup);
 
-  var styles$I = function styles(theme) {
+  var styles$J = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -19330,7 +20162,7 @@
     };
   };
 
-  function FormHelperText(props, context) {
+  function FormHelperText(props) {
     var _classNames;
 
     var classes = props.classes,
@@ -19341,13 +20173,14 @@
         filled = props.filled,
         focused = props.focused,
         margin = props.margin,
+        muiFormControl = props.muiFormControl,
         required = props.required,
         variant = props.variant,
-        other = objectWithoutProperties(props, ["classes", "className", "component", "disabled", "error", "filled", "focused", "margin", "required", "variant"]);
+        other = objectWithoutProperties(props, ["classes", "className", "component", "disabled", "error", "filled", "focused", "margin", "muiFormControl", "required", "variant"]);
 
     var fcs = formControlState({
       props: props,
-      context: context,
+      muiFormControl: muiFormControl,
       states: ['variant', 'margin', 'disabled', 'error', 'filled', 'focused', 'required']
     });
     return React.createElement(Component, _extends_1({
@@ -19376,7 +20209,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the helper text should be displayed in a disabled state.
@@ -19405,6 +20238,11 @@
     margin: propTypes.oneOf(['dense']),
 
     /**
+     * @ignore
+     */
+    muiFormControl: propTypes.object,
+
+    /**
      * If `true`, the helper text should use required classes key.
      */
     required: propTypes.bool,
@@ -19417,14 +20255,11 @@
   FormHelperText.defaultProps = {
     component: 'p'
   };
-  FormHelperText.contextTypes = {
-    muiFormControl: propTypes.object
-  };
-  var FormHelperText$1 = withStyles(styles$I, {
+  var FormHelperText$1 = withStyles(styles$J, {
     name: 'MuiFormHelperText'
-  })(FormHelperText);
+  })(withFormControlContext(FormHelperText));
 
-  var styles$J = function styles(theme) {
+  var styles$K = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -19466,7 +20301,7 @@
     };
   };
 
-  function FormLabel(props, context) {
+  function FormLabel(props) {
     var _classNames;
 
     var children = props.children,
@@ -19477,12 +20312,13 @@
         error = props.error,
         filled = props.filled,
         focused = props.focused,
+        muiFormControl = props.muiFormControl,
         required = props.required,
-        other = objectWithoutProperties(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "required"]);
+        other = objectWithoutProperties(props, ["children", "classes", "className", "component", "disabled", "error", "filled", "focused", "muiFormControl", "required"]);
 
     var fcs = formControlState({
       props: props,
-      context: context,
+      muiFormControl: muiFormControl,
       states: ['required', 'focused', 'disabled', 'error', 'filled']
     });
     return React.createElement(Component, _extends_1({
@@ -19513,7 +20349,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the label should be displayed in a disabled state.
@@ -19536,6 +20372,11 @@
     focused: propTypes.bool,
 
     /**
+     * @ignore
+     */
+    muiFormControl: propTypes.object,
+
+    /**
      * If `true`, the label will indicate that the input is required.
      */
     required: propTypes.bool
@@ -19543,12 +20384,9 @@
   FormLabel.defaultProps = {
     component: 'label'
   };
-  FormLabel.contextTypes = {
-    muiFormControl: propTypes.object
-  };
-  var FormLabel$1 = withStyles(styles$J, {
+  var FormLabel$1 = withStyles(styles$K, {
     name: 'MuiFormLabel'
-  })(FormLabel);
+  })(withFormControlContext(FormLabel));
 
   function requirePropFactory(componentNameInError) {
 
@@ -19637,7 +20475,7 @@
   // justifyContent: 'flex-start',
 
 
-  var styles$K = function styles(theme) {
+  var styles$L = function styles(theme) {
     return _extends_1({
       /* Styles applied to the root element if `container={true}`. */
       container: {
@@ -19821,7 +20659,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the component will have the flex *container* behavior.
@@ -19912,7 +20750,7 @@
     xs: false,
     zeroMinWidth: false
   };
-  var StyledGrid = withStyles(styles$K, {
+  var StyledGrid = withStyles(styles$L, {
     name: 'MuiGrid'
   })(Grid);
 
@@ -19933,7 +20771,7 @@
     });
   }
 
-  var styles$L = {
+  var styles$M = {
     /* Styles applied to the root element. */
     root: {
       display: 'flex',
@@ -20012,7 +20850,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * Number of px for the spacing between tiles.
@@ -20030,11 +20868,11 @@
     component: 'ul',
     spacing: 4
   };
-  var GridList$1 = withStyles(styles$L, {
+  var GridList$1 = withStyles(styles$M, {
     name: 'MuiGridList'
   })(GridList);
 
-  var styles$M = {
+  var styles$N = {
     /* Styles applied to the root element. */
     root: {
       boxSizing: 'border-box',
@@ -20210,7 +21048,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * Height of the tile in number of grid cells.
@@ -20222,11 +21060,11 @@
     component: 'li',
     rows: 1
   };
-  var GridListTile$1 = withStyles(styles$M, {
+  var GridListTile$1 = withStyles(styles$N, {
     name: 'MuiGridListTile'
   })(GridListTile);
 
-  var styles$N = function styles(theme) {
+  var styles$O = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -20373,7 +21211,7 @@
     actionPosition: 'right',
     titlePosition: 'bottom'
   };
-  var GridListTileBar$1 = withStyles(styles$N, {
+  var GridListTileBar$1 = withStyles(styles$O, {
     name: 'MuiGridListTileBar'
   })(GridListTileBar);
 
@@ -20381,7 +21219,7 @@
     return "scale(".concat(value, ", ").concat(Math.pow(value, 2), ")");
   }
 
-  var styles$O = {
+  var styles$P = {
     entering: {
       opacity: 1,
       transform: getScale(1)
@@ -20523,7 +21361,7 @@
             style: _extends_1({
               opacity: 0,
               transform: getScale(0.75)
-            }, styles$O[state], style)
+            }, styles$P[state], style)
           }, childProps));
         });
       }
@@ -20752,7 +21590,7 @@
       };
 
       {
-        WithWidth.displayName = wrapDisplayName(Component, 'WithWidth');
+        WithWidth.displayName = "WithWidth(".concat(getDisplayName(Component), ")");
       }
 
       hoistNonReactStatics_cjs(WithWidth, Component);
@@ -20898,10 +21736,14 @@
      */
     xsUp: propTypes.bool
   };
-  HiddenJs.propTypes = exactProp(HiddenJs.propTypes);
+
+  {
+    HiddenJs.propTypes = exactProp(HiddenJs.propTypes);
+  }
+
   var HiddenJs$1 = withWidth()(HiddenJs);
 
-  var styles$P = function styles(theme) {
+  var styles$Q = function styles(theme) {
     var hidden = {
       display: 'none'
     };
@@ -21045,8 +21887,8 @@
      */
     xsUp: propTypes.bool
   };
-  var HiddenCss$1 = withStyles(styles$P, {
-    name: 'MuiHiddenCss'
+  var HiddenCss$1 = withStyles(styles$Q, {
+    name: 'MuiPrivateHiddenCss'
   })(HiddenCss);
 
   /**
@@ -21163,7 +22005,7 @@
     xsUp: false
   };
 
-  var styles$Q = function styles(theme) {
+  var styles$R = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -21260,7 +22102,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
@@ -21273,11 +22115,11 @@
     fontSize: 'default'
   };
   Icon.muiName = 'Icon';
-  var Icon$1 = withStyles(styles$Q, {
+  var Icon$1 = withStyles(styles$R, {
     name: 'MuiIcon'
   })(Icon);
 
-  var styles$R = function styles(theme) {
+  var styles$S = function styles(theme) {
     var light = theme.palette.type === 'light';
     var bottomLineColor = light ? 'rgba(0, 0, 0, 0.42)' : 'rgba(255, 255, 255, 0.7)';
     return {
@@ -21340,10 +22182,14 @@
 
         },
         '&:hover:not($disabled):not($focused):not($error):before': {
-          borderBottom: "2px solid ".concat(theme.palette.text.primary)
+          borderBottom: "2px solid ".concat(theme.palette.text.primary),
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            borderBottom: "1px solid ".concat(bottomLineColor)
+          }
         },
         '&$disabled:before': {
-          borderBottom: "1px dotted ".concat(bottomLineColor)
+          borderBottomStyle: 'dotted'
         }
       },
 
@@ -21414,7 +22260,7 @@
     /**
      * The default input value, useful when not controlling the component.
      */
-    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number]),
+    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))]),
 
     /**
      * If `true`, the input will be disabled.
@@ -21526,7 +22372,7 @@
     /**
      * The input value, required for a controlled component.
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))])
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))])
   };
   InputBase$1.defaultProps = {
     fullWidth: false,
@@ -21535,11 +22381,11 @@
     type: 'text'
   };
   Input.muiName = 'Input';
-  var Input$1 = withStyles(styles$R, {
+  var Input$1 = withStyles(styles$S, {
     name: 'MuiInput'
   })(Input);
 
-  var styles$S = {
+  var styles$T = {
     /* Styles applied to the root element. */
     root: {
       display: 'flex',
@@ -21607,7 +22453,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If children is a string then disable wrapping in a Typography component.
@@ -21628,16 +22474,28 @@
     component: 'div',
     disableTypography: false
   };
-  var InputAdornment$1 = withStyles(styles$S, {
+  var InputAdornment$1 = withStyles(styles$T, {
     name: 'MuiInputAdornment'
   })(InputAdornment);
 
-  var styles$T = function styles(theme) {
+  var styles$U = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
         transformOrigin: 'top left'
       },
+
+      /* Styles applied to the root element if `focused={true}`. */
+      focused: {},
+
+      /* Styles applied to the root element if `disabled={true}`. */
+      disabled: {},
+
+      /* Styles applied to the root element if `error={true}`. */
+      error: {},
+
+      /* Styles applied to the root element if `required={true}`. */
+      required: {},
 
       /* Styles applied to the root element if the component is a descendant of `FormControl`. */
       formControl: {
@@ -21676,9 +22534,9 @@
         // zIndex: 1 will raise the label above opaque background-colors of input.
         zIndex: 1,
         pointerEvents: 'none',
-        transform: 'translate(12px, 22px) scale(1)',
+        transform: 'translate(12px, 20px) scale(1)',
         '&$marginDense': {
-          transform: 'translate(12px, 19px) scale(1)'
+          transform: 'translate(12px, 17px) scale(1)'
         },
         '&$shrink': {
           transform: 'translate(12px, 10px) scale(0.75)',
@@ -21693,9 +22551,9 @@
         // see comment above on filled.zIndex
         zIndex: 1,
         pointerEvents: 'none',
-        transform: 'translate(14px, 22px) scale(1)',
+        transform: 'translate(14px, 20px) scale(1)',
         '&$marginDense': {
-          transform: 'translate(14px, 17.5px) scale(1)'
+          transform: 'translate(14px, 17px) scale(1)'
         },
         '&$shrink': {
           transform: 'translate(14px, -6px) scale(0.75)'
@@ -21704,7 +22562,7 @@
     };
   };
 
-  function InputLabel(props, context) {
+  function InputLabel(props) {
     var _classNames;
 
     var children = props.children,
@@ -21713,11 +22571,11 @@
         disableAnimation = props.disableAnimation,
         FormLabelClasses = props.FormLabelClasses,
         margin = props.margin,
+        muiFormControl = props.muiFormControl,
         shrinkProp = props.shrink,
         variant = props.variant,
-        other = objectWithoutProperties(props, ["children", "classes", "className", "disableAnimation", "FormLabelClasses", "margin", "shrink", "variant"]);
+        other = objectWithoutProperties(props, ["children", "classes", "className", "disableAnimation", "FormLabelClasses", "margin", "muiFormControl", "shrink", "variant"]);
 
-    var muiFormControl = context.muiFormControl;
     var shrink = shrinkProp;
 
     if (typeof shrink === 'undefined' && muiFormControl) {
@@ -21726,14 +22584,19 @@
 
     var fcs = formControlState({
       props: props,
-      context: context,
+      muiFormControl: muiFormControl,
       states: ['margin', 'variant']
     });
     var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.formControl, muiFormControl), defineProperty(_classNames, classes.animated, !disableAnimation), defineProperty(_classNames, classes.shrink, shrink), defineProperty(_classNames, classes.marginDense, fcs.margin === 'dense'), defineProperty(_classNames, classes.filled, fcs.variant === 'filled'), defineProperty(_classNames, classes.outlined, fcs.variant === 'outlined'), _classNames), classNameProp);
     return React.createElement(FormLabel$1, _extends_1({
       "data-shrink": shrink,
       className: className,
-      classes: FormLabelClasses
+      classes: _extends_1({
+        focused: classes.focused,
+        disabled: classes.disabled,
+        error: classes.error,
+        required: classes.required
+      }, FormLabelClasses)
     }, other), children);
   }
 
@@ -21786,6 +22649,11 @@
     margin: propTypes.oneOf(['dense']),
 
     /**
+     * @ignore
+     */
+    muiFormControl: propTypes.object,
+
+    /**
      * if `true`, the label will indicate that the input is required.
      */
     required: propTypes.bool,
@@ -21803,16 +22671,13 @@
   InputLabel.defaultProps = {
     disableAnimation: false
   };
-  InputLabel.contextTypes = {
-    muiFormControl: propTypes.object
-  };
-  var InputLabel$1 = withStyles(styles$T, {
+  var InputLabel$1 = withStyles(styles$U, {
     name: 'MuiInputLabel'
-  })(InputLabel);
+  })(withFormControlContext(InputLabel));
 
   var TRANSITION_DURATION = 4; // seconds
 
-  var styles$U = function styles(theme) {
+  var styles$V = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -21831,6 +22696,12 @@
       colorSecondary: {
         backgroundColor: lighten(theme.palette.secondary.light, 0.4)
       },
+
+      /* Styles applied to the root element if `variant="determinate"`. */
+      determinate: {},
+
+      /* Styles applied to the root element if `variant="indeterminate"`. */
+      indeterminate: {},
 
       /* Styles applied to the root element if `variant="buffer"`. */
       buffer: {
@@ -21913,9 +22784,6 @@
         animationDelay: '1.15s'
       },
 
-      /* Styles applied to the bar2 element if `variant="determinate"`. */
-      bar2Determinate: {},
-
       /* Styles applied to the bar2 element if `variant="buffer"`. */
       bar2Buffer: {
         transition: "transform .".concat(TRANSITION_DURATION, "s linear")
@@ -21991,10 +22859,10 @@
         variant = props.variant,
         other = objectWithoutProperties(props, ["classes", "className", "color", "value", "valueBuffer", "variant"]);
 
-    var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.colorPrimary, color === 'primary'), defineProperty(_classNames, classes.colorSecondary, color === 'secondary'), defineProperty(_classNames, classes.buffer, variant === 'buffer'), defineProperty(_classNames, classes.query, variant === 'query'), _classNames), classNameProp);
+    var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.colorPrimary, color === 'primary'), defineProperty(_classNames, classes.colorSecondary, color === 'secondary'), defineProperty(_classNames, classes.determinate, variant === 'determinate'), defineProperty(_classNames, classes.indeterminate, variant === 'indeterminate'), defineProperty(_classNames, classes.buffer, variant === 'buffer'), defineProperty(_classNames, classes.query, variant === 'query'), _classNames), classNameProp);
     var dashedClass = classnames(classes.dashed, (_classNames2 = {}, defineProperty(_classNames2, classes.dashedColorPrimary, color === 'primary'), defineProperty(_classNames2, classes.dashedColorSecondary, color === 'secondary'), _classNames2));
     var bar1ClassName = classnames(classes.bar, (_classNames3 = {}, defineProperty(_classNames3, classes.barColorPrimary, color === 'primary'), defineProperty(_classNames3, classes.barColorSecondary, color === 'secondary'), defineProperty(_classNames3, classes.bar1Indeterminate, variant === 'indeterminate' || variant === 'query'), defineProperty(_classNames3, classes.bar1Determinate, variant === 'determinate'), defineProperty(_classNames3, classes.bar1Buffer, variant === 'buffer'), _classNames3));
-    var bar2ClassName = classnames(classes.bar, (_classNames4 = {}, defineProperty(_classNames4, classes.barColorPrimary, color === 'primary' && variant !== 'buffer'), defineProperty(_classNames4, classes.colorPrimary, color === 'primary' && variant === 'buffer'), defineProperty(_classNames4, classes.barColorSecondary, color === 'secondary' && variant !== 'buffer'), defineProperty(_classNames4, classes.colorSecondary, color === 'secondary' && variant === 'buffer'), defineProperty(_classNames4, classes.bar2Indeterminate, variant === 'indeterminate' || variant === 'query'), defineProperty(_classNames4, classes.bar2Determinate, variant === 'determinate'), defineProperty(_classNames4, classes.bar2Buffer, variant === 'buffer'), _classNames4));
+    var bar2ClassName = classnames(classes.bar, (_classNames4 = {}, defineProperty(_classNames4, classes.barColorPrimary, color === 'primary' && variant !== 'buffer'), defineProperty(_classNames4, classes.colorPrimary, color === 'primary' && variant === 'buffer'), defineProperty(_classNames4, classes.barColorSecondary, color === 'secondary' && variant !== 'buffer'), defineProperty(_classNames4, classes.colorSecondary, color === 'secondary' && variant === 'buffer'), defineProperty(_classNames4, classes.bar2Indeterminate, variant === 'indeterminate' || variant === 'query'), defineProperty(_classNames4, classes.bar2Buffer, variant === 'buffer'), _classNames4));
     var rootProps = {};
     var inlineStyles = {
       bar1: {},
@@ -22071,11 +22939,17 @@
     color: 'primary',
     variant: 'indeterminate'
   };
-  var LinearProgress$1 = withStyles(styles$U, {
+  var LinearProgress$1 = withStyles(styles$V, {
     name: 'MuiLinearProgress'
   })(LinearProgress);
 
-  var styles$V = {
+  /**
+   * @ignore - internal component.
+   */
+
+  var ListContext = React.createContext({});
+
+  var styles$W = {
     /* Styles applied to the root element. */
     root: {
       listStyle: 'none',
@@ -22102,48 +22976,26 @@
     }
   };
 
-  var List =
-  /*#__PURE__*/
-  function (_React$Component) {
-    inherits(List, _React$Component);
+  function List(props) {
+    var _classNames;
 
-    function List() {
-      classCallCheck(this, List);
+    var children = props.children,
+        classes = props.classes,
+        className = props.className,
+        Component = props.component,
+        dense = props.dense,
+        disablePadding = props.disablePadding,
+        subheader = props.subheader,
+        other = objectWithoutProperties(props, ["children", "classes", "className", "component", "dense", "disablePadding", "subheader"]);
 
-      return possibleConstructorReturn(this, getPrototypeOf(List).apply(this, arguments));
-    }
-
-    createClass(List, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        return {
-          dense: this.props.dense
-        };
+    return React.createElement(Component, _extends_1({
+      className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.dense, dense && !disablePadding), defineProperty(_classNames, classes.padding, !disablePadding), defineProperty(_classNames, classes.subheader, subheader), _classNames), className)
+    }, other), React.createElement(ListContext.Provider, {
+      value: {
+        dense: dense
       }
-    }, {
-      key: "render",
-      value: function render() {
-        var _classNames;
-
-        var _this$props = this.props,
-            children = _this$props.children,
-            classes = _this$props.classes,
-            classNameProp = _this$props.className,
-            Component = _this$props.component,
-            dense = _this$props.dense,
-            disablePadding = _this$props.disablePadding,
-            subheader = _this$props.subheader,
-            other = objectWithoutProperties(_this$props, ["children", "classes", "className", "component", "dense", "disablePadding", "subheader"]);
-
-        var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.dense, dense && !disablePadding), defineProperty(_classNames, classes.padding, !disablePadding), defineProperty(_classNames, classes.subheader, subheader), _classNames), classNameProp);
-        return React.createElement(Component, _extends_1({
-          className: className
-        }, other), subheader, children);
-      }
-    }]);
-
-    return List;
-  }(React.Component);
+    }, subheader, children));
+  }
 
   List.propTypes = {
     /**
@@ -22166,7 +23018,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, compact vertical padding designed for keyboard and mouse input will be used for
@@ -22190,14 +23042,38 @@
     dense: false,
     disablePadding: false
   };
-  List.childContextTypes = {
-    dense: propTypes.bool
-  };
-  var List$1 = withStyles(styles$V, {
+  var List$1 = withStyles(styles$W, {
     name: 'MuiList'
   })(List);
 
-  var styles$W = function styles(theme) {
+  /**
+   * @ignore - internal component.
+   *
+   * Consumes a context and passes that context merged with its props.
+   */
+
+  function MergeListContext(props) {
+    var alignItems = props.alignItems,
+        children = props.children,
+        dense = props.dense;
+    return React.createElement(ListContext.Consumer, null, function (context) {
+      var childContext = {
+        dense: dense || context.dense || false,
+        alignItems: alignItems
+      };
+      return React.createElement(ListContext.Provider, {
+        value: childContext
+      }, children(childContext));
+    });
+  }
+
+  MergeListContext.propTypes = {
+    alignItems: propTypes.oneOf(['flex-start', 'center']).isRequired,
+    children: propTypes.func.isRequired,
+    dense: propTypes.bool.isRequired
+  };
+
+  var styles$X = function styles(theme) {
     return {
       /* Styles applied to the (normally root) `component` element. May be wrapped by a `container`. */
       root: {
@@ -22238,6 +23114,11 @@
         paddingBottom: 8
       },
 
+      /* Styles applied to the `component` element if `alignItems="flex-start"`. */
+      alignItemsFlexStart: {
+        alignItems: 'flex-start'
+      },
+
       /* Styles applied to the inner `component` element if `disabled={true}`. */
       disabled: {
         opacity: 0.5
@@ -22250,7 +23131,10 @@
       },
 
       /* Styles applied to the inner `component` element if `disableGutters={false}`. */
-      gutters: theme.mixins.gutters(),
+      gutters: {
+        paddingLeft: 16,
+        paddingRight: 16
+      },
 
       /* Styles applied to the inner `component` element if `button={true}`. */
       button: {
@@ -22279,95 +23163,81 @@
     };
   };
 
-  var ListItem =
-  /*#__PURE__*/
-  function (_React$Component) {
-    inherits(ListItem, _React$Component);
+  function ListItem(props) {
+    var alignItems = props.alignItems,
+        button = props.button,
+        childrenProp = props.children,
+        classes = props.classes,
+        classNameProp = props.className,
+        componentProp = props.component,
+        ContainerComponent = props.ContainerComponent,
+        _props$ContainerProps = props.ContainerProps;
+    _props$ContainerProps = _props$ContainerProps === void 0 ? {} : _props$ContainerProps;
 
-    function ListItem() {
-      classCallCheck(this, ListItem);
+    var ContainerClassName = _props$ContainerProps.className,
+        ContainerProps = objectWithoutProperties(_props$ContainerProps, ["className"]),
+        denseProp = props.dense,
+        disabled = props.disabled,
+        disableGutters = props.disableGutters,
+        divider = props.divider,
+        focusVisibleClassName = props.focusVisibleClassName,
+        selected = props.selected,
+        other = objectWithoutProperties(props, ["alignItems", "button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
 
-      return possibleConstructorReturn(this, getPrototypeOf(ListItem).apply(this, arguments));
-    }
+    return React.createElement(MergeListContext, {
+      dense: denseProp,
+      alignItems: alignItems
+    }, function (_ref) {
+      var _classNames;
 
-    createClass(ListItem, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        return {
-          dense: this.props.dense || this.context.dense || false
-        };
+      var dense = _ref.dense;
+      var children = React.Children.toArray(childrenProp);
+      var hasAvatar = children.some(function (value) {
+        return isMuiElement(value, ['ListItemAvatar']);
+      });
+      var hasSecondaryAction = children.length && isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
+      var className = classnames(classes.root, classes.default, (_classNames = {}, defineProperty(_classNames, classes.dense, dense || hasAvatar), defineProperty(_classNames, classes.gutters, !disableGutters), defineProperty(_classNames, classes.divider, divider), defineProperty(_classNames, classes.disabled, disabled), defineProperty(_classNames, classes.button, button), defineProperty(_classNames, classes.alignItemsFlexStart, alignItems === 'flex-start'), defineProperty(_classNames, classes.secondaryAction, hasSecondaryAction), defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
+
+      var componentProps = _extends_1({
+        className: className,
+        disabled: disabled
+      }, other);
+
+      var Component = componentProp || 'li';
+
+      if (button) {
+        componentProps.component = componentProp || 'div';
+        componentProps.focusVisibleClassName = classnames(classes.focusVisible, focusVisibleClassName);
+        Component = ButtonBase$1;
       }
-    }, {
-      key: "render",
-      value: function render() {
-        var _classNames;
 
-        var _this$props = this.props,
-            button = _this$props.button,
-            childrenProp = _this$props.children,
-            classes = _this$props.classes,
-            classNameProp = _this$props.className,
-            componentProp = _this$props.component,
-            ContainerComponent = _this$props.ContainerComponent,
-            _this$props$Container = _this$props.ContainerProps;
-        _this$props$Container = _this$props$Container === void 0 ? {} : _this$props$Container;
+      if (hasSecondaryAction) {
+        // Use div by default.
+        Component = !componentProps.component && !componentProp ? 'div' : Component; // Avoid nesting of li > li.
 
-        var ContainerClassName = _this$props$Container.className,
-            ContainerProps = objectWithoutProperties(_this$props$Container, ["className"]),
-            dense = _this$props.dense,
-            disabled = _this$props.disabled,
-            disableGutters = _this$props.disableGutters,
-            divider = _this$props.divider,
-            focusVisibleClassName = _this$props.focusVisibleClassName,
-            selected = _this$props.selected,
-            other = objectWithoutProperties(_this$props, ["button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
-
-        var isDense = dense || this.context.dense || false;
-        var children = React.Children.toArray(childrenProp);
-        var hasAvatar = children.some(function (value) {
-          return isMuiElement(value, ['ListItemAvatar']);
-        });
-        var hasSecondaryAction = children.length && isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
-        var className = classnames(classes.root, classes.default, (_classNames = {}, defineProperty(_classNames, classes.dense, isDense || hasAvatar), defineProperty(_classNames, classes.gutters, !disableGutters), defineProperty(_classNames, classes.divider, divider), defineProperty(_classNames, classes.disabled, disabled), defineProperty(_classNames, classes.button, button), defineProperty(_classNames, classes.secondaryAction, hasSecondaryAction), defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
-
-        var componentProps = _extends_1({
-          className: className,
-          disabled: disabled
-        }, other);
-
-        var Component = componentProp || 'li';
-
-        if (button) {
-          componentProps.component = componentProp || 'div';
-          componentProps.focusVisibleClassName = classnames(classes.focusVisible, focusVisibleClassName);
-          Component = ButtonBase$1;
-        }
-
-        if (hasSecondaryAction) {
-          // Use div by default.
-          Component = !componentProps.component && !componentProp ? 'div' : Component; // Avoid nesting of li > li.
-
-          if (ContainerComponent === 'li') {
-            if (Component === 'li') {
-              Component = 'div';
-            } else if (componentProps.component === 'li') {
-              componentProps.component = 'div';
-            }
+        if (ContainerComponent === 'li') {
+          if (Component === 'li') {
+            Component = 'div';
+          } else if (componentProps.component === 'li') {
+            componentProps.component = 'div';
           }
-
-          return React.createElement(ContainerComponent, _extends_1({
-            className: classnames(classes.container, ContainerClassName)
-          }, ContainerProps), React.createElement(Component, componentProps, children), children.pop());
         }
 
-        return React.createElement(Component, componentProps, children);
+        return React.createElement(ContainerComponent, _extends_1({
+          className: classnames(classes.container, ContainerClassName)
+        }, ContainerProps), React.createElement(Component, componentProps, children), children.pop());
       }
-    }]);
 
-    return ListItem;
-  }(React.Component);
+      return React.createElement(Component, componentProps, children);
+    });
+  }
 
   ListItem.propTypes = {
+    /**
+     * Defines the `align-items` style property.
+     */
+    alignItems: propTypes.oneOf(['flex-start', 'center']),
+
     /**
      * If `true`, the list item will be a button (using `ButtonBase`).
      */
@@ -22394,7 +23264,7 @@
      * Either a string to use a DOM element or a component.
      * By default, it's a `li` when `button` is `false` and a `div` when `button` is `true`.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * The container component used when a `ListItemSecondaryAction` is rendered.
@@ -22438,6 +23308,7 @@
     selected: propTypes.bool
   };
   ListItem.defaultProps = {
+    alignItems: 'center',
     button: false,
     ContainerComponent: 'li',
     dense: false,
@@ -22446,17 +23317,11 @@
     divider: false,
     selected: false
   };
-  ListItem.contextTypes = {
-    dense: propTypes.bool
-  };
-  ListItem.childContextTypes = {
-    dense: propTypes.bool
-  };
-  var ListItem$1 = withStyles(styles$W, {
+  var ListItem$1 = withStyles(styles$X, {
     name: 'MuiListItem'
   })(ListItem);
 
-  var styles$X = function styles(theme) {
+  var styles$Y = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -22464,6 +23329,11 @@
         height: 36,
         fontSize: theme.typography.pxToRem(18),
         marginRight: 4
+      },
+
+      /* Styles applied to the root element when. */
+      alignItemsFlexStart: {
+        marginTop: 4
       },
 
       /* Styles applied to the children – typically the `Avatar` component. */
@@ -22475,24 +23345,24 @@
     };
   };
   /**
-   * This is a simple wrapper to apply the `dense` mode styles to `Avatar`.
+   * This is a simple wrapper to apply the `dense`
+   * and `align-items="flex-start"` mode styles to `Avatar`.
    */
 
-  function ListItemAvatar(props, context) {
+  function ListItemAvatar(props) {
     var children = props.children,
         classes = props.classes,
-        classNameProp = props.className,
+        className = props.className,
         other = objectWithoutProperties(props, ["children", "classes", "className"]);
 
-    if (context.dense === undefined) {
-      warning_1(false, "Material-UI: <ListItemAvatar> is a simple wrapper to apply the dense styles\n      to <Avatar>. You do not need it unless you are controlling the <List> dense property.");
-      return props.children;
-    }
+    return React.createElement(ListContext.Consumer, null, function (context) {
+      var _classNames;
 
-    return React.cloneElement(children, _extends_1({
-      className: classnames(defineProperty({}, classes.root, context.dense), classNameProp, children.props.className),
-      childrenClassName: classnames(defineProperty({}, classes.icon, context.dense), children.props.childrenClassName)
-    }, other));
+      return React.cloneElement(children, _extends_1({
+        className: classnames((_classNames = {}, defineProperty(_classNames, classes.root, context.dense), defineProperty(_classNames, classes.alignItemsFlexStart, context.alignItems === 'flex-start'), _classNames), className, children.props.className),
+        childrenClassName: classnames(defineProperty({}, classes.icon, context.dense), children.props.childrenClassName)
+      }, other));
+    });
   }
 
   ListItemAvatar.propTypes = {
@@ -22512,15 +23382,12 @@
      */
     className: propTypes.string
   };
-  ListItemAvatar.contextTypes = {
-    dense: propTypes.bool
-  };
   ListItemAvatar.muiName = 'ListItemAvatar';
-  var ListItemAvatar$1 = withStyles(styles$X, {
+  var ListItemAvatar$1 = withStyles(styles$Y, {
     name: 'MuiListItemAvatar'
   })(ListItemAvatar);
 
-  var styles$Y = function styles(theme) {
+  var styles$Z = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -22564,11 +23431,11 @@
      */
     className: propTypes.string
   };
-  var ListItemIcon$1 = withStyles(styles$Y, {
+  var ListItemIcon$1 = withStyles(styles$Z, {
     name: 'MuiListItemIcon'
   })(ListItemIcon);
 
-  var styles$Z = {
+  var styles$_ = {
     /* Styles applied to the root element. */
     root: {
       position: 'absolute',
@@ -22607,11 +23474,11 @@
     className: propTypes.string
   };
   ListItemSecondaryAction.muiName = 'ListItemSecondaryAction';
-  var ListItemSecondaryAction$1 = withStyles(styles$Z, {
+  var ListItemSecondaryAction$1 = withStyles(styles$_, {
     name: 'MuiListItemSecondaryAction'
   })(ListItemSecondaryAction);
 
-  var styles$_ = function styles(theme) {
+  var styles$10 = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -22654,9 +23521,7 @@
     };
   };
 
-  function ListItemText(props, context) {
-    var _classNames3;
-
+  function ListItemText(props) {
     var children = props.children,
         classes = props.classes,
         classNameProp = props.className,
@@ -22668,30 +23533,34 @@
         secondaryTypographyProps = props.secondaryTypographyProps,
         other = objectWithoutProperties(props, ["children", "classes", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps"]);
 
-    var dense = context.dense;
-    var primary = primaryProp != null ? primaryProp : children;
+    return React.createElement(ListContext.Consumer, null, function (_ref) {
+      var _classNames3;
 
-    if (primary != null && primary.type !== Typography$1 && !disableTypography) {
-      primary = React.createElement(Typography$1, _extends_1({
-        variant: "subheading",
-        internalDeprecatedVariant: true,
-        className: classnames(classes.primary, defineProperty({}, classes.textDense, dense)),
-        component: "span"
-      }, primaryTypographyProps), primary);
-    }
+      var dense = _ref.dense;
+      var primary = primaryProp != null ? primaryProp : children;
 
-    var secondary = secondaryProp;
+      if (primary != null && primary.type !== Typography$1 && !disableTypography) {
+        primary = React.createElement(Typography$1, _extends_1({
+          variant: "subheading",
+          internalDeprecatedVariant: true,
+          className: classnames(classes.primary, defineProperty({}, classes.textDense, dense)),
+          component: "span"
+        }, primaryTypographyProps), primary);
+      }
 
-    if (secondary != null && secondary.type !== Typography$1 && !disableTypography) {
-      secondary = React.createElement(Typography$1, _extends_1({
-        className: classnames(classes.secondary, defineProperty({}, classes.textDense, dense)),
-        color: "textSecondary"
-      }, secondaryTypographyProps), secondary);
-    }
+      var secondary = secondaryProp;
 
-    return React.createElement("div", _extends_1({
-      className: classnames(classes.root, (_classNames3 = {}, defineProperty(_classNames3, classes.dense, dense), defineProperty(_classNames3, classes.inset, inset), _classNames3), classNameProp)
-    }, other), primary, secondary);
+      if (secondary != null && secondary.type !== Typography$1 && !disableTypography) {
+        secondary = React.createElement(Typography$1, _extends_1({
+          className: classnames(classes.secondary, defineProperty({}, classes.textDense, dense)),
+          color: "textSecondary"
+        }, secondaryTypographyProps), secondary);
+      }
+
+      return React.createElement("div", _extends_1({
+        className: classnames(classes.root, (_classNames3 = {}, defineProperty(_classNames3, classes.dense, dense), defineProperty(_classNames3, classes.inset, inset), _classNames3), classNameProp)
+      }, other), primary, secondary);
+    });
   }
 
   ListItemText.propTypes = {
@@ -22751,14 +23620,11 @@
     disableTypography: false,
     inset: false
   };
-  ListItemText.contextTypes = {
-    dense: propTypes.bool
-  };
-  var ListItemText$1 = withStyles(styles$_, {
+  var ListItemText$1 = withStyles(styles$10, {
     name: 'MuiListItemText'
   })(ListItemText);
 
-  var styles$10 = function styles(theme) {
+  var styles$11 = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -22782,7 +23648,10 @@
       },
 
       /* Styles applied to the inner `component` element if `disableGutters={false}`. */
-      gutters: theme.mixins.gutters(),
+      gutters: {
+        paddingLeft: 16,
+        paddingRight: 16
+      },
 
       /* Styles applied to the root element if `inset={true}`. */
       inset: {
@@ -22842,7 +23711,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the List Subheader will not have gutters.
@@ -22867,7 +23736,7 @@
     inset: false
   };
   ListSubheader.muiName = 'ListSubheader';
-  var ListSubheader$1 = withStyles(styles$10, {
+  var ListSubheader$1 = withStyles(styles$11, {
     name: 'MuiListSubheader'
   })(ListSubheader);
 
@@ -22922,7 +23791,7 @@
     return typeof anchorEl === 'function' ? anchorEl() : anchorEl;
   }
 
-  var styles$11 = {
+  var styles$12 = {
     /* Styles applied to the `Paper` component. */
     paper: {
       position: 'absolute',
@@ -22958,19 +23827,17 @@
       };
 
       _this.setPositioningStyles = function (element) {
-        if (element && element.style) {
-          var positioning = _this.getPositioningStyle(element);
+        var positioning = _this.getPositioningStyle(element);
 
-          if (positioning.top !== null) {
-            element.style.top = positioning.top;
-          }
-
-          if (positioning.left !== null) {
-            element.style.left = positioning.left;
-          }
-
-          element.style.transformOrigin = positioning.transformOrigin;
+        if (positioning.top !== null) {
+          element.style.top = positioning.top;
         }
+
+        if (positioning.left !== null) {
+          element.style.left = positioning.left;
+        }
+
+        element.style.transformOrigin = positioning.transformOrigin;
       };
 
       _this.getPositioningStyle = function (element) {
@@ -23042,9 +23909,9 @@
         };
       };
 
-      _this.handleEnter = function (element) {
-        if (_this.props.onEnter) {
-          _this.props.onEnter(element);
+      _this.handleEntering = function (element) {
+        if (_this.props.onEntering) {
+          _this.props.onEntering(element);
         }
 
         _this.setPositioningStyles(element);
@@ -23052,6 +23919,12 @@
 
       if (typeof window !== 'undefined') {
         _this.handleResize = debounce_1(function () {
+          // Because we debounce the event, the open property might no longer be true
+          // when the callback resolves.
+          if (!_this.props.open) {
+            return;
+          }
+
           _this.setPositioningStyles(_this.paperRef);
         }, 166); // Corresponds to 10 frames at 60 Hz.
       }
@@ -23158,7 +24031,8 @@
             transformOrigin = _this$props4.transformOrigin,
             TransitionComponent = _this$props4.TransitionComponent,
             transitionDurationProp = _this$props4.transitionDuration,
-            TransitionProps = _this$props4.TransitionProps,
+            _this$props4$Transiti = _this$props4.TransitionProps,
+            TransitionProps = _this$props4$Transiti === void 0 ? {} : _this$props4$Transiti,
             other = objectWithoutProperties(_this$props4, ["action", "anchorEl", "anchorOrigin", "anchorPosition", "anchorReference", "children", "classes", "container", "elevation", "getContentAnchorEl", "marginThreshold", "ModalClasses", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "open", "PaperProps", "role", "transformOrigin", "TransitionComponent", "transitionDuration", "TransitionProps"]);
 
         var transitionDuration = transitionDurationProp;
@@ -23181,15 +24055,16 @@
         }, other), React.createElement(TransitionComponent, _extends_1({
           appear: true,
           in: open,
-          onEnter: this.handleEnter,
+          onEnter: onEnter,
           onEntered: onEntered,
-          onEntering: onEntering,
           onExit: onExit,
           onExited: onExited,
           onExiting: onExiting,
           role: role,
           timeout: transitionDuration
-        }, TransitionProps), React.createElement(Paper$1, _extends_1({
+        }, TransitionProps, {
+          onEntering: createChainedFunction(this.handleEntering, TransitionProps.onEntering)
+        }), React.createElement(Paper$1, _extends_1({
           className: classes.paper,
           elevation: elevation,
           ref: function ref(_ref) {
@@ -23395,7 +24270,7 @@
     TransitionComponent: Grow$1,
     transitionDuration: 'auto'
   };
-  var Popover$1 = withStyles(styles$11, {
+  var Popover$1 = withStyles(styles$12, {
     name: 'MuiPopover'
   })(Popover);
 
@@ -23610,7 +24485,7 @@
     vertical: 'top',
     horizontal: 'left'
   };
-  var styles$12 = {
+  var styles$13 = {
     /* Styles applied to the `Paper` component. */
     paper: {
       // specZ: The maximum height of a simple menu should be one or more rows less than the view
@@ -23641,11 +24516,11 @@
       _this = possibleConstructorReturn(this, (_getPrototypeOf2 = getPrototypeOf(Menu)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
       _this.getContentAnchorEl = function () {
-        if (!_this.menuListRef || !_this.menuListRef.selectedItemRef) {
-          return ReactDOM.findDOMNode(_this.menuListRef).firstChild;
+        if (_this.menuListRef.selectedItemRef) {
+          return ReactDOM.findDOMNode(_this.menuListRef.selectedItemRef);
         }
 
-        return ReactDOM.findDOMNode(_this.menuListRef.selectedItemRef);
+        return ReactDOM.findDOMNode(_this.menuListRef).firstChild;
       };
 
       _this.focus = function () {
@@ -23661,7 +24536,11 @@
         }
       };
 
-      _this.handleEnter = function (element) {
+      _this.handleMenuListRef = function (ref) {
+        _this.menuListRef = ref;
+      };
+
+      _this.handleEntering = function (element) {
         var _this$props = _this.props,
             disableAutoFocusItem = _this$props.disableAutoFocusItem,
             theme = _this$props.theme;
@@ -23679,8 +24558,8 @@
           menuList.style.width = "calc(100% + ".concat(size, ")");
         }
 
-        if (_this.props.onEnter) {
-          _this.props.onEnter(element);
+        if (_this.props.onEntering) {
+          _this.props.onEntering(element);
         }
       };
 
@@ -23707,24 +24586,22 @@
     }, {
       key: "render",
       value: function render() {
-        var _this2 = this;
-
         var _this$props2 = this.props,
             children = _this$props2.children,
             classes = _this$props2.classes,
             disableAutoFocusItem = _this$props2.disableAutoFocusItem,
             MenuListProps = _this$props2.MenuListProps,
-            onEnter = _this$props2.onEnter,
+            onEntering = _this$props2.onEntering,
             _this$props2$PaperPro = _this$props2.PaperProps,
             PaperProps = _this$props2$PaperPro === void 0 ? {} : _this$props2$PaperPro,
             PopoverClasses = _this$props2.PopoverClasses,
             theme = _this$props2.theme,
-            other = objectWithoutProperties(_this$props2, ["children", "classes", "disableAutoFocusItem", "MenuListProps", "onEnter", "PaperProps", "PopoverClasses", "theme"]);
+            other = objectWithoutProperties(_this$props2, ["children", "classes", "disableAutoFocusItem", "MenuListProps", "onEntering", "PaperProps", "PopoverClasses", "theme"]);
 
         return React.createElement(Popover$1, _extends_1({
           getContentAnchorEl: this.getContentAnchorEl,
           classes: PopoverClasses,
-          onEnter: this.handleEnter,
+          onEntering: this.handleEntering,
           anchorOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
           transformOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
           PaperProps: _extends_1({}, PaperProps, {
@@ -23735,9 +24612,7 @@
         }, other), React.createElement(MenuList, _extends_1({
           onKeyDown: this.handleListKeyDown
         }, MenuListProps, {
-          ref: function ref(_ref) {
-            _this2.menuListRef = _ref;
-          }
+          ref: this.handleMenuListRef
         }), children));
       }
     }]);
@@ -23841,12 +24716,12 @@
     disableAutoFocusItem: false,
     transitionDuration: 'auto'
   };
-  var Menu$1 = withStyles(styles$12, {
+  var Menu$1 = withStyles(styles$13, {
     name: 'MuiMenu',
     withTheme: true
   })(Menu);
 
-  var styles$13 = function styles(theme) {
+  var styles$14 = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: _extends_1({}, theme.typography.subheading, {
@@ -23854,12 +24729,15 @@
         boxSizing: 'content-box',
         width: 'auto',
         overflow: 'hidden',
-        textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
-        paddingLeft: 16,
-        paddingRight: 16,
         '&$selected': {}
       }),
+
+      /* Styles applied to the root element if `disableGutters={false}`. */
+      gutters: {
+        paddingLeft: 16,
+        paddingRight: 16
+      },
 
       /* Styles applied to the root element if `selected={true}`. */
       selected: {}
@@ -23867,20 +24745,24 @@
   };
 
   function MenuItem(props) {
+    var _classNames;
+
     var classes = props.classes,
         className = props.className,
         component = props.component,
-        selected = props.selected,
+        disableGutters = props.disableGutters,
         role = props.role,
-        other = objectWithoutProperties(props, ["classes", "className", "component", "selected", "role"]);
+        selected = props.selected,
+        other = objectWithoutProperties(props, ["classes", "className", "component", "disableGutters", "role", "selected"]);
 
     return React.createElement(ListItem$1, _extends_1({
       button: true,
       role: role,
       tabIndex: -1,
+      component: component,
       selected: selected,
-      className: classnames(classes.root, defineProperty({}, classes.selected, selected), className),
-      component: component
+      disableGutters: disableGutters,
+      className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.selected, selected), defineProperty(_classNames, classes.gutters, !disableGutters), _classNames), className)
     }, other));
   }
 
@@ -23905,7 +24787,12 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
+
+    /**
+     * If `true`, the left and right padding is removed.
+     */
+    disableGutters: propTypes.bool,
 
     /**
      * @ignore
@@ -23919,13 +24806,14 @@
   };
   MenuItem.defaultProps = {
     component: 'li',
+    disableGutters: false,
     role: 'menuitem'
   };
-  var MenuItem$1 = withStyles(styles$13, {
+  var MenuItem$1 = withStyles(styles$14, {
     name: 'MuiMenuItem'
   })(MenuItem);
 
-  var styles$14 = function styles(theme) {
+  var styles$15 = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -24071,7 +24959,7 @@
     position: 'bottom',
     variant: 'dots'
   };
-  var MobileStepper$1 = withStyles(styles$14, {
+  var MobileStepper$1 = withStyles(styles$15, {
     name: 'MuiMobileStepper'
   })(MobileStepper);
 
@@ -24157,7 +25045,7 @@
     /**
      * The input value.
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]),
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))]),
 
     /**
      * The variant to use.
@@ -24181,7 +25069,7 @@
   ArrowDropDown.muiName = 'SvgIcon';
   var ArrowDropDownIcon = ArrowDropDown;
 
-  var styles$15 = function styles(theme) {
+  var styles$16 = function styles(theme) {
     return {
       /* Styles applied to the `Input` component `root` class. */
       root: {
@@ -24213,17 +25101,15 @@
           borderRadius: 0 // Reset Chrome style
 
         },
-        // Remove Firefox focus border
-        '&:-moz-focusring': {
-          color: 'transparent',
-          textShadow: '0 0 0 #000'
-        },
         // Remove IE 11 arrow
         '&::-ms-expand': {
           display: 'none'
         },
         '&$disabled': {
           cursor: 'default'
+        },
+        '&[multiple]': {
+          height: 'auto'
         }
       },
 
@@ -24272,18 +25158,19 @@
    * An alternative to `<Select native />` with a much smaller bundle size footprint.
    */
 
-  function NativeSelect(props, context) {
+  function NativeSelect(props) {
     var children = props.children,
         classes = props.classes,
         IconComponent = props.IconComponent,
         input = props.input,
         inputProps = props.inputProps,
+        muiFormControl = props.muiFormControl,
         variant = props.variant,
-        other = objectWithoutProperties(props, ["children", "classes", "IconComponent", "input", "inputProps", "variant"]);
+        other = objectWithoutProperties(props, ["children", "classes", "IconComponent", "input", "inputProps", "muiFormControl", "variant"]);
 
     var fcs = formControlState({
       props: props,
-      context: context,
+      muiFormControl: muiFormControl,
       states: ['variant']
     });
     return React.cloneElement(input, _extends_1({
@@ -24329,6 +25216,11 @@
     inputProps: propTypes.object,
 
     /**
+     * @ignore
+     */
+    muiFormControl: propTypes.object,
+
+    /**
      * Callback function fired when a menu item is selected.
      *
      * @param {object} event The event source of the callback.
@@ -24339,7 +25231,7 @@
     /**
      * The input value.
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]),
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))]),
 
     /**
      * The variant to use.
@@ -24350,25 +25242,20 @@
     IconComponent: ArrowDropDownIcon,
     input: React.createElement(Input$1, null)
   };
-  NativeSelect.contextTypes = {
-    muiFormControl: propTypes.object
-  };
   NativeSelect.muiName = 'Select';
-  var NativeSelect$1 = withStyles(styles$15, {
+  var NativeSelect$1 = withStyles(styles$16, {
     name: 'MuiNativeSelect'
-  })(NativeSelect);
+  })(withFormControlContext(NativeSelect));
 
-  var styles$16 = function styles(theme) {
-    var light = theme.palette.type === 'light';
+  var styles$17 = function styles(theme) {
     var align = theme.direction === 'rtl' ? 'right' : 'left';
     return {
       /* Styles applied to the root element. */
       root: {
         position: 'absolute',
-        width: '100%',
-        height: '100%',
-        boxSizing: 'border-box',
-        top: 0,
+        bottom: 0,
+        right: 0,
+        top: -5,
         left: 0,
         margin: 0,
         padding: 0,
@@ -24376,7 +25263,6 @@
         borderRadius: theme.shape.borderRadius,
         borderStyle: 'solid',
         borderWidth: 1,
-        borderColor: light ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)',
         // Match the Input Label
         transition: theme.transitions.create(["padding-".concat(align), 'border-color', 'border-width'], {
           duration: theme.transitions.duration.shorter,
@@ -24388,32 +25274,11 @@
       legend: {
         textAlign: 'left',
         padding: 0,
+        lineHeight: '11px',
         transition: theme.transitions.create('width', {
           duration: theme.transitions.duration.shorter,
           easing: theme.transitions.easing.easeOut
-        }),
-        // Firefox workaround. Firefox will only obscure the
-        // rendered height of the legend and, unlike other browsers,
-        // will not push fieldset contents.
-        '@supports (-moz-appearance:none)': {
-          height: 2
-        }
-      },
-
-      /* Styles applied to the root element if the control is focused. */
-      focused: {
-        borderColor: theme.palette.primary.main,
-        borderWidth: 2
-      },
-
-      /* Styles applied to the root element if `error={true}`. */
-      error: {
-        borderColor: theme.palette.error.main
-      },
-
-      /* Styles applied to the root element if `disabled={true}`. */
-      disabled: {
-        borderColor: theme.palette.action.disabled
+        })
       }
     };
   };
@@ -24422,26 +25287,21 @@
    */
 
   function NotchedOutline(props) {
-    var _classNames;
-
     var children = props.children,
         classes = props.classes,
         className = props.className,
-        disabled = props.disabled,
-        error = props.error,
-        focused = props.focused,
         labelWidthProp = props.labelWidth,
         notched = props.notched,
         style = props.style,
         theme = props.theme,
-        other = objectWithoutProperties(props, ["children", "classes", "className", "disabled", "error", "focused", "labelWidth", "notched", "style", "theme"]);
+        other = objectWithoutProperties(props, ["children", "classes", "className", "labelWidth", "notched", "style", "theme"]);
 
     var align = theme.direction === 'rtl' ? 'right' : 'left';
     var labelWidth = labelWidthProp > 0 ? labelWidthProp * 0.75 + 8 : 0;
     return React.createElement("fieldset", _extends_1({
       "aria-hidden": true,
       style: _extends_1(defineProperty({}, "padding".concat(capitalize(align)), 8 + (notched ? 0 : labelWidth / 2)), style),
-      className: classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.focused, focused), defineProperty(_classNames, classes.error, error), defineProperty(_classNames, classes.disabled, disabled), _classNames), className)
+      className: classnames(classes.root, className)
     }, other), React.createElement("legend", {
       className: classes.legend,
       style: {
@@ -24450,7 +25310,11 @@
         // by always having a legend rendered
         width: notched ? labelWidth : 0.01
       }
-    }));
+    }, React.createElement("span", {
+      dangerouslySetInnerHTML: {
+        __html: '&#8203;'
+      }
+    })));
   }
 
   NotchedOutline.propTypes = {
@@ -24464,21 +25328,6 @@
      * @ignore
      */
     className: propTypes.string,
-
-    /**
-     * If `true`, the outline should be displayed in a disabled state.
-     */
-    disabled: propTypes.bool,
-
-    /**
-     * If `true`, the outline should be displayed in an error state.
-     */
-    error: propTypes.bool,
-
-    /**
-     * If `true`, the outline should be displayed in a focused state.
-     */
-    focused: propTypes.bool,
 
     /**
      * The width of the legend.
@@ -24500,18 +25349,36 @@
      */
     theme: propTypes.object
   };
-  var NotchedOutline$1 = withStyles(styles$16, {
-    name: 'MuiNotchedOutline',
+  var NotchedOutline$1 = withStyles(styles$17, {
+    name: 'MuiPrivateNotchedOutline',
     withTheme: true
   })(NotchedOutline);
 
-  var styles$17 = function styles(theme) {
+  var styles$18 = function styles(theme) {
+    var borderColor = theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)';
     return {
       /* Styles applied to the root element. */
       root: {
         position: 'relative',
+        '& $notchedOutline': {
+          borderColor: borderColor
+        },
         '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
-          borderColor: theme.palette.text.primary
+          borderColor: theme.palette.text.primary,
+          // Reset on touch devices, it doesn't add specificity
+          '@media (hover: none)': {
+            borderColor: borderColor
+          }
+        },
+        '&$focused $notchedOutline': {
+          borderColor: theme.palette.primary.main,
+          borderWidth: 2
+        },
+        '&$error $notchedOutline': {
+          borderColor: theme.palette.error.main
+        },
+        '&$disabled $notchedOutline': {
+          borderColor: theme.palette.action.disabled
         }
       },
 
@@ -24582,15 +25449,12 @@
       renderPrefix: function renderPrefix(state) {
         return React.createElement(NotchedOutline$1, {
           className: classes.notchedOutline,
-          disabled: state.disabled,
-          error: state.error,
-          focused: state.focused,
           labelWidth: labelWidth,
           notched: typeof notched !== 'undefined' ? notched : Boolean(state.startAdornment || state.filled || state.focused)
         });
       },
       classes: _extends_1({}, classes, {
-        root: classnames(classes.root, classes.underline, {}),
+        root: classnames(classes.root, classes.underline),
         notchedOutline: null
       })
     }, other));
@@ -24624,7 +25488,7 @@
     /**
      * The default input value, useful when not controlling the component.
      */
-    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number]),
+    defaultValue: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))]),
 
     /**
      * If `true`, the input will be disabled.
@@ -24741,7 +25605,7 @@
     /**
      * The input value, required for a controlled component.
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))])
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))])
   };
   InputBase$1.defaultProps = {
     fullWidth: false,
@@ -24750,13 +25614,13 @@
     type: 'text'
   };
   OutlinedInput.muiName = 'Input';
-  var OutlinedInput$1 = withStyles(styles$17, {
+  var OutlinedInput$1 = withStyles(styles$18, {
     name: 'MuiOutlinedInput'
   })(OutlinedInput);
 
   /**!
    * @fileOverview Kickass library to create and place poppers near their reference elements.
-   * @version 1.14.4
+   * @version 1.14.6
    * @license
    * Copyright (c) 2016 Federico Zivolo and contributors
    *
@@ -24853,7 +25717,8 @@
       return [];
     }
     // NOTE: 1 DOM access here
-    var css = getComputedStyle(element, null);
+    var window = element.ownerDocument.defaultView;
+    var css = window.getComputedStyle(element, null);
     return property ? css[property] : css;
   }
 
@@ -24941,7 +25806,7 @@
     var noOffsetParent = isIE(10) ? document.body : null;
 
     // NOTE: 1 DOM access here
-    var offsetParent = element.offsetParent;
+    var offsetParent = element.offsetParent || null;
     // Skip hidden elements which don't have an offsetParent
     while (offsetParent === noOffsetParent && element.nextElementSibling) {
       offsetParent = (element = element.nextElementSibling).offsetParent;
@@ -24953,9 +25818,9 @@
       return element ? element.ownerDocument.documentElement : document.documentElement;
     }
 
-    // .offsetParent will return the closest TD or TABLE in case
+    // .offsetParent will return the closest TH, TD or TABLE in case
     // no offsetParent is present, I hate this job...
-    if (['TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
+    if (['TH', 'TD', 'TABLE'].indexOf(offsetParent.nodeName) !== -1 && getStyleComputedProperty(offsetParent, 'position') === 'static') {
       return getOffsetParent(offsetParent);
     }
 
@@ -25135,7 +26000,7 @@
 
 
 
-  var defineProperty$2 = function (obj, key, value) {
+  var defineProperty$3 = function (obj, key, value) {
     if (key in obj) {
       Object.defineProperty(obj, key, {
         value: value,
@@ -25503,9 +26368,10 @@
    * @returns {Object} object containing width and height properties
    */
   function getOuterSizes(element) {
-    var styles = getComputedStyle(element);
-    var x = parseFloat(styles.marginTop) + parseFloat(styles.marginBottom);
-    var y = parseFloat(styles.marginLeft) + parseFloat(styles.marginRight);
+    var window = element.ownerDocument.defaultView;
+    var styles = window.getComputedStyle(element);
+    var x = parseFloat(styles.marginTop || 0) + parseFloat(styles.marginBottom || 0);
+    var y = parseFloat(styles.marginLeft || 0) + parseFloat(styles.marginRight || 0);
     var result = {
       width: element.offsetWidth + y,
       height: element.offsetHeight + x
@@ -25957,6 +26823,52 @@
 
   /**
    * @function
+   * @memberof Popper.Utils
+   * @argument {Object} data - The data object generated by `update` method
+   * @argument {Boolean} shouldRound - If the offsets should be rounded at all
+   * @returns {Object} The popper's position offsets rounded
+   *
+   * The tale of pixel-perfect positioning. It's still not 100% perfect, but as
+   * good as it can be within reason.
+   * Discussion here: https://github.com/FezVrasta/popper.js/pull/715
+   *
+   * Low DPI screens cause a popper to be blurry if not using full pixels (Safari
+   * as well on High DPI screens).
+   *
+   * Firefox prefers no rounding for positioning and does not have blurriness on
+   * high DPI screens.
+   *
+   * Only horizontal placement and left/right values need to be considered.
+   */
+  function getRoundedOffsets(data, shouldRound) {
+    var _data$offsets = data.offsets,
+        popper = _data$offsets.popper,
+        reference = _data$offsets.reference;
+
+
+    var isVertical = ['left', 'right'].indexOf(data.placement) !== -1;
+    var isVariation = data.placement.indexOf('-') !== -1;
+    var sameWidthOddness = reference.width % 2 === popper.width % 2;
+    var bothOddWidth = reference.width % 2 === 1 && popper.width % 2 === 1;
+    var noRound = function noRound(v) {
+      return v;
+    };
+
+    var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthOddness ? Math.round : Math.floor;
+    var verticalToInteger = !shouldRound ? noRound : Math.round;
+
+    return {
+      left: horizontalToInteger(bothOddWidth && !isVariation && shouldRound ? popper.left - 1 : popper.left),
+      top: verticalToInteger(popper.top),
+      bottom: verticalToInteger(popper.bottom),
+      right: horizontalToInteger(popper.right)
+    };
+  }
+
+  var isFirefox = isBrowser$1 && /Firefox/i.test(navigator.userAgent);
+
+  /**
+   * @function
    * @memberof Modifiers
    * @argument {Object} data - The data object generated by `update` method
    * @argument {Object} options - Modifiers configuration and options
@@ -25985,15 +26897,7 @@
       position: popper.position
     };
 
-    // Avoid blurry text by using full pixel integers.
-    // For pixel-perfect positioning, top/bottom prefers rounded
-    // values, while left/right prefers floored values.
-    var offsets = {
-      left: Math.floor(popper.left),
-      top: Math.round(popper.top),
-      bottom: Math.round(popper.bottom),
-      right: Math.floor(popper.right)
-    };
+    var offsets = getRoundedOffsets(data, window.devicePixelRatio < 2 || !isFirefox);
 
     var sideA = x === 'bottom' ? 'top' : 'bottom';
     var sideB = y === 'right' ? 'left' : 'right';
@@ -26166,7 +27070,7 @@
     sideValue = Math.max(Math.min(popper[len] - arrowElementSize, sideValue), 0);
 
     data.arrowElement = arrowElement;
-    data.offsets.arrow = (_data$offsets$arrow = {}, defineProperty$2(_data$offsets$arrow, side, Math.round(sideValue)), defineProperty$2(_data$offsets$arrow, altSide, ''), _data$offsets$arrow);
+    data.offsets.arrow = (_data$offsets$arrow = {}, defineProperty$3(_data$offsets$arrow, side, Math.round(sideValue)), defineProperty$3(_data$offsets$arrow, altSide, ''), _data$offsets$arrow);
 
     return data;
   }
@@ -26589,7 +27493,7 @@
         if (popper[placement] < boundaries[placement] && !options.escapeWithReference) {
           value = Math.max(popper[placement], boundaries[placement]);
         }
-        return defineProperty$2({}, placement, value);
+        return defineProperty$3({}, placement, value);
       },
       secondary: function secondary(placement) {
         var mainSide = placement === 'right' ? 'left' : 'top';
@@ -26597,7 +27501,7 @@
         if (popper[placement] > boundaries[placement] && !options.escapeWithReference) {
           value = Math.min(popper[mainSide], boundaries[placement] - (placement === 'right' ? popper.width : popper.height));
         }
-        return defineProperty$2({}, mainSide, value);
+        return defineProperty$3({}, mainSide, value);
       }
     };
 
@@ -26634,8 +27538,8 @@
       var measurement = isVertical ? 'width' : 'height';
 
       var shiftOffsets = {
-        start: defineProperty$2({}, side, reference[side]),
-        end: defineProperty$2({}, side, reference[side] + reference[measurement] - popper[measurement])
+        start: defineProperty$3({}, side, reference[side]),
+        end: defineProperty$3({}, side, reference[side] + reference[measurement] - popper[measurement])
       };
 
       data.offsets.popper = _extends({}, popper, shiftOffsets[shiftvariation]);
@@ -27284,8 +28188,10 @@
   Popper.placements = placements;
   Popper.Defaults = Defaults;
 
-  function flipPlacement(theme, placement) {
-    if (theme.direction !== 'rtl') {
+  function flipPlacement(placement) {
+    var direction = typeof window !== 'undefined' && document.body.getAttribute('dir') || 'ltr';
+
+    if (direction !== 'rtl') {
       return placement;
     }
 
@@ -27335,7 +28241,6 @@
             placement = _this$props.placement,
             _this$props$popperOpt = _this$props.popperOptions,
             popperOptions = _this$props$popperOpt === void 0 ? {} : _this$props$popperOpt,
-            theme = _this$props.theme,
             disablePortal = _this$props.disablePortal;
         var popperNode = ReactDOM.findDOMNode(assertThisInitialized(assertThisInitialized(_this)));
 
@@ -27350,7 +28255,7 @@
         }
 
         _this.popper = new Popper(getAnchorEl$1(anchorEl), popperNode, _extends_1({
-          placement: flipPlacement(theme, placement)
+          placement: flipPlacement(placement)
         }, popperOptions, {
           modifiers: _extends_1({}, disablePortal ? {} : {
             // It's using scrollParent by default, we can use the viewport when using a portal.
@@ -27441,7 +28346,7 @@
         }
 
         var childProps = {
-          placement: placement || flipPlacement(theme, placementProps)
+          placement: placement || flipPlacement(placementProps)
         };
 
         if (transition) {
@@ -27548,11 +28453,6 @@
     popperOptions: propTypes.object,
 
     /**
-     * @ignore
-     */
-    theme: propTypes.object.isRequired,
-
-    /**
      * Help supporting a react-transition-group/Transition component.
      */
     transition: propTypes.bool
@@ -27562,7 +28462,6 @@
     placement: 'bottom',
     transition: false
   };
-  var Popper$2 = withTheme()(Popper$1);
 
   /**
    * @ignore - internal component.
@@ -27596,7 +28495,7 @@
   RadioButtonChecked.muiName = 'SvgIcon';
   var RadioButtonCheckedIcon = RadioButtonChecked;
 
-  var styles$18 = function styles(theme) {
+  var styles$19 = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -27726,7 +28625,7 @@
   Radio.defaultProps = {
     color: 'secondary'
   };
-  var Radio$1 = withStyles(styles$18, {
+  var Radio$1 = withStyles(styles$19, {
     name: 'MuiRadio'
   })(Radio);
 
@@ -27857,9 +28756,17 @@
     value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool])
   };
 
+  function areEqualValues(a, b) {
+    if (_typeof_1$1(b) === 'object' && b !== null) {
+      return a === b;
+    }
+
+    return String(a) === String(b);
+  }
   /**
    * @ignore - internal component.
    */
+
 
   var SelectInput =
   /*#__PURE__*/
@@ -28099,13 +29006,15 @@
               throw new Error('Material-UI: the `value` property must be an array ' + 'when using the `Select` component with `multiple`.');
             }
 
-            selected = value.indexOf(child.props.value) !== -1;
+            selected = value.some(function (v) {
+              return areEqualValues(v, child.props.value);
+            });
 
             if (selected && computeDisplay) {
               displayMultiple.push(child.props.children);
             }
           } else {
-            selected = value === child.props.value;
+            selected = areEqualValues(value, child.props.value);
 
             if (selected && computeDisplay) {
               displaySingle = child.props.children;
@@ -28150,7 +29059,7 @@
           "aria-pressed": open ? 'true' : 'false',
           tabIndex: tabIndex,
           role: "button",
-          "aria-owns": open ? "menu-".concat(name || '') : null,
+          "aria-owns": open ? "menu-".concat(name || '') : undefined,
           "aria-haspopup": "true",
           onKeyDown: this.handleKeyDown,
           onBlur: this.handleBlur,
@@ -28328,7 +29237,7 @@
     /**
      * The input value.
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))]).isRequired,
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))]).isRequired,
 
     /**
      * The variant to use.
@@ -28336,7 +29245,9 @@
     variant: propTypes.oneOf(['standard', 'outlined', 'filled'])
   };
 
-  function Select(props, context) {
+  var styles$1a = styles$16;
+
+  function Select(props) {
     var autoWidth = props.autoWidth,
         children = props.children,
         classes = props.classes,
@@ -28345,6 +29256,7 @@
         input = props.input,
         inputProps = props.inputProps,
         MenuProps = props.MenuProps,
+        muiFormControl = props.muiFormControl,
         multiple = props.multiple,
         native = props.native,
         onClose = props.onClose,
@@ -28353,12 +29265,12 @@
         renderValue = props.renderValue,
         SelectDisplayProps = props.SelectDisplayProps,
         variant = props.variant,
-        other = objectWithoutProperties(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
+        other = objectWithoutProperties(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "muiFormControl", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
 
     var inputComponent = native ? NativeSelectInput : SelectInput;
     var fcs = formControlState({
       props: props,
-      context: context,
+      muiFormControl: muiFormControl,
       states: ['variant']
     });
     return React.cloneElement(input, _extends_1({
@@ -28369,12 +29281,13 @@
         children: children,
         IconComponent: IconComponent,
         variant: fcs.variant,
-        type: undefined
+        type: undefined,
+        // We render a select. We can ignore the type provided by the `Input`.
+        multiple: multiple
       }, native ? {} : {
         autoWidth: autoWidth,
         displayEmpty: displayEmpty,
         MenuProps: MenuProps,
-        multiple: multiple,
         onClose: onClose,
         onOpen: onOpen,
         open: open,
@@ -28496,7 +29409,7 @@
      * The input value.
      * This property is required when the `native` property is `false` (default).
      */
-    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool]))]),
+    value: propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object, propTypes.arrayOf(propTypes.oneOfType([propTypes.string, propTypes.number, propTypes.bool, propTypes.object]))]),
 
     /**
      * The variant to use.
@@ -28511,15 +29424,12 @@
     multiple: false,
     native: false
   };
-  Select.contextTypes = {
-    muiFormControl: propTypes.object
-  };
   Select.muiName = 'Select';
-  var Select$1 = withStyles(styles$15, {
+  var Select$1 = withStyles(styles$1a, {
     name: 'MuiSelect'
-  })(Select);
+  })(withFormControlContext(Select));
 
-  var styles$1a = function styles(theme) {
+  var styles$1b = function styles(theme) {
     var _root;
 
     var emphasis = theme.palette.type === 'light' ? 0.8 : 0.98;
@@ -28603,11 +29513,11 @@
      */
     message: propTypes.node
   };
-  var SnackbarContent$1 = withStyles(styles$1a, {
+  var SnackbarContent$1 = withStyles(styles$1b, {
     name: 'MuiSnackbarContent'
   })(SnackbarContent);
 
-  var styles$1b = function styles(theme) {
+  var styles$1c = function styles(theme) {
     var gutter = 24;
     var top = {
       top: 0
@@ -28903,8 +29813,7 @@
     autoHideDuration: propTypes.number,
 
     /**
-     * If you wish the take control over the children of the component you can use this property.
-     * When used, you replace the `SnackbarContent` component with the children.
+     * Replace the `SnackbarContent` component.
      */
     children: propTypes.element,
 
@@ -29043,12 +29952,12 @@
       exit: duration.leavingScreen
     }
   };
-  var Snackbar$1 = withStyles(styles$1b, {
+  var Snackbar$1 = withStyles(styles$1c, {
     flip: false,
     name: 'MuiSnackbar'
   })(Snackbar);
 
-  var styles$1c = {
+  var styles$1d = {
     /* Styles applied to the root element. */
     root: {},
 
@@ -29187,7 +30096,7 @@
     completed: false,
     disabled: false
   };
-  var Step$1 = withStyles(styles$1c, {
+  var Step$1 = withStyles(styles$1d, {
     name: 'MuiStep'
   })(Step);
 
@@ -29223,7 +30132,7 @@
   Warning.muiName = 'SvgIcon';
   var Warning$1 = Warning;
 
-  var styles$1d = function styles(theme) {
+  var styles$1e = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -29329,11 +30238,11 @@
     completed: false,
     error: false
   };
-  var StepIcon$1 = withStyles(styles$1d, {
+  var StepIcon$1 = withStyles(styles$1e, {
     name: 'MuiStepIcon'
   })(StepIcon);
 
-  var styles$1e = function styles(theme) {
+  var styles$1f = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -29387,6 +30296,8 @@
 
       /* Styles applied to the `icon` container element. */
       iconContainer: {
+        flexShrink: 0,
+        // Fix IE 11 issue
         display: 'flex',
         paddingRight: 8,
         '&$alternativeLabel': {
@@ -29532,11 +30443,11 @@
     orientation: 'horizontal'
   };
   StepLabel.muiName = 'StepLabel';
-  var StepLabel$1 = withStyles(styles$1e, {
+  var StepLabel$1 = withStyles(styles$1f, {
     name: 'MuiStepLabel'
   })(StepLabel);
 
-  var styles$1f = {
+  var styles$1g = {
     /* Styles applied to the root element. */
     root: {
       width: '100%',
@@ -29653,11 +30564,11 @@
      */
     orientation: propTypes.oneOf(['horizontal', 'vertical'])
   };
-  var StepButton$1 = withStyles(styles$1f, {
+  var StepButton$1 = withStyles(styles$1g, {
     name: 'MuiStepButton'
   })(StepButton);
 
-  var styles$1g = function styles(theme) {
+  var styles$1h = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -29779,11 +30690,11 @@
     alternativeLabel: false,
     orientation: 'horizontal'
   };
-  var StepConnector$1 = withStyles(styles$1g, {
+  var StepConnector$1 = withStyles(styles$1h, {
     name: 'MuiStepConnector'
   })(StepConnector);
 
-  var styles$1h = function styles(theme) {
+  var styles$1i = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -29891,7 +30802,7 @@
     /**
      * Collapse component.
      */
-    TransitionComponent: propTypes.func,
+    TransitionComponent: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
 
     /**
      * Adjust the duration of the content expand transition.
@@ -29913,11 +30824,11 @@
     TransitionComponent: Collapse$1,
     transitionDuration: 'auto'
   };
-  var StepContent$1 = withStyles(styles$1h, {
+  var StepContent$1 = withStyles(styles$1i, {
     name: 'MuiStepContent'
   })(StepContent);
 
-  var styles$1i = {
+  var styles$1j = {
     /* Styles applied to the root element. */
     root: {
       display: 'flex',
@@ -30041,11 +30952,11 @@
     orientation: 'horizontal'
   };
   Stepper.muiName = 'Stepper';
-  var Stepper$1 = withStyles(styles$1i, {
+  var Stepper$1 = withStyles(styles$1j, {
     name: 'MuiStepper'
   })(Stepper);
 
-  var styles$1j = function styles(theme) {
+  var styles$1k = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -30080,11 +30991,12 @@
   function SwipeArea(props) {
     var anchor = props.anchor,
         classes = props.classes,
+        className = props.className,
         width = props.width,
-        other = objectWithoutProperties(props, ["anchor", "classes", "width"]);
+        other = objectWithoutProperties(props, ["anchor", "classes", "className", "width"]);
 
     return React.createElement("div", _extends_1({
-      className: classnames(classes.root, classes["anchor".concat(capitalize(anchor))]),
+      className: classnames(classes.root, classes["anchor".concat(capitalize(anchor))], className),
       style: defineProperty({}, isHorizontal(props) ? 'width' : 'height', width)
     }, other));
   }
@@ -30101,12 +31013,19 @@
     classes: propTypes.object.isRequired,
 
     /**
+     * @ignore
+     */
+    className: propTypes.string,
+
+    /**
      * The width of the left most (or right most) area in pixels where the
      * drawer can be swiped open from.
      */
     width: propTypes.number.isRequired
   };
-  var SwipeArea$1 = withStyles(styles$1j)(SwipeArea);
+  var SwipeArea$1 = withStyles(styles$1k, {
+    name: 'MuiPrivateSwipeArea'
+  })(SwipeArea);
 
   // trigger a native scroll.
 
@@ -30440,9 +31359,10 @@
             open = _this$props2.open,
             _this$props2$PaperPro = _this$props2.PaperProps,
             PaperProps = _this$props2$PaperPro === void 0 ? {} : _this$props2$PaperPro,
+            SwipeAreaProps = _this$props2.SwipeAreaProps,
             swipeAreaWidth = _this$props2.swipeAreaWidth,
             variant = _this$props2.variant,
-            other = objectWithoutProperties(_this$props2, ["anchor", "disableBackdropTransition", "disableDiscovery", "disableSwipeToOpen", "hysteresis", "minFlingVelocity", "ModalProps", "onOpen", "open", "PaperProps", "swipeAreaWidth", "variant"]);
+            other = objectWithoutProperties(_this$props2, ["anchor", "disableBackdropTransition", "disableDiscovery", "disableSwipeToOpen", "hysteresis", "minFlingVelocity", "ModalProps", "onOpen", "open", "PaperProps", "SwipeAreaProps", "swipeAreaWidth", "variant"]);
 
         var maybeSwiping = this.state.maybeSwiping;
         return React.createElement(React.Fragment, null, React.createElement(Drawer$1, _extends_1({
@@ -30460,10 +31380,10 @@
             ref: this.handlePaperRef
           }),
           anchor: anchor
-        }, other)), !disableDiscovery && !disableSwipeToOpen && variant === 'temporary' && React.createElement(NoSsr, null, React.createElement(SwipeArea$1, {
+        }, other)), !disableDiscovery && !disableSwipeToOpen && variant === 'temporary' && React.createElement(NoSsr, null, React.createElement(SwipeArea$1, _extends_1({
           anchor: anchor,
           width: swipeAreaWidth
-        })));
+        }, SwipeAreaProps))));
       }
     }], [{
       key: "getDerivedStateFromProps",
@@ -30558,6 +31478,11 @@
     PaperProps: propTypes.object,
 
     /**
+     * Properties applied to the swipe area element.
+     */
+    SwipeAreaProps: propTypes.object,
+
+    /**
      * The width of the left most (or right most) area in pixels where the
      * drawer can be swiped open from.
      */
@@ -30599,7 +31524,7 @@
   };
   var SwipeableDrawer$1 = withTheme()(SwipeableDrawer);
 
-  var styles$1k = function styles(theme) {
+  var styles$1l = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -30813,17 +31738,18 @@
   Switch.defaultProps = {
     color: 'secondary'
   };
-  var Switch$1 = withStyles(styles$1k, {
+  var Switch$1 = withStyles(styles$1l, {
     name: 'MuiSwitch'
   })(Switch);
 
-  var styles$1l = function styles(theme) {
+  var styles$1m = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: _extends_1({}, theme.typography.button, defineProperty({
         maxWidth: 264,
-        position: 'relative',
         minWidth: 72,
+        position: 'relative',
+        boxSizing: 'border-box',
         padding: 0,
         minHeight: 48,
         flexShrink: 0,
@@ -30837,7 +31763,14 @@
 
       /* Styles applied to the root element if both `icon` and `label` are provided. */
       labelIcon: {
-        minHeight: 72
+        minHeight: 72,
+        // paddingTop supposed to be 12px
+        // - 3px from the paddingBottom
+        paddingTop: 9 // paddingBottom supposed to be 12px
+        // -3px for line-height of the label
+        // -6px for label padding
+        // = 3px
+
       },
 
       /* Styles applied to the root element if `textColor="inherit"`. */
@@ -30901,13 +31834,9 @@
         width: '100%',
         // Fix an IE 11 issue
         boxSizing: 'border-box',
-        paddingTop: 6,
-        paddingBottom: 6,
-        paddingLeft: 12,
-        paddingRight: 12
+        padding: '6px 12px'
       }, theme.breakpoints.up('md'), {
-        paddingLeft: 24,
-        paddingRight: 24
+        padding: '6px 24px'
       }),
 
       /* Styles applied to the label wrapper element if `label` is provided. */
@@ -30996,7 +31925,7 @@
 
         var _this$props2 = this.props,
             classes = _this$props2.classes,
-            classNameProp = _this$props2.className,
+            className = _this$props2.className,
             disabled = _this$props2.disabled,
             fullWidth = _this$props2.fullWidth,
             icon = _this$props2.icon,
@@ -31021,10 +31950,9 @@
           }, labelProp));
         }
 
-        var className = classnames(classes.root, classes["textColor".concat(capitalize(textColor))], (_classNames2 = {}, defineProperty(_classNames2, classes.disabled, disabled), defineProperty(_classNames2, classes.selected, selected), defineProperty(_classNames2, classes.labelIcon, icon && label), defineProperty(_classNames2, classes.fullWidth, fullWidth), _classNames2), classNameProp);
         return React.createElement(ButtonBase$1, _extends_1({
           focusRipple: true,
-          className: className,
+          className: classnames(classes.root, classes["textColor".concat(capitalize(textColor))], (_classNames2 = {}, defineProperty(_classNames2, classes.disabled, disabled), defineProperty(_classNames2, classes.selected, selected), defineProperty(_classNames2, classes.labelIcon, icon && label), defineProperty(_classNames2, classes.fullWidth, fullWidth), _classNames2), className),
           role: "tab",
           "aria-selected": selected,
           disabled: disabled
@@ -31113,11 +32041,17 @@
     disabled: false,
     textColor: 'inherit'
   };
-  var Tab$1 = withStyles(styles$1l, {
+  var Tab$1 = withStyles(styles$1m, {
     name: 'MuiTab'
   })(Tab);
 
-  var styles$1m = function styles(theme) {
+  /**
+   * @ignore - internal component.
+   */
+
+  var TableContext = React.createContext();
+
+  var styles$1n = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -31136,20 +32070,38 @@
     inherits(Table, _React$Component);
 
     function Table() {
+      var _getPrototypeOf2;
+
+      var _this;
+
       classCallCheck(this, Table);
 
-      return possibleConstructorReturn(this, getPrototypeOf(Table).apply(this, arguments));
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      _this = possibleConstructorReturn(this, (_getPrototypeOf2 = getPrototypeOf(Table)).call.apply(_getPrototypeOf2, [this].concat(args)));
+      _this.memoizedContextValue = {};
+      return _this;
     }
 
     createClass(Table, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        // eslint-disable-line class-methods-use-this
-        return {
-          table: {
-            padding: this.props.padding
+      key: "useMemo",
+      // To replace with the corresponding Hook once Material-UI v4.0.0 is out:
+      // https://reactjs.org/docs/hooks-reference.html#usememo
+      value: function useMemo(contextValue) {
+        var objectKeys = Object.keys(contextValue);
+
+        for (var i = 0; i < objectKeys.length; i += 1) {
+          var objectKey = objectKeys[i];
+
+          if (contextValue[objectKey] !== this.memoizedContextValue[objectKey]) {
+            this.memoizedContextValue = contextValue;
+            break;
           }
-        };
+        }
+
+        return this.memoizedContextValue;
       }
     }, {
       key: "render",
@@ -31161,9 +32113,13 @@
             padding = _this$props.padding,
             other = objectWithoutProperties(_this$props, ["classes", "className", "component", "padding"]);
 
-        return React.createElement(Component, _extends_1({
+        return React.createElement(TableContext.Provider, {
+          value: this.useMemo({
+            padding: padding
+          })
+        }, React.createElement(Component, _extends_1({
           className: classnames(classes.root, className)
-        }, other));
+        }, other)));
       }
     }]);
 
@@ -31191,7 +32147,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * Allows TableCells to inherit padding of the Table.
@@ -31202,64 +32158,44 @@
     component: 'table',
     padding: 'default'
   };
-  Table.childContextTypes = {
-    table: propTypes.object
-  };
-  var Table$1 = withStyles(styles$1m, {
+  var Table$1 = withStyles(styles$1n, {
     name: 'MuiTable'
   })(Table);
 
-  var styles$1n = {
+  /**
+   * @ignore - internal component.
+   */
+
+  var Tablelvl2Context = React.createContext();
+
+  var styles$1o = {
     /* Styles applied to the root element. */
     root: {
       display: 'table-row-group'
     }
   };
+  var contextValue = {
+    variant: 'body'
+  };
 
-  var TableBody =
-  /*#__PURE__*/
-  function (_React$Component) {
-    inherits(TableBody, _React$Component);
+  function TableBody(props) {
+    var classes = props.classes,
+        className = props.className,
+        Component = props.component,
+        other = objectWithoutProperties(props, ["classes", "className", "component"]);
 
-    function TableBody() {
-      classCallCheck(this, TableBody);
-
-      return possibleConstructorReturn(this, getPrototypeOf(TableBody).apply(this, arguments));
-    }
-
-    createClass(TableBody, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        // eslint-disable-line class-methods-use-this
-        return {
-          tablelvl2: {
-            variant: 'body'
-          }
-        };
-      }
-    }, {
-      key: "render",
-      value: function render() {
-        var _this$props = this.props,
-            classes = _this$props.classes,
-            className = _this$props.className,
-            Component = _this$props.component,
-            other = objectWithoutProperties(_this$props, ["classes", "className", "component"]);
-
-        return React.createElement(Component, _extends_1({
-          className: classnames(classes.root, className)
-        }, other));
-      }
-    }]);
-
-    return TableBody;
-  }(React.Component);
+    return React.createElement(Tablelvl2Context.Provider, {
+      value: contextValue
+    }, React.createElement(Component, _extends_1({
+      className: classnames(classes.root, className)
+    }, other)));
+  }
 
   TableBody.propTypes = {
     /**
      * The content of the component, normally `TableRow`.
      */
-    children: propTypes.node.isRequired,
+    children: propTypes.node,
 
     /**
      * Override or extend the styles applied to the component.
@@ -31276,19 +32212,30 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object])
+    component: componentPropType
   };
   TableBody.defaultProps = {
     component: 'tbody'
   };
-  TableBody.childContextTypes = {
-    tablelvl2: propTypes.object
-  };
-  var TableBody$1 = withStyles(styles$1n, {
+  var TableBody$1 = withStyles(styles$1o, {
     name: 'MuiTableBody'
   })(TableBody);
 
-  var styles$1o = function styles(theme) {
+  function deprecatedPropType(validator, reason) {
+
+    return function (props, propName, componentName, location, propFullName) {
+      var componentNameSafe = componentName || '<<anonymous>>';
+      var propFullNameSafe = propFullName || propName;
+
+      if (typeof props[propName] !== 'undefined') {
+        return new Error("The ".concat(location, " `").concat(propFullNameSafe, "` of ") + "`".concat(componentNameSafe, "` is deprecated. ").concat(reason));
+      }
+
+      return null;
+    };
+  }
+
+  var styles$1p = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -31296,7 +32243,7 @@
         verticalAlign: 'inherit',
         // Workaround for a rendering bug with spanned columns in Chrome 62.0.
         // Removes the alpha (sets it to 1), and lightens or darkens the theme color.
-        borderBottom: "1px solid\n    ".concat(theme.palette.type === 'light' ? lighten(fade(theme.palette.divider, 1), 0.88) : darken(fade(theme.palette.divider, 1), 0.8)),
+        borderBottom: "1px solid\n    ".concat(theme.palette.type === 'light' ? lighten(fade(theme.palette.divider, 1), 0.88) : darken(fade(theme.palette.divider, 1), 0.68)),
         textAlign: 'left',
         padding: '4px 56px 4px 24px',
         '&:last-child': {
@@ -31351,56 +32298,89 @@
         '&:last-child': {
           padding: 0
         }
+      },
+
+      /* Styles applied to the root element if `align="left"`. */
+      alignLeft: {
+        textAlign: 'left'
+      },
+
+      /* Styles applied to the root element if `align="center"`. */
+      alignCenter: {
+        textAlign: 'center'
+      },
+
+      /* Styles applied to the root element if `align="right"`. */
+      alignRight: {
+        textAlign: 'right',
+        flexDirection: 'row-reverse'
+      },
+
+      /* Styles applied to the root element if `align="justify"`. */
+      alignJustify: {
+        textAlign: 'justify'
       }
     };
   };
 
-  function TableCell(props, context) {
-    var _classNames;
-
-    var children = props.children,
+  function TableCell(props) {
+    var align = props.align,
+        children = props.children,
         classes = props.classes,
         classNameProp = props.className,
         component = props.component,
         sortDirection = props.sortDirection,
-        numeric = props.numeric,
+        _props$numeric = props.numeric,
+        numeric = _props$numeric === void 0 ? false : _props$numeric,
         paddingProp = props.padding,
         scopeProp = props.scope,
         variant = props.variant,
-        other = objectWithoutProperties(props, ["children", "classes", "className", "component", "sortDirection", "numeric", "padding", "scope", "variant"]);
+        other = objectWithoutProperties(props, ["align", "children", "classes", "className", "component", "sortDirection", "numeric", "padding", "scope", "variant"]);
 
-    var table = context.table,
-        tablelvl2 = context.tablelvl2;
-    var Component;
+    return React.createElement(TableContext.Consumer, null, function (table) {
+      return React.createElement(Tablelvl2Context.Consumer, null, function (tablelvl2) {
+        var _classNames;
 
-    if (component) {
-      Component = component;
-    } else {
-      Component = tablelvl2 && tablelvl2.variant === 'head' ? 'th' : 'td';
-    }
+        var Component;
 
-    var scope = scopeProp;
+        if (component) {
+          Component = component;
+        } else {
+          Component = tablelvl2 && tablelvl2.variant === 'head' ? 'th' : 'td';
+        }
 
-    if (!scope && tablelvl2 && tablelvl2.variant === 'head') {
-      scope = 'col';
-    }
+        var scope = scopeProp;
 
-    var padding = paddingProp || (table && table.padding ? table.padding : 'default');
-    var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.head, variant ? variant === 'head' : tablelvl2 && tablelvl2.variant === 'head'), defineProperty(_classNames, classes.body, variant ? variant === 'body' : tablelvl2 && tablelvl2.variant === 'body'), defineProperty(_classNames, classes.footer, variant ? variant === 'footer' : tablelvl2 && tablelvl2.variant === 'footer'), defineProperty(_classNames, classes.numeric, numeric), defineProperty(_classNames, classes["padding".concat(capitalize(padding))], padding !== 'default'), _classNames), classNameProp);
-    var ariaSort = null;
+        if (!scope && tablelvl2 && tablelvl2.variant === 'head') {
+          scope = 'col';
+        }
 
-    if (sortDirection) {
-      ariaSort = sortDirection === 'asc' ? 'ascending' : 'descending';
-    }
+        var padding = paddingProp || (table && table.padding ? table.padding : 'default');
+        var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.head, variant ? variant === 'head' : tablelvl2 && tablelvl2.variant === 'head'), defineProperty(_classNames, classes.body, variant ? variant === 'body' : tablelvl2 && tablelvl2.variant === 'body'), defineProperty(_classNames, classes.footer, variant ? variant === 'footer' : tablelvl2 && tablelvl2.variant === 'footer'), defineProperty(_classNames, classes["align".concat(capitalize(align))], align !== 'inherit'), defineProperty(_classNames, classes.numeric, numeric), defineProperty(_classNames, classes["padding".concat(capitalize(padding))], padding !== 'default'), _classNames), classNameProp);
+        var ariaSort = null;
 
-    return React.createElement(Component, _extends_1({
-      className: className,
-      "aria-sort": ariaSort,
-      scope: scope
-    }, other), children);
+        if (sortDirection) {
+          ariaSort = sortDirection === 'asc' ? 'ascending' : 'descending';
+        }
+
+        return React.createElement(Component, _extends_1({
+          className: className,
+          "aria-sort": ariaSort,
+          scope: scope
+        }, other), children);
+      });
+    });
   }
 
   TableCell.propTypes = {
+    /**
+     * Set the text-align on the table cell content.
+     *
+     * Monetary or generally number fields **should be right aligned** as that allows
+     * you to add them up quickly in your head without having to worry about decimals.
+     */
+    align: propTypes.oneOf(['inherit', 'left', 'center', 'right', 'justify']),
+
     /**
      * The table cell contents.
      */
@@ -31421,12 +32401,12 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, content will align to the right.
      */
-    numeric: propTypes.bool,
+    numeric: deprecatedPropType(propTypes.bool, 'Instead, use the `align` property.'),
 
     /**
      * Sets the padding applied to the cell.
@@ -31451,61 +32431,34 @@
     variant: propTypes.oneOf(['head', 'body', 'footer'])
   };
   TableCell.defaultProps = {
-    numeric: false
+    align: 'inherit'
   };
-  TableCell.contextTypes = {
-    table: propTypes.object,
-    tablelvl2: propTypes.object
-  };
-  var TableCell$1 = withStyles(styles$1o, {
+  var TableCell$1 = withStyles(styles$1p, {
     name: 'MuiTableCell'
   })(TableCell);
 
-  var styles$1p = {
+  var styles$1q = {
     /* Styles applied to the root element. */
     root: {
       display: 'table-footer-group'
     }
   };
+  var contextValue$1 = {
+    variant: 'footer'
+  };
 
-  var TableFooter =
-  /*#__PURE__*/
-  function (_React$Component) {
-    inherits(TableFooter, _React$Component);
+  function TableFooter(props) {
+    var classes = props.classes,
+        className = props.className,
+        Component = props.component,
+        other = objectWithoutProperties(props, ["classes", "className", "component"]);
 
-    function TableFooter() {
-      classCallCheck(this, TableFooter);
-
-      return possibleConstructorReturn(this, getPrototypeOf(TableFooter).apply(this, arguments));
-    }
-
-    createClass(TableFooter, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        // eslint-disable-line class-methods-use-this
-        return {
-          tablelvl2: {
-            variant: 'footer'
-          }
-        };
-      }
-    }, {
-      key: "render",
-      value: function render() {
-        var _this$props = this.props,
-            classes = _this$props.classes,
-            className = _this$props.className,
-            Component = _this$props.component,
-            other = objectWithoutProperties(_this$props, ["classes", "className", "component"]);
-
-        return React.createElement(Component, _extends_1({
-          className: classnames(classes.root, className)
-        }, other));
-      }
-    }]);
-
-    return TableFooter;
-  }(React.Component);
+    return React.createElement(Tablelvl2Context.Provider, {
+      value: contextValue$1
+    }, React.createElement(Component, _extends_1({
+      className: classnames(classes.root, className)
+    }, other)));
+  }
 
   TableFooter.propTypes = {
     /**
@@ -31528,69 +32481,43 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object])
+    component: componentPropType
   };
   TableFooter.defaultProps = {
     component: 'tfoot'
   };
-  TableFooter.childContextTypes = {
-    tablelvl2: propTypes.object
-  };
-  var TableFooter$1 = withStyles(styles$1p, {
+  var TableFooter$1 = withStyles(styles$1q, {
     name: 'MuiTableFooter'
   })(TableFooter);
 
-  var styles$1q = {
+  var styles$1r = {
     /* Styles applied to the root element. */
     root: {
       display: 'table-header-group'
     }
   };
+  var contextValue$2 = {
+    variant: 'head'
+  };
 
-  var TableHead =
-  /*#__PURE__*/
-  function (_React$Component) {
-    inherits(TableHead, _React$Component);
+  function TableHead(props) {
+    var classes = props.classes,
+        className = props.className,
+        Component = props.component,
+        other = objectWithoutProperties(props, ["classes", "className", "component"]);
 
-    function TableHead() {
-      classCallCheck(this, TableHead);
-
-      return possibleConstructorReturn(this, getPrototypeOf(TableHead).apply(this, arguments));
-    }
-
-    createClass(TableHead, [{
-      key: "getChildContext",
-      value: function getChildContext() {
-        // eslint-disable-line class-methods-use-this
-        return {
-          tablelvl2: {
-            variant: 'head'
-          }
-        };
-      }
-    }, {
-      key: "render",
-      value: function render() {
-        var _this$props = this.props,
-            classes = _this$props.classes,
-            className = _this$props.className,
-            Component = _this$props.component,
-            other = objectWithoutProperties(_this$props, ["classes", "className", "component"]);
-
-        return React.createElement(Component, _extends_1({
-          className: classnames(classes.root, className)
-        }, other));
-      }
-    }]);
-
-    return TableHead;
-  }(React.Component);
+    return React.createElement(Tablelvl2Context.Provider, {
+      value: contextValue$2
+    }, React.createElement(Component, _extends_1({
+      className: classnames(classes.root, className)
+    }, other)));
+  }
 
   TableHead.propTypes = {
     /**
      * The content of the component, normally `TableRow`.
      */
-    children: propTypes.node.isRequired,
+    children: propTypes.node,
 
     /**
      * Override or extend the styles applied to the component.
@@ -31607,19 +32534,16 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object])
+    component: componentPropType
   };
   TableHead.defaultProps = {
     component: 'thead'
   };
-  TableHead.childContextTypes = {
-    tablelvl2: propTypes.object
-  };
-  var TableHead$1 = withStyles(styles$1q, {
+  var TableHead$1 = withStyles(styles$1r, {
     name: 'MuiTableHead'
   })(TableHead);
 
-  var styles$1r = function styles(theme) {
+  var styles$1s = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -31686,7 +32610,7 @@
     disableGutters: false,
     variant: 'regular'
   };
-  var Toolbar$1 = withStyles(styles$1r, {
+  var Toolbar$1 = withStyles(styles$1s, {
     name: 'MuiToolbar'
   })(Toolbar);
 
@@ -31778,10 +32702,12 @@
 
         return React.createElement("div", other, React.createElement(IconButton$1, _extends_1({
           onClick: this.handleBackButtonClick,
-          disabled: page === 0
+          disabled: page === 0,
+          color: "inherit"
         }, backIconButtonProps), theme.direction === 'rtl' ? _ref$d : _ref2$1), React.createElement(IconButton$1, _extends_1({
           onClick: this.handleNextButtonClick,
-          disabled: page >= Math.ceil(count / rowsPerPage) - 1
+          disabled: page >= Math.ceil(count / rowsPerPage) - 1,
+          color: "inherit"
         }, nextIconButtonProps), theme.direction === 'rtl' ? _ref3 : _ref4));
       }
     }]);
@@ -31830,7 +32756,7 @@
   };
   var TablePaginationActions$1 = withTheme()(TablePaginationActions);
 
-  var styles$1s = function styles(theme) {
+  var styles$1t = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -31862,8 +32788,7 @@
       /* Styles applied to the Select component `root` class. */
       selectRoot: {
         marginRight: 32,
-        marginLeft: 8,
-        color: theme.palette.text.secondary
+        marginLeft: 8
       },
 
       /* Styles applied to the Select component `select` class. */
@@ -31879,6 +32804,7 @@
 
       /* Styles applied to the `InputBase` component. */
       input: {
+        color: 'inherit',
         fontSize: 'inherit',
         flexShrink: 0
       },
@@ -31889,7 +32815,6 @@
       /* Styles applied to the internal `TablePaginationActions` component. */
       actions: {
         flexShrink: 0,
-        color: theme.palette.text.secondary,
         marginLeft: 20
       }
     };
@@ -31943,7 +32868,8 @@
             page = _this$props2.page,
             rowsPerPage = _this$props2.rowsPerPage,
             rowsPerPageOptions = _this$props2.rowsPerPageOptions,
-            SelectProps = _this$props2.SelectProps,
+            _this$props2$SelectPr = _this$props2.SelectProps,
+            SelectProps = _this$props2$SelectPr === void 0 ? {} : _this$props2$SelectPr,
             other = objectWithoutProperties(_this$props2, ["ActionsComponent", "backIconButtonProps", "classes", "colSpan", "component", "count", "labelDisplayedRows", "labelRowsPerPage", "nextIconButtonProps", "onChangePage", "onChangeRowsPerPage", "page", "rowsPerPage", "rowsPerPageOptions", "SelectProps"]);
 
         var colSpan;
@@ -31952,6 +32878,7 @@
           colSpan = colSpanProp || 1000; // col-span over everything
         }
 
+        var MenuItemComponent = SelectProps.native ? 'option' : MenuItem$1;
         return React.createElement(Component, _extends_1({
           className: classes.root,
           colSpan: colSpan
@@ -31975,7 +32902,7 @@
           value: rowsPerPage,
           onChange: onChangeRowsPerPage
         }, SelectProps), rowsPerPageOptions.map(function (rowsPerPageOption) {
-          return React.createElement(MenuItem$1, {
+          return React.createElement(MenuItemComponent, {
             className: classes.menuItem,
             key: rowsPerPageOption,
             value: rowsPerPageOption
@@ -32031,7 +32958,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * The total number of rows.
@@ -32100,13 +33027,13 @@
       return "".concat(from, "-").concat(to, " of ").concat(count);
     },
     labelRowsPerPage: 'Rows per page:',
-    rowsPerPageOptions: [5, 10, 25]
+    rowsPerPageOptions: [10, 25, 50, 100]
   };
-  var TablePagination$1 = withStyles(styles$1s, {
+  var TablePagination$1 = withStyles(styles$1t, {
     name: 'MuiTablePagination'
   })(TablePagination);
 
-  var styles$1t = function styles(theme) {
+  var styles$1u = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -32148,9 +33075,7 @@
    * based on the material table element parent (head, body, etc).
    */
 
-  function TableRow(props, context) {
-    var _classNames;
-
+  function TableRow(props) {
     var classes = props.classes,
         classNameProp = props.className,
         Component = props.component,
@@ -32158,11 +33083,14 @@
         selected = props.selected,
         other = objectWithoutProperties(props, ["classes", "className", "component", "hover", "selected"]);
 
-    var tablelvl2 = context.tablelvl2;
-    var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.head, tablelvl2 && tablelvl2.variant === 'head'), defineProperty(_classNames, classes.footer, tablelvl2 && tablelvl2.variant === 'footer'), defineProperty(_classNames, classes.hover, hover), defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
-    return React.createElement(Component, _extends_1({
-      className: className
-    }, other));
+    return React.createElement(Tablelvl2Context.Consumer, null, function (tablelvl2) {
+      var _classNames;
+
+      var className = classnames(classes.root, (_classNames = {}, defineProperty(_classNames, classes.head, tablelvl2 && tablelvl2.variant === 'head'), defineProperty(_classNames, classes.footer, tablelvl2 && tablelvl2.variant === 'footer'), defineProperty(_classNames, classes.hover, hover), defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
+      return React.createElement(Component, _extends_1({
+        className: className
+      }, other));
+    });
   }
 
   TableRow.propTypes = {
@@ -32186,7 +33114,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the table row will shade on hover.
@@ -32203,10 +33131,7 @@
     hover: false,
     selected: false
   };
-  TableRow.contextTypes = {
-    tablelvl2: propTypes.object
-  };
-  var TableRow$1 = withStyles(styles$1t, {
+  var TableRow$1 = withStyles(styles$1u, {
     name: 'MuiTableRow'
   })(TableRow);
 
@@ -32226,7 +33151,7 @@
   ArrowDownward.muiName = 'SvgIcon';
   var ArrowDownwardIcon = ArrowDownward;
 
-  var styles$1u = function styles(theme) {
+  var styles$1v = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -32341,7 +33266,7 @@
     hideSortIcon: false,
     IconComponent: ArrowDownwardIcon
   };
-  var TableSortLabel$1 = withStyles(styles$1u, {
+  var TableSortLabel$1 = withStyles(styles$1v, {
     name: 'MuiTableSortLabel'
   })(TableSortLabel);
 
@@ -32488,12 +33413,13 @@
     return cancel;
   }
 
-  var styles$1v = {
-    width: 100,
-    height: 100,
+  var styles$1w = {
+    width: 90,
+    height: 90,
     position: 'absolute',
-    top: -10000,
+    top: -9000,
     overflow: 'scroll',
+    // Support IE 11
     msOverflowStyle: 'scrollbar'
   };
   /**
@@ -32514,6 +33440,10 @@
 
       _this = possibleConstructorReturn(this, getPrototypeOf(ScrollbarSize).call(this));
 
+      _this.handleRef = function (ref) {
+        _this.nodeRef = ref;
+      };
+
       _this.setMeasurements = function () {
         var nodeRef = _this.nodeRef;
 
@@ -32522,22 +33452,16 @@
         }
 
         _this.scrollbarHeight = nodeRef.offsetHeight - nodeRef.clientHeight;
-        _this.scrollbarWidth = nodeRef.offsetWidth - nodeRef.clientWidth;
       };
 
       if (typeof window !== 'undefined') {
         _this.handleResize = debounce_1(function () {
-          var onChange = _this.props.onChange;
           var prevHeight = _this.scrollbarHeight;
-          var prevWidth = _this.scrollbarWidth;
 
           _this.setMeasurements();
 
-          if (prevHeight !== _this.scrollbarHeight || prevWidth !== _this.scrollbarWidth) {
-            onChange({
-              scrollbarHeight: _this.scrollbarHeight,
-              scrollbarWidth: _this.scrollbarWidth
-            });
+          if (prevHeight !== _this.scrollbarHeight) {
+            _this.props.onChange(_this.scrollbarHeight);
           }
         }, 166); // Corresponds to 10 frames at 60 Hz.
       }
@@ -32549,10 +33473,7 @@
       key: "componentDidMount",
       value: function componentDidMount() {
         this.setMeasurements();
-        this.props.onLoad({
-          scrollbarHeight: this.scrollbarHeight,
-          scrollbarWidth: this.scrollbarWidth
-        });
+        this.props.onChange(this.scrollbarHeight);
       }
     }, {
       key: "componentWillUnmount",
@@ -32562,17 +33483,12 @@
     }, {
       key: "render",
       value: function render() {
-        var _this2 = this;
-
-        var onChange = this.props.onChange;
-        return React.createElement("div", null, onChange ? React.createElement(EventListener, {
+        return React.createElement(React.Fragment, null, React.createElement(EventListener, {
           target: "window",
           onResize: this.handleResize
-        }) : null, React.createElement("div", {
-          style: styles$1v,
-          ref: function ref(_ref) {
-            _this2.nodeRef = _ref;
-          }
+        }), React.createElement("div", {
+          style: styles$1w,
+          ref: this.handleRef
         }));
       }
     }]);
@@ -32581,11 +33497,10 @@
   }(React.Component);
 
   ScrollbarSize.propTypes = {
-    onChange: propTypes.func.isRequired,
-    onLoad: propTypes.func.isRequired
+    onChange: propTypes.func.isRequired
   };
 
-  var styles$1w = function styles(theme) {
+  var styles$1x = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -32641,11 +33556,11 @@
      */
     color: propTypes.oneOf(['primary', 'secondary'])
   };
-  var TabIndicator$1 = withStyles(styles$1w, {
-    name: 'MuiTabIndicator'
+  var TabIndicator$1 = withStyles(styles$1x, {
+    name: 'MuiPrivateTabIndicator'
   })(TabIndicator);
 
-  var styles$1x = {
+  var styles$1y = {
     /* Styles applied to the root element. */
     root: {
       color: 'inherit',
@@ -32713,11 +33628,11 @@
   TabScrollButton.defaultProps = {
     visible: true
   };
-  var TabScrollButton$1 = withStyles(styles$1x, {
-    name: 'MuiTabScrollButton'
+  var TabScrollButton$1 = withStyles(styles$1y, {
+    name: 'MuiPrivateTabScrollButton'
   })(TabScrollButton);
 
-  var styles$1y = function styles(theme) {
+  var styles$1z = function styles(theme) {
     return {
       /* Styles applied to the root element. */
       root: {
@@ -32799,7 +33714,6 @@
             theme = _this$props.theme;
         var conditionalElements = {};
         conditionalElements.scrollbarSizeListener = scrollable ? React.createElement(ScrollbarSize, {
-          onLoad: _this.handleScrollbarSizeChange,
           onChange: _this.handleScrollbarSizeChange
         }) : null;
         var showScrollButtons = scrollable && (scrollButtons === 'auto' || scrollButtons === 'on');
@@ -32843,7 +33757,7 @@
           if (children.length > 0) {
             var tab = children[_this.valueToIndex.get(value)];
 
-            warning_1(tab, "Material-UI: the value provided `".concat(value, "` is invalid"));
+            warning_1(tab, ["Material-UI: the value provided `".concat(value, "` to the Tabs component is invalid."), 'Non of the Tabs children have this value.', _this.valueToIndex.keys ? "You can provide one of the following values: ".concat(Array.from(_this.valueToIndex.keys()).join(', '), ".") : null].join('\n'));
             tabMeta = tab ? tab.getBoundingClientRect() : null;
           }
         }
@@ -32862,9 +33776,7 @@
         _this.moveTabsScroll(_this.tabsRef.clientWidth);
       };
 
-      _this.handleScrollbarSizeChange = function (_ref) {
-        var scrollbarHeight = _ref.scrollbarHeight;
-
+      _this.handleScrollbarSizeChange = function (scrollbarHeight) {
         _this.setState({
           scrollerStyle: {
             marginBottom: -scrollbarHeight
@@ -32953,7 +33865,6 @@
     createClass(Tabs, [{
       key: "componentDidMount",
       value: function componentDidMount() {
-        // eslint-disable-next-line react/no-did-mount-set-state
         this.setState({
           mounted: true
         });
@@ -33083,8 +33994,8 @@
         }, conditionalElements.scrollButtonLeft, React.createElement("div", {
           className: scrollerClassName,
           style: this.state.scrollerStyle,
-          ref: function ref(_ref2) {
-            _this2.tabsRef = _ref2;
+          ref: function ref(_ref) {
+            _this2.tabsRef = _ref;
           },
           role: "tablist",
           onScroll: this.handleTabsScroll
@@ -33134,7 +34045,7 @@
      * The component used for the root node.
      * Either a string to use a DOM element or a component.
      */
-    component: propTypes.oneOfType([propTypes.string, propTypes.func, propTypes.object]),
+    component: componentPropType,
 
     /**
      * If `true`, the tabs will grow to use all the available space.
@@ -33205,7 +34116,7 @@
     scrollButtons: 'auto',
     textColor: 'inherit'
   };
-  var Tabs$1 = withStyles(styles$1y, {
+  var Tabs$1 = withStyles(styles$1z, {
     name: 'MuiTabs',
     withTheme: true
   })(Tabs);
@@ -33526,7 +34437,7 @@
     variant: 'standard'
   };
 
-  var styles$1z = function styles(theme) {
+  var styles$1A = function styles(theme) {
     return {
       /* Styles applied to the Popper component. */
       popper: {
@@ -33764,7 +34675,7 @@
     createClass(Tooltip, [{
       key: "componentDidMount",
       value: function componentDidMount() {
-        warning_1(!this.childrenRef.disabled || !this.childrenRef.tagName.toLowerCase() === 'button', ['Material-UI: you are providing a disabled `button` child to the Tooltip component.', 'A disabled element does not fire events.', "Tooltip needs to listen to the child element's events to display the title.", '', 'Place a `div` container on top of the element.'].join('\n')); // Fallback to this default id when possible.
+        warning_1(!this.childrenRef.disabled || this.childrenRef.disabled && this.props.title === '' || this.childrenRef.tagName.toLowerCase() !== 'button', ['Material-UI: you are providing a disabled `button` child to the Tooltip component.', 'A disabled element does not fire events.', "Tooltip needs to listen to the child element's events to display the title.", '', 'Place a `div` container on top of the element.'].join('\n')); // Fallback to this default id when possible.
         // Use the random value for client side rendering only.
         // We can't use it server side.
 
@@ -33797,6 +34708,7 @@
             enterDelay = _this$props5.enterDelay,
             enterTouchDelay = _this$props5.enterTouchDelay,
             id = _this$props5.id,
+            interactive = _this$props5.interactive,
             leaveDelay = _this$props5.leaveDelay,
             leaveTouchDelay = _this$props5.leaveTouchDelay,
             onClose = _this$props5.onClose,
@@ -33808,18 +34720,27 @@
             title$$1 = _this$props5.title,
             TransitionComponent = _this$props5.TransitionComponent,
             TransitionProps = _this$props5.TransitionProps,
-            other = objectWithoutProperties(_this$props5, ["children", "classes", "disableFocusListener", "disableHoverListener", "disableTouchListener", "enterDelay", "enterTouchDelay", "id", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperProps", "theme", "title", "TransitionComponent", "TransitionProps"]);
+            other = objectWithoutProperties(_this$props5, ["children", "classes", "disableFocusListener", "disableHoverListener", "disableTouchListener", "enterDelay", "enterTouchDelay", "id", "interactive", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperProps", "theme", "title", "TransitionComponent", "TransitionProps"]);
 
-        var open = this.isControlled ? openProp : this.state.open; // There is no point at displaying an empty tooltip.
+        var open = this.isControlled ? openProp : this.state.open; // There is no point in displaying an empty tooltip.
 
         if (title$$1 === '') {
           open = false;
-        }
+        } // For accessibility and SEO concerns, we render the title to the DOM node when
+        // the tooltip is hidden. However, we have made a tradeoff when
+        // `disableHoverListener` is set. This title logic is disabled.
+        // It's allowing us to keep the implementation size minimal.
+        // We are open to change the tradeoff.
+
+
+        var shouldShowNativeTitle = !open && !disableHoverListener;
 
         var childrenProps = _extends_1({
           'aria-describedby': open ? id || this.defaultId : null,
-          title: !open && typeof title$$1 === 'string' ? title$$1 : null
-        }, other);
+          title: shouldShowNativeTitle && typeof title$$1 === 'string' ? title$$1 : null
+        }, other, children.props, {
+          className: classnames(other.className, children.props.className)
+        });
 
         if (!disableTouchListener) {
           childrenProps.onTouchStart = this.handleTouchStart;
@@ -33836,17 +34757,23 @@
           childrenProps.onBlur = this.handleLeave;
         }
 
+        var interactiveWrapperListeners = interactive ? {
+          onMouseOver: childrenProps.onMouseOver,
+          onMouseLeave: childrenProps.onMouseLeave,
+          onFocus: childrenProps.onFocus,
+          onBlur: childrenProps.onBlur
+        } : {};
         warning_1(!children.props.title, ['Material-UI: you have provided a `title` property to the child of <Tooltip />.', "Remove this title property `".concat(children.props.title, "` or the Tooltip component.")].join('\n'));
         return React.createElement(React.Fragment, null, React.createElement(RootRef, {
           rootRef: this.onRootRef
-        }, React.cloneElement(children, childrenProps)), React.createElement(Popper$2, _extends_1({
+        }, React.cloneElement(children, childrenProps)), React.createElement(Popper$1, _extends_1({
           className: classes.popper,
           placement: placement,
           anchorEl: this.childrenRef,
           open: open,
           id: childrenProps['aria-describedby'],
           transition: true
-        }, PopperProps), function (_ref) {
+        }, interactiveWrapperListeners, PopperProps), function (_ref) {
           var placementInner = _ref.placement,
               TransitionPropsInner = _ref.TransitionProps;
           return React.createElement(TransitionComponent, _extends_1({
@@ -33902,9 +34829,15 @@
     /**
      * The relationship between the tooltip and the wrapper component is not clear from the DOM.
      * This property is used with aria-describedby to solve the accessibility issue.
-     * If you don't provide this property. It fallback to a random generated id.
+     * If you don't provide this property. It falls back to a randomly generated id.
      */
     id: propTypes.string,
+
+    /**
+     * Makes a tooltip interactive, i.e. will not close when the user
+     * hovers over the tooltip before the `leaveDelay` is expired.
+     */
+    interactive: propTypes.bool,
 
     /**
      * The number of milliseconds to wait before hiding the tooltip.
@@ -33972,12 +34905,13 @@
     disableTouchListener: false,
     enterDelay: 0,
     enterTouchDelay: 1000,
+    interactive: false,
     leaveDelay: 0,
     leaveTouchDelay: 1500,
     placement: 'bottom',
     TransitionComponent: Grow$1
   };
-  var Tooltip$1 = withStyles(styles$1z, {
+  var Tooltip$1 = withStyles(styles$1A, {
     name: 'MuiTooltip',
     withTheme: true
   })(Tooltip);
@@ -34007,7 +34941,7 @@
     };
   };
 
-  var styles$1A = {
+  var styles$1B = {
     entering: {
       transform: 'scale(1)'
     },
@@ -34092,7 +35026,7 @@
             style: _extends_1({
               transform: 'scale(0)',
               willChange: 'transform'
-            }, styles$1A[state], style)
+            }, styles$1B[state], style)
           }, childProps));
         });
       }
@@ -34188,6 +35122,7 @@
   exports.ExpansionPanelActions = ExpansionPanelActions$1;
   exports.ExpansionPanelDetails = ExpansionPanelDetails$1;
   exports.ExpansionPanelSummary = ExpansionPanelSummary$1;
+  exports.Fab = Fab$1;
   exports.Fade = Fade$1;
   exports.FilledInput = FilledInput$1;
   exports.FormControl = FormControl$1;
@@ -34226,7 +35161,7 @@
   exports.OutlinedInput = OutlinedInput$1;
   exports.Paper = Paper$1;
   exports.Popover = Popover$1;
-  exports.Popper = Popper$2;
+  exports.Popper = Popper$1;
   exports.Portal = Portal;
   exports.Radio = Radio$1;
   exports.RadioGroup = RadioGroup;

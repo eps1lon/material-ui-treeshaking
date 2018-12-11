@@ -263,5 +263,5 @@ Textarea.defaultProps = {
   rows: 1
 };
 export default withStyles(styles, {
-  name: 'MuiTextarea'
+  name: 'MuiPrivateTextarea'
 })(Textarea);

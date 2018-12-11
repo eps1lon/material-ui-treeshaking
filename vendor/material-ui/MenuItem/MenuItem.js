@@ -19,6 +19,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _ListItem = _interopRequireDefault(require("../ListItem"));
@@ -32,12 +34,15 @@ var styles = function styles(theme) {
       boxSizing: 'content-box',
       width: 'auto',
       overflow: 'hidden',
-      textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
-      paddingLeft: 16,
-      paddingRight: 16,
       '&$selected': {}
     }),
+
+    /* Styles applied to the root element if `disableGutters={false}`. */
+    gutters: {
+      paddingLeft: 16,
+      paddingRight: 16
+    },
 
     /* Styles applied to the root element if `selected={true}`. */
     selected: {}
@@ -47,19 +52,23 @@ var styles = function styles(theme) {
 exports.styles = styles;
 
 function MenuItem(props) {
+  var _classNames;
+
   var classes = props.classes,
       className = props.className,
       component = props.component,
-      selected = props.selected,
+      disableGutters = props.disableGutters,
       role = props.role,
-      other = (0, _objectWithoutProperties2.default)(props, ["classes", "className", "component", "selected", "role"]);
+      selected = props.selected,
+      other = (0, _objectWithoutProperties2.default)(props, ["classes", "className", "component", "disableGutters", "role", "selected"]);
   return _react.default.createElement(_ListItem.default, (0, _extends2.default)({
     button: true,
     role: role,
     tabIndex: -1,
+    component: component,
     selected: selected,
-    className: (0, _classnames.default)(classes.root, (0, _defineProperty2.default)({}, classes.selected, selected), className),
-    component: component
+    disableGutters: disableGutters,
+    className: (0, _classnames.default)(classes.root, (_classNames = {}, (0, _defineProperty2.default)(_classNames, classes.selected, selected), (0, _defineProperty2.default)(_classNames, classes.gutters, !disableGutters), _classNames), className)
   }, other));
 }
 
@@ -84,7 +93,12 @@ MenuItem.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
+
+  /**
+   * If `true`, the left and right padding is removed.
+   */
+  disableGutters: _propTypes.default.bool,
 
   /**
    * @ignore
@@ -98,6 +112,7 @@ MenuItem.propTypes = {
 };
 MenuItem.defaultProps = {
   component: 'li',
+  disableGutters: false,
   role: 'menuitem'
 };
 

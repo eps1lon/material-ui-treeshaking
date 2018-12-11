@@ -10,11 +10,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
-import withTheme from '../styles/withTheme';
 import Portal from '../Portal';
 
-function flipPlacement(theme, placement) {
-  if (theme.direction !== 'rtl') {
+function flipPlacement(placement) {
+  var direction = typeof window !== 'undefined' && document.body.getAttribute('dir') || 'ltr';
+
+  if (direction !== 'rtl') {
     return placement;
   }
 
@@ -64,7 +65,6 @@ function (_React$Component) {
           placement = _this$props.placement,
           _this$props$popperOpt = _this$props.popperOptions,
           popperOptions = _this$props$popperOpt === void 0 ? {} : _this$props$popperOpt,
-          theme = _this$props.theme,
           disablePortal = _this$props.disablePortal;
       var popperNode = ReactDOM.findDOMNode(_assertThisInitialized(_assertThisInitialized(_this)));
 
@@ -79,7 +79,7 @@ function (_React$Component) {
       }
 
       _this.popper = new PopperJS(getAnchorEl(anchorEl), popperNode, _extends({
-        placement: flipPlacement(theme, placement)
+        placement: flipPlacement(placement)
       }, popperOptions, {
         modifiers: _extends({}, disablePortal ? {} : {
           // It's using scrollParent by default, we can use the viewport when using a portal.
@@ -170,7 +170,7 @@ function (_React$Component) {
       }
 
       var childProps = {
-        placement: placement || flipPlacement(theme, placementProps)
+        placement: placement || flipPlacement(placementProps)
       };
 
       if (transition) {
@@ -277,11 +277,6 @@ Popper.propTypes = {
   popperOptions: PropTypes.object,
 
   /**
-   * @ignore
-   */
-  theme: PropTypes.object.isRequired,
-
-  /**
    * Help supporting a react-transition-group/Transition component.
    */
   transition: PropTypes.bool
@@ -291,4 +286,4 @@ Popper.defaultProps = {
   placement: 'bottom',
   transition: false
 };
-export default withTheme()(Popper);
+export default Popper;

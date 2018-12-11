@@ -7,7 +7,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ownerDocument from '../utils/ownerDocument';
-import exactProp from '../utils/exactProp';
+import { exactProp } from '@material-ui/utils';
 
 function getContainer(container, defaultContainer) {
   container = typeof container === 'function' ? container() : container;
@@ -133,5 +133,9 @@ Portal.propTypes = {
 Portal.defaultProps = {
   disablePortal: false
 };
-Portal.propTypes = exactProp(Portal.propTypes);
+
+if (process.env.NODE_ENV !== 'production') {
+  Portal.propTypes = exactProp(Portal.propTypes);
+}
+
 export default Portal;

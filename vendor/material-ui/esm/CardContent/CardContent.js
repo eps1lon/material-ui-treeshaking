@@ -3,18 +3,16 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
-export var styles = function styles(theme) {
-  return {
-    /* Styles applied to the root element. */
-    root: theme.mixins.gutters({
-      paddingTop: 16,
-      paddingBottom: 16,
-      '&:last-child': {
-        paddingBottom: 24
-      }
-    })
-  };
+export var styles = {
+  /* Styles applied to the root element. */
+  root: {
+    padding: 16,
+    '&:last-child': {
+      paddingBottom: 24
+    }
+  }
 };
 
 function CardContent(props) {
@@ -44,7 +42,7 @@ CardContent.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object])
+  component: componentPropType
 };
 CardContent.defaultProps = {
   component: 'div'

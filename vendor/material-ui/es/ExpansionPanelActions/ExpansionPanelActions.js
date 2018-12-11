@@ -35,7 +35,7 @@ function ExpansionPanelActions(props) {
   }, other), cloneChildrenWithClassName(children, classes.action));
 }
 
-ExpansionPanelActions.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ExpansionPanelActions.propTypes = {
   /**
    * The content of the component.
    */
@@ -51,7 +51,7 @@ ExpansionPanelActions.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   className: PropTypes.string
-} : {};
+} : void 0;
 export default withStyles(styles, {
   name: 'MuiExpansionPanelActions'
 })(ExpansionPanelActions);

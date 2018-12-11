@@ -69,10 +69,14 @@ export const styles = theme => {
 
       },
       '&:hover:not($disabled):not($focused):not($error):before': {
-        borderBottom: `2px solid ${theme.palette.text.primary}`
+        borderBottom: `2px solid ${theme.palette.text.primary}`,
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          borderBottom: `1px solid ${bottomLineColor}`
+        }
       },
       '&$disabled:before': {
-        borderBottom: `1px dotted ${bottomLineColor}`
+        borderBottomStyle: 'dotted'
       }
     },
 
@@ -119,7 +123,7 @@ function Input(props) {
   }, other));
 }
 
-Input.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Input.propTypes = {
   /**
    * This property helps users to fill forms faster, especially on mobile devices.
    * The name can be confusing, as it's more like an autofill.
@@ -147,7 +151,7 @@ Input.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The default input value, useful when not controlling the component.
    */
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]),
 
   /**
    * If `true`, the input will be disabled.
@@ -259,8 +263,8 @@ Input.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The input value, required for a controlled component.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))])
-} : {};
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))])
+} : void 0;
 InputBase.defaultProps = {
   fullWidth: false,
   inputComponent: 'input',

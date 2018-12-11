@@ -19,9 +19,9 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
-var _warning = _interopRequireDefault(require("warning"));
-
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
+
+var _ListContext = _interopRequireDefault(require("../List/ListContext"));
 
 var styles = function styles(theme) {
   return {
@@ -33,6 +33,11 @@ var styles = function styles(theme) {
       marginRight: 4
     },
 
+    /* Styles applied to the root element when. */
+    alignItemsFlexStart: {
+      marginTop: 4
+    },
+
     /* Styles applied to the children – typically the `Avatar` component. */
     icon: {
       width: 20,
@@ -42,27 +47,26 @@ var styles = function styles(theme) {
   };
 };
 /**
- * This is a simple wrapper to apply the `dense` mode styles to `Avatar`.
+ * This is a simple wrapper to apply the `dense`
+ * and `align-items="flex-start"` mode styles to `Avatar`.
  */
 
 
 exports.styles = styles;
 
-function ListItemAvatar(props, context) {
+function ListItemAvatar(props) {
   var children = props.children,
       classes = props.classes,
-      classNameProp = props.className,
+      className = props.className,
       other = (0, _objectWithoutProperties2.default)(props, ["children", "classes", "className"]);
+  return _react.default.createElement(_ListContext.default.Consumer, null, function (context) {
+    var _classNames;
 
-  if (context.dense === undefined) {
-    (0, _warning.default)(false, "Material-UI: <ListItemAvatar> is a simple wrapper to apply the dense styles\n      to <Avatar>. You do not need it unless you are controlling the <List> dense property.");
-    return props.children;
-  }
-
-  return _react.default.cloneElement(children, (0, _extends2.default)({
-    className: (0, _classnames.default)((0, _defineProperty2.default)({}, classes.root, context.dense), classNameProp, children.props.className),
-    childrenClassName: (0, _classnames.default)((0, _defineProperty2.default)({}, classes.icon, context.dense), children.props.childrenClassName)
-  }, other));
+    return _react.default.cloneElement(children, (0, _extends2.default)({
+      className: (0, _classnames.default)((_classNames = {}, (0, _defineProperty2.default)(_classNames, classes.root, context.dense), (0, _defineProperty2.default)(_classNames, classes.alignItemsFlexStart, context.alignItems === 'flex-start'), _classNames), className, children.props.className),
+      childrenClassName: (0, _classnames.default)((0, _defineProperty2.default)({}, classes.icon, context.dense), children.props.childrenClassName)
+    }, other));
+  });
 }
 
 ListItemAvatar.propTypes = {
@@ -81,9 +85,6 @@ ListItemAvatar.propTypes = {
    * @ignore
    */
   className: _propTypes.default.string
-};
-ListItemAvatar.contextTypes = {
-  dense: _propTypes.default.bool
 };
 ListItemAvatar.muiName = 'ListItemAvatar';
 

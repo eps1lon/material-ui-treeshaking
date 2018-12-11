@@ -10,6 +10,7 @@ import EventListener from 'react-event-listener';
 import debounce from 'debounce'; // < 1kb payload overhead when lodash/debounce is > 3kb.
 
 import { getNormalizedScrollLeft, detectScrollType } from 'normalize-scroll-left';
+import { componentPropType } from '@material-ui/utils';
 import animate from '../internal/animate';
 import ScrollbarSize from './ScrollbarSize';
 import withStyles from '../styles/withStyles';
@@ -90,7 +91,6 @@ class Tabs extends React.Component {
       } = this.props;
       const conditionalElements = {};
       conditionalElements.scrollbarSizeListener = scrollable ? React.createElement(ScrollbarSize, {
-        onLoad: this.handleScrollbarSizeChange,
         onChange: this.handleScrollbarSizeChange
       }) : null;
       const showScrollButtons = scrollable && (scrollButtons === 'auto' || scrollButtons === 'on');
@@ -136,7 +136,7 @@ class Tabs extends React.Component {
 
         if (children.length > 0) {
           const tab = children[this.valueToIndex.get(value)];
-          process.env.NODE_ENV !== "production" ? warning(tab, `Material-UI: the value provided \`${value}\` is invalid`) : void 0;
+          process.env.NODE_ENV !== "production" ? warning(tab, [`Material-UI: the value provided \`${value}\` to the Tabs component is invalid.`, 'Non of the Tabs children have this value.', this.valueToIndex.keys ? `You can provide one of the following values: ${Array.from(this.valueToIndex.keys()).join(', ')}.` : null].join('\n')) : void 0;
           tabMeta = tab ? tab.getBoundingClientRect() : null;
         }
       }
@@ -155,9 +155,7 @@ class Tabs extends React.Component {
       this.moveTabsScroll(this.tabsRef.clientWidth);
     };
 
-    this.handleScrollbarSizeChange = ({
-      scrollbarHeight
-    }) => {
+    this.handleScrollbarSizeChange = scrollbarHeight => {
       this.setState({
         scrollerStyle: {
           marginBottom: -scrollbarHeight
@@ -243,7 +241,6 @@ class Tabs extends React.Component {
   }
 
   componentDidMount() {
-    // eslint-disable-next-line react/no-did-mount-set-state
     this.setState({
       mounted: true
     });
@@ -379,7 +376,7 @@ class Tabs extends React.Component {
 
 }
 
-Tabs.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Tabs.propTypes = {
   /**
    * Callback fired when the component mounts.
    * This is useful when you want to trigger an action programmatically.
@@ -416,7 +413,7 @@ Tabs.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the tabs will grow to use all the available space.
@@ -476,7 +473,7 @@ Tabs.propTypes = process.env.NODE_ENV !== "production" ? {
    * If you don't want any selected `Tab`, you can set this property to `false`.
    */
   value: PropTypes.any
-} : {};
+} : void 0;
 Tabs.defaultProps = {
   centered: false,
   component: 'div',

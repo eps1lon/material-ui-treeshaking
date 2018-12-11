@@ -19,6 +19,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _createBreakpoints = require("../styles/createBreakpoints");
@@ -290,7 +292,7 @@ Grid.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * If `true`, the component will have the flex *container* behavior.

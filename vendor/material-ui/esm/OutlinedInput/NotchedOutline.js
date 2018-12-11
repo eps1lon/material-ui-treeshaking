@@ -7,16 +7,14 @@ import classNames from 'classnames';
 import { withStyles } from '../styles';
 import { capitalize } from '../utils/helpers';
 export var styles = function styles(theme) {
-  var light = theme.palette.type === 'light';
   var align = theme.direction === 'rtl' ? 'right' : 'left';
   return {
     /* Styles applied to the root element. */
     root: {
       position: 'absolute',
-      width: '100%',
-      height: '100%',
-      boxSizing: 'border-box',
-      top: 0,
+      bottom: 0,
+      right: 0,
+      top: -5,
       left: 0,
       margin: 0,
       padding: 0,
@@ -24,7 +22,6 @@ export var styles = function styles(theme) {
       borderRadius: theme.shape.borderRadius,
       borderStyle: 'solid',
       borderWidth: 1,
-      borderColor: light ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)',
       // Match the Input Label
       transition: theme.transitions.create(["padding-".concat(align), 'border-color', 'border-width'], {
         duration: theme.transitions.duration.shorter,
@@ -36,32 +33,11 @@ export var styles = function styles(theme) {
     legend: {
       textAlign: 'left',
       padding: 0,
+      lineHeight: '11px',
       transition: theme.transitions.create('width', {
         duration: theme.transitions.duration.shorter,
         easing: theme.transitions.easing.easeOut
-      }),
-      // Firefox workaround. Firefox will only obscure the
-      // rendered height of the legend and, unlike other browsers,
-      // will not push fieldset contents.
-      '@supports (-moz-appearance:none)': {
-        height: 2
-      }
-    },
-
-    /* Styles applied to the root element if the control is focused. */
-    focused: {
-      borderColor: theme.palette.primary.main,
-      borderWidth: 2
-    },
-
-    /* Styles applied to the root element if `error={true}`. */
-    error: {
-      borderColor: theme.palette.error.main
-    },
-
-    /* Styles applied to the root element if `disabled={true}`. */
-    disabled: {
-      borderColor: theme.palette.action.disabled
+      })
     }
   };
 };
@@ -70,26 +46,21 @@ export var styles = function styles(theme) {
  */
 
 function NotchedOutline(props) {
-  var _classNames;
-
   var children = props.children,
       classes = props.classes,
       className = props.className,
-      disabled = props.disabled,
-      error = props.error,
-      focused = props.focused,
       labelWidthProp = props.labelWidth,
       notched = props.notched,
       style = props.style,
       theme = props.theme,
-      other = _objectWithoutProperties(props, ["children", "classes", "className", "disabled", "error", "focused", "labelWidth", "notched", "style", "theme"]);
+      other = _objectWithoutProperties(props, ["children", "classes", "className", "labelWidth", "notched", "style", "theme"]);
 
   var align = theme.direction === 'rtl' ? 'right' : 'left';
   var labelWidth = labelWidthProp > 0 ? labelWidthProp * 0.75 + 8 : 0;
   return React.createElement("fieldset", _extends({
     "aria-hidden": true,
     style: _extends(_defineProperty({}, "padding".concat(capitalize(align)), 8 + (notched ? 0 : labelWidth / 2)), style),
-    className: classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.focused, focused), _defineProperty(_classNames, classes.error, error), _defineProperty(_classNames, classes.disabled, disabled), _classNames), className)
+    className: classNames(classes.root, className)
   }, other), React.createElement("legend", {
     className: classes.legend,
     style: {
@@ -98,7 +69,11 @@ function NotchedOutline(props) {
       // by always having a legend rendered
       width: notched ? labelWidth : 0.01
     }
-  }));
+  }, React.createElement("span", {
+    dangerouslySetInnerHTML: {
+      __html: '&#8203;'
+    }
+  })));
 }
 
 NotchedOutline.propTypes = {
@@ -112,21 +87,6 @@ NotchedOutline.propTypes = {
    * @ignore
    */
   className: PropTypes.string,
-
-  /**
-   * If `true`, the outline should be displayed in a disabled state.
-   */
-  disabled: PropTypes.bool,
-
-  /**
-   * If `true`, the outline should be displayed in an error state.
-   */
-  error: PropTypes.bool,
-
-  /**
-   * If `true`, the outline should be displayed in a focused state.
-   */
-  focused: PropTypes.bool,
 
   /**
    * The width of the legend.
@@ -149,6 +109,6 @@ NotchedOutline.propTypes = {
   theme: PropTypes.object
 };
 export default withStyles(styles, {
-  name: 'MuiNotchedOutline',
+  name: 'MuiPrivateNotchedOutline',
   withTheme: true
 })(NotchedOutline);

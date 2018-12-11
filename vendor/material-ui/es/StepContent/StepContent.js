@@ -60,7 +60,7 @@ function StepContent(props) {
   }, TransitionProps), children));
 }
 
-StepContent.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? StepContent.propTypes = {
   /**
    * @ignore
    * Expands the content.
@@ -113,7 +113,7 @@ StepContent.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * Collapse component.
    */
-  TransitionComponent: PropTypes.func,
+  TransitionComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
 
   /**
    * Adjust the duration of the content expand transition.
@@ -130,7 +130,7 @@ StepContent.propTypes = process.env.NODE_ENV !== "production" ? {
    * Properties applied to the `Transition` element.
    */
   TransitionProps: PropTypes.object
-} : {};
+} : void 0;
 StepContent.defaultProps = {
   TransitionComponent: Collapse,
   transitionDuration: 'auto'

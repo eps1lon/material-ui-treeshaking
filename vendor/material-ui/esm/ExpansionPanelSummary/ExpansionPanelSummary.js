@@ -102,16 +102,24 @@ function (_React$Component) {
       focused: false
     };
 
-    _this.handleFocus = function () {
+    _this.handleFocusVisible = function (event) {
       _this.setState({
         focused: true
       });
+
+      if (_this.props.onFocusVisible) {
+        _this.props.onFocusVisible(event);
+      }
     };
 
-    _this.handleBlur = function () {
+    _this.handleBlur = function (event) {
       _this.setState({
         focused: false
       });
+
+      if (_this.props.onBlur) {
+        _this.props.onBlur(event);
+      }
     };
 
     _this.handleChange = function (event) {
@@ -144,8 +152,11 @@ function (_React$Component) {
           expanded = _this$props2.expanded,
           expandIcon = _this$props2.expandIcon,
           IconButtonProps = _this$props2.IconButtonProps,
+          onBlur = _this$props2.onBlur,
           onChange = _this$props2.onChange,
-          other = _objectWithoutProperties(_this$props2, ["children", "classes", "className", "disabled", "expanded", "expandIcon", "IconButtonProps", "onChange"]);
+          onClick = _this$props2.onClick,
+          onFocusVisible = _this$props2.onFocusVisible,
+          other = _objectWithoutProperties(_this$props2, ["children", "classes", "className", "disabled", "expanded", "expandIcon", "IconButtonProps", "onBlur", "onChange", "onClick", "onFocusVisible"]);
 
       var focused = this.state.focused;
       return React.createElement(ButtonBase, _extends({
@@ -154,12 +165,11 @@ function (_React$Component) {
         disabled: disabled,
         component: "div",
         "aria-expanded": expanded,
-        className: classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.disabled, disabled), _defineProperty(_classNames, classes.expanded, expanded), _defineProperty(_classNames, classes.focused, focused), _classNames), className)
-      }, other, {
-        onFocusVisible: this.handleFocus,
+        className: classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.disabled, disabled), _defineProperty(_classNames, classes.expanded, expanded), _defineProperty(_classNames, classes.focused, focused), _classNames), className),
+        onFocusVisible: this.handleFocusVisible,
         onBlur: this.handleBlur,
         onClick: this.handleChange
-      }), React.createElement("div", {
+      }, other), React.createElement("div", {
         className: classNames(classes.content, _defineProperty({}, classes.expanded, expanded))
       }, children), expandIcon && React.createElement(IconButton, _extends({
         disabled: disabled,

@@ -84,7 +84,7 @@ function StepConnector(props) {
   }));
 }
 
-StepConnector.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? StepConnector.propTypes = {
   /**
    * @ignore
    */
@@ -126,7 +126,7 @@ StepConnector.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   orientation: PropTypes.oneOf(['horizontal', 'vertical'])
-} : {};
+} : void 0;
 StepConnector.defaultProps = {
   alternativeLabel: false,
   orientation: 'horizontal'

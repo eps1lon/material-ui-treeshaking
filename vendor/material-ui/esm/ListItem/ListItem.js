@@ -1,17 +1,14 @@
 import _extends from "@babel/runtime/helpers/extends";
 import _defineProperty from "@babel/runtime/helpers/defineProperty";
 import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
-import _classCallCheck from "@babel/runtime/helpers/classCallCheck";
-import _createClass from "@babel/runtime/helpers/createClass";
-import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
-import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
-import _inherits from "@babel/runtime/helpers/inherits";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import ButtonBase from '../ButtonBase';
 import { isMuiElement } from '../utils/reactHelpers';
+import MergeListContext from './MergeListContext';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the (normally root) `component` element. May be wrapped by a `container`. */
@@ -53,6 +50,11 @@ export var styles = function styles(theme) {
       paddingBottom: 8
     },
 
+    /* Styles applied to the `component` element if `alignItems="flex-start"`. */
+    alignItemsFlexStart: {
+      alignItems: 'flex-start'
+    },
+
     /* Styles applied to the inner `component` element if `disabled={true}`. */
     disabled: {
       opacity: 0.5
@@ -65,7 +67,10 @@ export var styles = function styles(theme) {
     },
 
     /* Styles applied to the inner `component` element if `disableGutters={false}`. */
-    gutters: theme.mixins.gutters(),
+    gutters: {
+      paddingLeft: 16,
+      paddingRight: 16
+    },
 
     /* Styles applied to the inner `component` element if `button={true}`. */
     button: {
@@ -94,95 +99,81 @@ export var styles = function styles(theme) {
   };
 };
 
-var ListItem =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(ListItem, _React$Component);
+function ListItem(props) {
+  var alignItems = props.alignItems,
+      button = props.button,
+      childrenProp = props.children,
+      classes = props.classes,
+      classNameProp = props.className,
+      componentProp = props.component,
+      ContainerComponent = props.ContainerComponent,
+      _props$ContainerProps = props.ContainerProps;
+  _props$ContainerProps = _props$ContainerProps === void 0 ? {} : _props$ContainerProps;
 
-  function ListItem() {
-    _classCallCheck(this, ListItem);
+  var ContainerClassName = _props$ContainerProps.className,
+      ContainerProps = _objectWithoutProperties(_props$ContainerProps, ["className"]),
+      denseProp = props.dense,
+      disabled = props.disabled,
+      disableGutters = props.disableGutters,
+      divider = props.divider,
+      focusVisibleClassName = props.focusVisibleClassName,
+      selected = props.selected,
+      other = _objectWithoutProperties(props, ["alignItems", "button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(ListItem).apply(this, arguments));
-  }
+  return React.createElement(MergeListContext, {
+    dense: denseProp,
+    alignItems: alignItems
+  }, function (_ref) {
+    var _classNames;
 
-  _createClass(ListItem, [{
-    key: "getChildContext",
-    value: function getChildContext() {
-      return {
-        dense: this.props.dense || this.context.dense || false
-      };
+    var dense = _ref.dense;
+    var children = React.Children.toArray(childrenProp);
+    var hasAvatar = children.some(function (value) {
+      return isMuiElement(value, ['ListItemAvatar']);
+    });
+    var hasSecondaryAction = children.length && isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
+    var className = classNames(classes.root, classes.default, (_classNames = {}, _defineProperty(_classNames, classes.dense, dense || hasAvatar), _defineProperty(_classNames, classes.gutters, !disableGutters), _defineProperty(_classNames, classes.divider, divider), _defineProperty(_classNames, classes.disabled, disabled), _defineProperty(_classNames, classes.button, button), _defineProperty(_classNames, classes.alignItemsFlexStart, alignItems === 'flex-start'), _defineProperty(_classNames, classes.secondaryAction, hasSecondaryAction), _defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
+
+    var componentProps = _extends({
+      className: className,
+      disabled: disabled
+    }, other);
+
+    var Component = componentProp || 'li';
+
+    if (button) {
+      componentProps.component = componentProp || 'div';
+      componentProps.focusVisibleClassName = classNames(classes.focusVisible, focusVisibleClassName);
+      Component = ButtonBase;
     }
-  }, {
-    key: "render",
-    value: function render() {
-      var _classNames;
 
-      var _this$props = this.props,
-          button = _this$props.button,
-          childrenProp = _this$props.children,
-          classes = _this$props.classes,
-          classNameProp = _this$props.className,
-          componentProp = _this$props.component,
-          ContainerComponent = _this$props.ContainerComponent,
-          _this$props$Container = _this$props.ContainerProps;
-      _this$props$Container = _this$props$Container === void 0 ? {} : _this$props$Container;
+    if (hasSecondaryAction) {
+      // Use div by default.
+      Component = !componentProps.component && !componentProp ? 'div' : Component; // Avoid nesting of li > li.
 
-      var ContainerClassName = _this$props$Container.className,
-          ContainerProps = _objectWithoutProperties(_this$props$Container, ["className"]),
-          dense = _this$props.dense,
-          disabled = _this$props.disabled,
-          disableGutters = _this$props.disableGutters,
-          divider = _this$props.divider,
-          focusVisibleClassName = _this$props.focusVisibleClassName,
-          selected = _this$props.selected,
-          other = _objectWithoutProperties(_this$props, ["button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
-
-      var isDense = dense || this.context.dense || false;
-      var children = React.Children.toArray(childrenProp);
-      var hasAvatar = children.some(function (value) {
-        return isMuiElement(value, ['ListItemAvatar']);
-      });
-      var hasSecondaryAction = children.length && isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
-      var className = classNames(classes.root, classes.default, (_classNames = {}, _defineProperty(_classNames, classes.dense, isDense || hasAvatar), _defineProperty(_classNames, classes.gutters, !disableGutters), _defineProperty(_classNames, classes.divider, divider), _defineProperty(_classNames, classes.disabled, disabled), _defineProperty(_classNames, classes.button, button), _defineProperty(_classNames, classes.secondaryAction, hasSecondaryAction), _defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
-
-      var componentProps = _extends({
-        className: className,
-        disabled: disabled
-      }, other);
-
-      var Component = componentProp || 'li';
-
-      if (button) {
-        componentProps.component = componentProp || 'div';
-        componentProps.focusVisibleClassName = classNames(classes.focusVisible, focusVisibleClassName);
-        Component = ButtonBase;
-      }
-
-      if (hasSecondaryAction) {
-        // Use div by default.
-        Component = !componentProps.component && !componentProp ? 'div' : Component; // Avoid nesting of li > li.
-
-        if (ContainerComponent === 'li') {
-          if (Component === 'li') {
-            Component = 'div';
-          } else if (componentProps.component === 'li') {
-            componentProps.component = 'div';
-          }
+      if (ContainerComponent === 'li') {
+        if (Component === 'li') {
+          Component = 'div';
+        } else if (componentProps.component === 'li') {
+          componentProps.component = 'div';
         }
-
-        return React.createElement(ContainerComponent, _extends({
-          className: classNames(classes.container, ContainerClassName)
-        }, ContainerProps), React.createElement(Component, componentProps, children), children.pop());
       }
 
-      return React.createElement(Component, componentProps, children);
+      return React.createElement(ContainerComponent, _extends({
+        className: classNames(classes.container, ContainerClassName)
+      }, ContainerProps), React.createElement(Component, componentProps, children), children.pop());
     }
-  }]);
 
-  return ListItem;
-}(React.Component);
+    return React.createElement(Component, componentProps, children);
+  });
+}
 
 ListItem.propTypes = {
+  /**
+   * Defines the `align-items` style property.
+   */
+  alignItems: PropTypes.oneOf(['flex-start', 'center']),
+
   /**
    * If `true`, the list item will be a button (using `ButtonBase`).
    */
@@ -209,7 +200,7 @@ ListItem.propTypes = {
    * Either a string to use a DOM element or a component.
    * By default, it's a `li` when `button` is `false` and a `div` when `button` is `true`.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * The container component used when a `ListItemSecondaryAction` is rendered.
@@ -253,6 +244,7 @@ ListItem.propTypes = {
   selected: PropTypes.bool
 };
 ListItem.defaultProps = {
+  alignItems: 'center',
   button: false,
   ContainerComponent: 'li',
   dense: false,
@@ -260,12 +252,6 @@ ListItem.defaultProps = {
   disableGutters: false,
   divider: false,
   selected: false
-};
-ListItem.contextTypes = {
-  dense: PropTypes.bool
-};
-ListItem.childContextTypes = {
-  dense: PropTypes.bool
 };
 export default withStyles(styles, {
   name: 'MuiListItem'

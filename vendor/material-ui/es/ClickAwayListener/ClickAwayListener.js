@@ -15,6 +15,7 @@ class ClickAwayListener extends React.Component {
   constructor(...args) {
     super(...args);
     this.mounted = false;
+    this.moved = false;
 
     this.handleClickAway = event => {
       // Ignore events that have been `event.preventDefault()` marked.
@@ -24,6 +25,12 @@ class ClickAwayListener extends React.Component {
 
 
       if (!this.mounted) {
+        return;
+      } // Do not act if user performed touchmove
+
+
+      if (this.moved) {
+        this.moved = false;
         return;
       } // The child might render null.
 
@@ -37,6 +44,10 @@ class ClickAwayListener extends React.Component {
       if (doc.documentElement && doc.documentElement.contains(event.target) && !this.node.contains(event.target)) {
         this.props.onClickAway(event);
       }
+    };
+
+    this.handleTouchMove = () => {
+      this.moved = true;
     };
   }
 
@@ -68,6 +79,7 @@ class ClickAwayListener extends React.Component {
 
     if (touchEvent !== false) {
       listenerProps[touchEvent] = this.handleClickAway;
+      listenerProps.onTouchMove = this.handleTouchMove;
     }
 
     return React.createElement(React.Fragment, null, children, React.createElement(EventListener, _extends({
@@ -77,7 +89,7 @@ class ClickAwayListener extends React.Component {
 
 }
 
-ClickAwayListener.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ClickAwayListener.propTypes = {
   /**
    * The wrapped element.
    */
@@ -97,7 +109,7 @@ ClickAwayListener.propTypes = process.env.NODE_ENV !== "production" ? {
    * The touch event to listen to. You can disable the listener by providing `false`.
    */
   touchEvent: PropTypes.oneOf(['onTouchStart', 'onTouchEnd', false])
-} : {};
+} : void 0;
 ClickAwayListener.defaultProps = {
   mouseEvent: 'onMouseUp',
   touchEvent: 'onTouchEnd'

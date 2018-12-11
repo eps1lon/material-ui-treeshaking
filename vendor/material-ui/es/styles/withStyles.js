@@ -1,10 +1,12 @@
 import _extends from "@babel/runtime/helpers/extends";
 import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutPropertiesLoose";
+
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import wrapDisplayName from 'recompose/wrapDisplayName';
+import { getDisplayName, ponyfillGlobal } from '@material-ui/utils';
 import { create } from 'jss';
 import ns from './reactJssContext';
 import jssPreset from './jssPreset';
@@ -14,7 +16,6 @@ import createMuiTheme from './createMuiTheme';
 import themeListener from './themeListener';
 import createGenerateClassName from './createGenerateClassName';
 import getStylesCreator from './getStylesCreator';
-import getDisplayName from '../utils/getDisplayName';
 import getThemeProps from './getThemeProps'; // Default JSS instance.
 
 const jss = create(jssPreset()); // Use a singleton or the provided one by the context.
@@ -37,25 +38,15 @@ export const sheetsManager = new Map(); // We use the same empty object to ref c
 
 const noopTheme = {}; // In order to have self-supporting components, we rely on default theme when not provided.
 
-let defaultTheme;
-
-function getDefaultTheme() {
-  if (defaultTheme) {
-    return defaultTheme;
+const defaultTheme = createMuiTheme({
+  typography: {
+    suppressWarning: true
   }
-
-  defaultTheme = createMuiTheme({
-    typography: {
-      suppressWarning: true
-    }
-  });
-  return defaultTheme;
-} // Link a style sheet with a component.
+}); // Link a style sheet with a component.
 // It does not modify the component passed to it;
 // instead, it returns a new component, with a `classes` property.
 
-
-const withStyles = (stylesOrCreator, options = {}) => Component => {
+const withStylesOld = (stylesOrCreator, options = {}) => Component => {
   const {
     withTheme = false,
     flip = null,
@@ -96,7 +87,7 @@ const withStyles = (stylesOrCreator, options = {}) => Component => {
         generateClassName
       }, context[ns.sheetOptions]); // We use || as the function call is lazy evaluated.
 
-      this.theme = listenToTheme ? themeListener.initial(context) || getDefaultTheme() : noopTheme;
+      this.theme = listenToTheme ? themeListener.initial(context) || defaultTheme : noopTheme;
       this.attach(this.theme);
       this.cacheClasses = {
         // Cache for the finalized classes value.
@@ -285,7 +276,7 @@ const withStyles = (stylesOrCreator, options = {}) => Component => {
 
   }
 
-  WithStyles.propTypes = process.env.NODE_ENV !== "production" ? {
+  process.env.NODE_ENV !== "production" ? WithStyles.propTypes = {
     /**
      * Override or extend the styles applied to the component.
      */
@@ -295,7 +286,7 @@ const withStyles = (stylesOrCreator, options = {}) => Component => {
      * Use that property to pass a ref callback to the decorated component.
      */
     innerRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
-  } : {};
+  } : void 0;
   WithStyles.contextTypes = _extends({
     muiThemeProviderOptions: PropTypes.object,
     [ns.jss]: PropTypes.object,
@@ -304,7 +295,7 @@ const withStyles = (stylesOrCreator, options = {}) => Component => {
   }, listenToTheme ? themeListener.contextTypes : {});
 
   if (process.env.NODE_ENV !== 'production') {
-    WithStyles.displayName = wrapDisplayName(Component, 'WithStyles');
+    WithStyles.displayName = `WithStyles(${getDisplayName(Component)})`;
   }
 
   hoistNonReactStatics(WithStyles, Component);
@@ -317,5 +308,17 @@ const withStyles = (stylesOrCreator, options = {}) => Component => {
 
   return WithStyles;
 };
+/* istanbul ignore if */
 
-export default withStyles;
+
+if (!ponyfillGlobal.__MUI_STYLES__) {
+  ponyfillGlobal.__MUI_STYLES__ = {};
+}
+
+if (!ponyfillGlobal.__MUI_STYLES__.withStyles) {
+  ponyfillGlobal.__MUI_STYLES__.withStyles = withStylesOld;
+}
+
+export default ((styles, options) => ponyfillGlobal.__MUI_STYLES__.withStyles(styles, _extends({
+  defaultTheme
+}, options)));

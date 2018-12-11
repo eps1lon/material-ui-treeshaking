@@ -4,17 +4,18 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import SelectInput from './SelectInput';
+import formControlState from '../FormControl/formControlState';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import withStyles from '../styles/withStyles';
 import mergeClasses from '../styles/mergeClasses';
 import ArrowDropDownIcon from '../internal/svg-icons/ArrowDropDown'; // To replace with InputBase in v4.0.0
 
 import Input from '../Input';
-import { formControlState } from '../InputBase/InputBase';
 import { styles as nativeSelectStyles } from '../NativeSelect/NativeSelect';
 import NativeSelectInput from '../NativeSelect/NativeSelectInput';
 export var styles = nativeSelectStyles;
 
-function Select(props, context) {
+function Select(props) {
   var autoWidth = props.autoWidth,
       children = props.children,
       classes = props.classes,
@@ -23,6 +24,7 @@ function Select(props, context) {
       input = props.input,
       inputProps = props.inputProps,
       MenuProps = props.MenuProps,
+      muiFormControl = props.muiFormControl,
       multiple = props.multiple,
       native = props.native,
       onClose = props.onClose,
@@ -31,12 +33,12 @@ function Select(props, context) {
       renderValue = props.renderValue,
       SelectDisplayProps = props.SelectDisplayProps,
       variant = props.variant,
-      other = _objectWithoutProperties(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
+      other = _objectWithoutProperties(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "muiFormControl", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
 
   var inputComponent = native ? NativeSelectInput : SelectInput;
   var fcs = formControlState({
     props: props,
-    context: context,
+    muiFormControl: muiFormControl,
     states: ['variant']
   });
   return React.cloneElement(input, _extends({
@@ -47,12 +49,13 @@ function Select(props, context) {
       children: children,
       IconComponent: IconComponent,
       variant: fcs.variant,
-      type: undefined
+      type: undefined,
+      // We render a select. We can ignore the type provided by the `Input`.
+      multiple: multiple
     }, native ? {} : {
       autoWidth: autoWidth,
       displayEmpty: displayEmpty,
       MenuProps: MenuProps,
-      multiple: multiple,
       onClose: onClose,
       onOpen: onOpen,
       open: open,
@@ -174,7 +177,7 @@ Select.propTypes = {
    * The input value.
    * This property is required when the `native` property is `false` (default).
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]),
 
   /**
    * The variant to use.
@@ -189,10 +192,7 @@ Select.defaultProps = {
   multiple: false,
   native: false
 };
-Select.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 Select.muiName = 'Select';
-export default withStyles(nativeSelectStyles, {
+export default withStyles(styles, {
   name: 'MuiSelect'
-})(Select);
+})(withFormControlContext(Select));

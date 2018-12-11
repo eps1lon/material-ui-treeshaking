@@ -70,10 +70,14 @@ export var styles = function styles(theme) {
 
       },
       '&:hover:not($disabled):not($focused):not($error):before': {
-        borderBottom: "2px solid ".concat(theme.palette.text.primary)
+        borderBottom: "2px solid ".concat(theme.palette.text.primary),
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          borderBottom: "1px solid ".concat(bottomLineColor)
+        }
       },
       '&$disabled:before': {
-        borderBottom: "1px dotted ".concat(bottomLineColor)
+        borderBottomStyle: 'dotted'
       }
     },
 
@@ -144,7 +148,7 @@ Input.propTypes = {
   /**
    * The default input value, useful when not controlling the component.
    */
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]),
 
   /**
    * If `true`, the input will be disabled.
@@ -256,7 +260,7 @@ Input.propTypes = {
   /**
    * The input value, required for a controlled component.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))])
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))])
 };
 InputBase.defaultProps = {
   fullWidth: false,

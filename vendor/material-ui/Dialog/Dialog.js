@@ -11,6 +11,16 @@ var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends")
 
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 
+var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
+
+var _createClass2 = _interopRequireDefault(require("@babel/runtime/helpers/createClass"));
+
+var _possibleConstructorReturn2 = _interopRequireDefault(require("@babel/runtime/helpers/possibleConstructorReturn"));
+
+var _getPrototypeOf3 = _interopRequireDefault(require("@babel/runtime/helpers/getPrototypeOf"));
+
+var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
+
 var _defineProperty2 = _interopRequireDefault(require("@babel/runtime/helpers/defineProperty"));
 
 var _react = _interopRequireDefault(require("react"));
@@ -29,8 +39,13 @@ var _Fade = _interopRequireDefault(require("../Fade"));
 
 var _transitions = require("../styles/transitions");
 
+var _chainPropTypes = _interopRequireDefault(require("../utils/chainPropTypes"));
+
 var _Paper = _interopRequireDefault(require("../Paper"));
 
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 // @inheritedComponent Modal
 var styles = function styles(theme) {
   return {
@@ -50,16 +65,21 @@ var styles = function styles(theme) {
       overflowX: 'hidden'
     },
 
+    /* Styles applied to the container element. */
+    container: {
+      height: '100%',
+      // We disable the focus ring for mouse, touch and keyboard users.
+      outline: 'none'
+    },
+
     /* Styles applied to the `Paper` component. */
     paper: {
       display: 'flex',
       flexDirection: 'column',
       margin: 48,
       position: 'relative',
-      overflowY: 'auto',
-      // Fix IE 11 issue, to remove at some point.
-      // We disable the focus ring for mouse, touch and keyboard users.
-      outline: 'none'
+      overflowY: 'auto' // Fix IE 11 issue, to remove at some point.
+
     },
 
     /* Styles applied to the `Paper` component if `scroll="paper"`. */
@@ -105,6 +125,14 @@ var styles = function styles(theme) {
       })
     },
 
+    /* Styles applied to the `Paper` component if `maxWidth="xl"`. */
+    paperWidthXl: {
+      maxWidth: theme.breakpoints.values.xl,
+      '&$paperScrollBody': (0, _defineProperty2.default)({}, theme.breakpoints.down(theme.breakpoints.values.xl + 48 * 2), {
+        margin: 48
+      })
+    },
+
     /* Styles applied to the `Paper` component if `fullWidth={true}`. */
     paperFullWidth: {
       width: '100%'
@@ -131,61 +159,106 @@ var styles = function styles(theme) {
 
 exports.styles = styles;
 
-function Dialog(props) {
-  var _classNames;
+var Dialog =
+/*#__PURE__*/
+function (_React$Component) {
+  (0, _inherits2.default)(Dialog, _React$Component);
 
-  var BackdropProps = props.BackdropProps,
-      children = props.children,
-      classes = props.classes,
-      className = props.className,
-      disableBackdropClick = props.disableBackdropClick,
-      disableEscapeKeyDown = props.disableEscapeKeyDown,
-      fullScreen = props.fullScreen,
-      fullWidth = props.fullWidth,
-      maxWidth = props.maxWidth,
-      onBackdropClick = props.onBackdropClick,
-      onClose = props.onClose,
-      onEnter = props.onEnter,
-      onEntered = props.onEntered,
-      onEntering = props.onEntering,
-      onEscapeKeyDown = props.onEscapeKeyDown,
-      onExit = props.onExit,
-      onExited = props.onExited,
-      onExiting = props.onExiting,
-      open = props.open,
-      PaperProps = props.PaperProps,
-      scroll = props.scroll,
-      TransitionComponent = props.TransitionComponent,
-      transitionDuration = props.transitionDuration,
-      TransitionProps = props.TransitionProps,
-      other = (0, _objectWithoutProperties2.default)(props, ["BackdropProps", "children", "classes", "className", "disableBackdropClick", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClose", "onEnter", "onEntered", "onEntering", "onEscapeKeyDown", "onExit", "onExited", "onExiting", "open", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"]);
-  return _react.default.createElement(_Modal.default, (0, _extends2.default)({
-    className: (0, _classnames.default)(classes.root, classes["scroll".concat((0, _helpers.capitalize)(scroll))], className),
-    BackdropProps: (0, _extends2.default)({
-      transitionDuration: transitionDuration
-    }, BackdropProps),
-    disableBackdropClick: disableBackdropClick,
-    disableEscapeKeyDown: disableEscapeKeyDown,
-    onBackdropClick: onBackdropClick,
-    onEscapeKeyDown: onEscapeKeyDown,
-    onClose: onClose,
-    open: open,
-    role: "dialog"
-  }, other), _react.default.createElement(TransitionComponent, (0, _extends2.default)({
-    appear: true,
-    in: open,
-    timeout: transitionDuration,
-    onEnter: onEnter,
-    onEntering: onEntering,
-    onEntered: onEntered,
-    onExit: onExit,
-    onExiting: onExiting,
-    onExited: onExited
-  }, TransitionProps), _react.default.createElement(_Paper.default, (0, _extends2.default)({
-    elevation: 24,
-    className: (0, _classnames.default)(classes.paper, classes["paperScroll".concat((0, _helpers.capitalize)(scroll))], (_classNames = {}, (0, _defineProperty2.default)(_classNames, classes["paperWidth".concat(maxWidth ? (0, _helpers.capitalize)(maxWidth) : '')], maxWidth), (0, _defineProperty2.default)(_classNames, classes.paperFullScreen, fullScreen), (0, _defineProperty2.default)(_classNames, classes.paperFullWidth, fullWidth), _classNames))
-  }, PaperProps), children)));
-}
+  function Dialog() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    (0, _classCallCheck2.default)(this, Dialog);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = (0, _possibleConstructorReturn2.default)(this, (_getPrototypeOf2 = (0, _getPrototypeOf3.default)(Dialog)).call.apply(_getPrototypeOf2, [this].concat(args)));
+
+    _this.handleBackdropClick = function (event) {
+      if (event.target !== event.currentTarget) {
+        return;
+      }
+
+      if (_this.props.onBackdropClick) {
+        _this.props.onBackdropClick(event);
+      }
+
+      if (!_this.props.disableBackdropClick && _this.props.onClose) {
+        _this.props.onClose(event, 'backdropClick');
+      }
+    };
+
+    return _this;
+  }
+
+  (0, _createClass2.default)(Dialog, [{
+    key: "render",
+    value: function render() {
+      var _classNames;
+
+      var _this$props = this.props,
+          BackdropProps = _this$props.BackdropProps,
+          children = _this$props.children,
+          classes = _this$props.classes,
+          className = _this$props.className,
+          disableBackdropClick = _this$props.disableBackdropClick,
+          disableEscapeKeyDown = _this$props.disableEscapeKeyDown,
+          fullScreen = _this$props.fullScreen,
+          fullWidth = _this$props.fullWidth,
+          maxWidth = _this$props.maxWidth,
+          onBackdropClick = _this$props.onBackdropClick,
+          onClose = _this$props.onClose,
+          onEnter = _this$props.onEnter,
+          onEntered = _this$props.onEntered,
+          onEntering = _this$props.onEntering,
+          onEscapeKeyDown = _this$props.onEscapeKeyDown,
+          onExit = _this$props.onExit,
+          onExited = _this$props.onExited,
+          onExiting = _this$props.onExiting,
+          open = _this$props.open,
+          PaperProps = _this$props.PaperProps,
+          scroll = _this$props.scroll,
+          TransitionComponent = _this$props.TransitionComponent,
+          transitionDuration = _this$props.transitionDuration,
+          TransitionProps = _this$props.TransitionProps,
+          other = (0, _objectWithoutProperties2.default)(_this$props, ["BackdropProps", "children", "classes", "className", "disableBackdropClick", "disableEscapeKeyDown", "fullScreen", "fullWidth", "maxWidth", "onBackdropClick", "onClose", "onEnter", "onEntered", "onEntering", "onEscapeKeyDown", "onExit", "onExited", "onExiting", "open", "PaperProps", "scroll", "TransitionComponent", "transitionDuration", "TransitionProps"]);
+      return _react.default.createElement(_Modal.default, (0, _extends2.default)({
+        className: (0, _classnames.default)(classes.root, className),
+        BackdropProps: (0, _extends2.default)({
+          transitionDuration: transitionDuration
+        }, BackdropProps),
+        disableBackdropClick: disableBackdropClick,
+        disableEscapeKeyDown: disableEscapeKeyDown,
+        onBackdropClick: onBackdropClick,
+        onEscapeKeyDown: onEscapeKeyDown,
+        onClose: onClose,
+        open: open,
+        role: "dialog"
+      }, other), _react.default.createElement(TransitionComponent, (0, _extends2.default)({
+        appear: true,
+        in: open,
+        timeout: transitionDuration,
+        onEnter: onEnter,
+        onEntering: onEntering,
+        onEntered: onEntered,
+        onExit: onExit,
+        onExiting: onExiting,
+        onExited: onExited
+      }, TransitionProps), _react.default.createElement("div", {
+        className: (0, _classnames.default)(classes.container, classes["scroll".concat((0, _helpers.capitalize)(scroll))]),
+        onClick: this.handleBackdropClick,
+        role: "document"
+      }, _react.default.createElement(_Paper.default, (0, _extends2.default)({
+        elevation: 24,
+        className: (0, _classnames.default)(classes.paper, classes["paperScroll".concat((0, _helpers.capitalize)(scroll))], (_classNames = {}, (0, _defineProperty2.default)(_classNames, classes["paperWidth".concat(maxWidth ? (0, _helpers.capitalize)(maxWidth) : '')], maxWidth), (0, _defineProperty2.default)(_classNames, classes.paperFullScreen, fullScreen), (0, _defineProperty2.default)(_classNames, classes.paperFullWidth, fullWidth), _classNames))
+      }, PaperProps), children))));
+    }
+  }]);
+  return Dialog;
+}(_react.default.Component);
 
 Dialog.propTypes = {
   /**
@@ -235,7 +308,7 @@ Dialog.propTypes = {
    * on the desktop where you might need some coherent different width size across your
    * application. Set to `false` to disable `maxWidth`.
    */
-  maxWidth: _propTypes.default.oneOf(['xs', 'sm', 'md', 'lg', false]),
+  maxWidth: _propTypes.default.oneOf(['xs', 'sm', 'md', 'lg', 'xl', false]),
 
   /**
    * Callback fired when the backdrop is clicked.
@@ -292,8 +365,19 @@ Dialog.propTypes = {
 
   /**
    * Properties applied to the [`Paper`](/api/paper/) element.
+   * If you want to add a class to the `Paper` component use
+   * `classes.paper` in the `Dialog` props instead.
    */
-  PaperProps: _propTypes.default.object,
+  PaperProps: (0, _chainPropTypes.default)(_propTypes.default.object, function (props) {
+    var _props$PaperProps = props.PaperProps,
+        PaperProps = _props$PaperProps === void 0 ? {} : _props$PaperProps;
+
+    if ('className' in PaperProps) {
+      return new Error('`className` overrides all `Dialog` specific styles in `Paper`. If you wanted to add ' + 'styles to the `Paper` component use `classes.paper` in the `Dialog` props ' + "instead.".concat(process.env.NODE_ENV === 'test' ? Date.now() : ''));
+    }
+
+    return null;
+  }),
 
   /**
    * Determine the container for scrolling the dialog.

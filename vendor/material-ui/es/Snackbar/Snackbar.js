@@ -265,7 +265,7 @@ class Snackbar extends React.Component {
 
 }
 
-Snackbar.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Snackbar.propTypes = {
   /**
    * The action to display.
    */
@@ -288,8 +288,7 @@ Snackbar.propTypes = process.env.NODE_ENV !== "production" ? {
   autoHideDuration: PropTypes.number,
 
   /**
-   * If you wish the take control over the children of the component you can use this property.
-   * When used, you replace the `SnackbarContent` component with the children.
+   * Replace the `SnackbarContent` component.
    */
   children: PropTypes.element,
 
@@ -415,7 +414,7 @@ Snackbar.propTypes = process.env.NODE_ENV !== "production" ? {
    * Properties applied to the `Transition` element.
    */
   TransitionProps: PropTypes.object
-} : {};
+} : void 0;
 Snackbar.defaultProps = {
   anchorOrigin: {
     vertical: 'bottom',

@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import EventListener from 'react-event-listener';
 import debounce from 'debounce'; // < 1kb payload overhead when lodash/debounce is > 3kb.
 
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 export const styles = {
   /* Styles applied to the root element. */
@@ -129,7 +130,7 @@ class GridListTile extends React.Component {
 
 }
 
-GridListTile.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? GridListTile.propTypes = {
   /**
    * Theoretically you can pass any node as children, but the main use case is to pass an img,
    * in which case GridListTile takes care of making the image "cover" available space
@@ -157,13 +158,13 @@ GridListTile.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Height of the tile in number of grid cells.
    */
   rows: PropTypes.number
-} : {};
+} : void 0;
 GridListTile.defaultProps = {
   cols: 1,
   component: 'li',

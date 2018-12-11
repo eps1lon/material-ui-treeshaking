@@ -10,7 +10,7 @@ import createPalette from './createPalette';
 import createTypography from './createTypography';
 import shadows from './shadows';
 import shape from './shape';
-import spacing from './spacing';
+import defaultSpacing from './spacing';
 import transitions from './transitions';
 import zIndex from './zIndex';
 
@@ -24,12 +24,16 @@ function createMuiTheme() {
       _options$palette = options.palette,
       paletteInput = _options$palette === void 0 ? {} : _options$palette,
       shadowsInput = options.shadows,
+      _options$spacing = options.spacing,
+      spacingInput = _options$spacing === void 0 ? {} : _options$spacing,
       _options$typography = options.typography,
       typographyInput = _options$typography === void 0 ? {} : _options$typography,
-      other = _objectWithoutProperties(options, ["breakpoints", "mixins", "palette", "shadows", "typography"]);
+      other = _objectWithoutProperties(options, ["breakpoints", "mixins", "palette", "shadows", "spacing", "typography"]);
 
   var palette = createPalette(paletteInput);
   var breakpoints = createBreakpoints(breakpointsInput);
+
+  var spacing = _extends({}, defaultSpacing, spacingInput);
 
   var muiTheme = _extends({
     breakpoints: breakpoints,

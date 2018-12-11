@@ -31,7 +31,7 @@ function DialogTitle(props) {
   }, children));
 }
 
-DialogTitle.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? DialogTitle.propTypes = {
   /**
    * The content of the component.
    */
@@ -53,7 +53,7 @@ DialogTitle.propTypes = process.env.NODE_ENV !== "production" ? {
    * For instance, this can be useful to render an h4 instead of the default h2.
    */
   disableTypography: PropTypes.bool
-} : {};
+} : void 0;
 DialogTitle.defaultProps = {
   disableTypography: false
 };

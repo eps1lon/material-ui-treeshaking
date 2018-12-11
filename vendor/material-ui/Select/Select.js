@@ -17,6 +17,10 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _SelectInput = _interopRequireDefault(require("./SelectInput"));
 
+var _formControlState = _interopRequireDefault(require("../FormControl/formControlState"));
+
+var _withFormControlContext = _interopRequireDefault(require("../FormControl/withFormControlContext"));
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _mergeClasses = _interopRequireDefault(require("../styles/mergeClasses"));
@@ -24,8 +28,6 @@ var _mergeClasses = _interopRequireDefault(require("../styles/mergeClasses"));
 var _ArrowDropDown = _interopRequireDefault(require("../internal/svg-icons/ArrowDropDown"));
 
 var _Input = _interopRequireDefault(require("../Input"));
-
-var _InputBase = require("../InputBase/InputBase");
 
 var _NativeSelect = require("../NativeSelect/NativeSelect");
 
@@ -36,7 +38,7 @@ var _NativeSelectInput = _interopRequireDefault(require("../NativeSelect/NativeS
 var styles = _NativeSelect.styles;
 exports.styles = styles;
 
-function Select(props, context) {
+function Select(props) {
   var autoWidth = props.autoWidth,
       children = props.children,
       classes = props.classes,
@@ -45,6 +47,7 @@ function Select(props, context) {
       input = props.input,
       inputProps = props.inputProps,
       MenuProps = props.MenuProps,
+      muiFormControl = props.muiFormControl,
       multiple = props.multiple,
       native = props.native,
       onClose = props.onClose,
@@ -53,11 +56,11 @@ function Select(props, context) {
       renderValue = props.renderValue,
       SelectDisplayProps = props.SelectDisplayProps,
       variant = props.variant,
-      other = (0, _objectWithoutProperties2.default)(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
+      other = (0, _objectWithoutProperties2.default)(props, ["autoWidth", "children", "classes", "displayEmpty", "IconComponent", "input", "inputProps", "MenuProps", "muiFormControl", "multiple", "native", "onClose", "onOpen", "open", "renderValue", "SelectDisplayProps", "variant"]);
   var inputComponent = native ? _NativeSelectInput.default : _SelectInput.default;
-  var fcs = (0, _InputBase.formControlState)({
+  var fcs = (0, _formControlState.default)({
     props: props,
-    context: context,
+    muiFormControl: muiFormControl,
     states: ['variant']
   });
   return _react.default.cloneElement(input, (0, _extends2.default)({
@@ -68,12 +71,13 @@ function Select(props, context) {
       children: children,
       IconComponent: IconComponent,
       variant: fcs.variant,
-      type: undefined
+      type: undefined,
+      // We render a select. We can ignore the type provided by the `Input`.
+      multiple: multiple
     }, native ? {} : {
       autoWidth: autoWidth,
       displayEmpty: displayEmpty,
       MenuProps: MenuProps,
-      multiple: multiple,
       onClose: onClose,
       onOpen: onOpen,
       open: open,
@@ -195,7 +199,7 @@ Select.propTypes = {
    * The input value.
    * This property is required when the `native` property is `false` (default).
    */
-  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.arrayOf(_propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool]))]),
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.object, _propTypes.default.arrayOf(_propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.object]))]),
 
   /**
    * The variant to use.
@@ -210,13 +214,10 @@ Select.defaultProps = {
   multiple: false,
   native: false
 };
-Select.contextTypes = {
-  muiFormControl: _propTypes.default.object
-};
 Select.muiName = 'Select';
 
-var _default = (0, _withStyles.default)(_NativeSelect.styles, {
+var _default = (0, _withStyles.default)(styles, {
   name: 'MuiSelect'
-})(Select);
+})((0, _withFormControlContext.default)(Select));
 
 exports.default = _default;

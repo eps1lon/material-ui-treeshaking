@@ -19,6 +19,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _helpers = require("../utils/helpers");
@@ -76,7 +78,7 @@ var styles = function styles(theme) {
 
     /* Styles applied to the root element if `fontSize="large"`. */
     fontSizeLarge: {
-      fontSize: 36
+      fontSize: 35
     }
   };
 };
@@ -133,7 +135,7 @@ SvgIcon.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
@@ -144,6 +146,13 @@ SvgIcon.propTypes = {
    * Applies a color attribute to the SVG element.
    */
   nativeColor: _propTypes.default.string,
+
+  /**
+   * The shape-rendering attribute. The behavior of the different options is described
+   * [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering).
+   * If you are having issues with blurry icons you should investigate this property.
+   */
+  shapeRendering: _propTypes.default.string,
 
   /**
    * Provides a human-readable title for the element that contains it.

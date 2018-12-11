@@ -5,7 +5,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import NativeSelectInput from './NativeSelectInput';
 import withStyles from '../styles/withStyles';
-import { formControlState } from '../InputBase/InputBase';
+import formControlState from '../FormControl/formControlState';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import ArrowDropDownIcon from '../internal/svg-icons/ArrowDropDown';
 import Input from '../Input';
 export const styles = theme => ({
@@ -39,17 +40,15 @@ export const styles = theme => ({
       borderRadius: 0 // Reset Chrome style
 
     },
-    // Remove Firefox focus border
-    '&:-moz-focusring': {
-      color: 'transparent',
-      textShadow: '0 0 0 #000'
-    },
     // Remove IE 11 arrow
     '&::-ms-expand': {
       display: 'none'
     },
     '&$disabled': {
       cursor: 'default'
+    },
+    '&[multiple]': {
+      height: 'auto'
     }
   },
 
@@ -97,19 +96,20 @@ export const styles = theme => ({
  * An alternative to `<Select native />` with a much smaller bundle size footprint.
  */
 
-function NativeSelect(props, context) {
+function NativeSelect(props) {
   const {
     children,
     classes,
     IconComponent,
     input,
-    inputProps
+    inputProps,
+    muiFormControl
   } = props,
-        other = _objectWithoutPropertiesLoose(props, ["children", "classes", "IconComponent", "input", "inputProps", "variant"]);
+        other = _objectWithoutPropertiesLoose(props, ["children", "classes", "IconComponent", "input", "inputProps", "muiFormControl", "variant"]);
 
   const fcs = formControlState({
     props,
-    context,
+    muiFormControl,
     states: ['variant']
   });
   return React.cloneElement(input, _extends({
@@ -126,7 +126,7 @@ function NativeSelect(props, context) {
   }, other));
 }
 
-NativeSelect.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? NativeSelect.propTypes = {
   /**
    * The option elements to populate the select with.
    * Can be some `<option>` elements.
@@ -155,6 +155,11 @@ NativeSelect.propTypes = process.env.NODE_ENV !== "production" ? {
   inputProps: PropTypes.object,
 
   /**
+   * @ignore
+   */
+  muiFormControl: PropTypes.object,
+
+  /**
    * Callback function fired when a menu item is selected.
    *
    * @param {object} event The event source of the callback.
@@ -165,21 +170,18 @@ NativeSelect.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The input value.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))]),
 
   /**
    * The variant to use.
    */
   variant: PropTypes.oneOf(['standard', 'outlined', 'filled'])
-} : {};
+} : void 0;
 NativeSelect.defaultProps = {
   IconComponent: ArrowDropDownIcon,
   input: React.createElement(Input, null)
 };
-NativeSelect.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 NativeSelect.muiName = 'Select';
 export default withStyles(styles, {
   name: 'MuiNativeSelect'
-})(NativeSelect);
+})(withFormControlContext(NativeSelect));

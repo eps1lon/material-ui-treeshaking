@@ -3,16 +3,16 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutP
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import Typography from '../Typography';
 export const styles = theme => ({
   /* Styles applied to the root element. */
-  root: theme.mixins.gutters({
+  root: {
     display: 'flex',
     alignItems: 'center',
-    paddingTop: 16,
-    paddingBottom: 16
-  }),
+    padding: 16
+  },
 
   /* Styles applied to the avatar element. */
   avatar: {
@@ -91,7 +91,7 @@ function CardHeader(props) {
   }, action));
 }
 
-CardHeader.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? CardHeader.propTypes = {
   /**
    * The action to display in the card header.
    */
@@ -117,7 +117,7 @@ CardHeader.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the children won't be wrapped by a Typography component.
@@ -148,7 +148,7 @@ CardHeader.propTypes = process.env.NODE_ENV !== "production" ? {
    * (as long as disableTypography is not `true`).
    */
   titleTypographyProps: PropTypes.object
-} : {};
+} : void 0;
 CardHeader.defaultProps = {
   component: 'div',
   disableTypography: false

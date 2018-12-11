@@ -9,11 +9,12 @@ import EventListener from 'react-event-listener';
 import debounce from 'debounce'; // < 1kb payload overhead when lodash/debounce is > 3kb.
 
 var styles = {
-  width: 100,
-  height: 100,
+  width: 90,
+  height: 90,
   position: 'absolute',
-  top: -10000,
+  top: -9000,
   overflow: 'scroll',
+  // Support IE 11
   msOverflowStyle: 'scrollbar'
 };
 /**
@@ -34,6 +35,10 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ScrollbarSize).call(this));
 
+    _this.handleRef = function (ref) {
+      _this.nodeRef = ref;
+    };
+
     _this.setMeasurements = function () {
       var nodeRef = _this.nodeRef;
 
@@ -42,22 +47,16 @@ function (_React$Component) {
       }
 
       _this.scrollbarHeight = nodeRef.offsetHeight - nodeRef.clientHeight;
-      _this.scrollbarWidth = nodeRef.offsetWidth - nodeRef.clientWidth;
     };
 
     if (typeof window !== 'undefined') {
       _this.handleResize = debounce(function () {
-        var onChange = _this.props.onChange;
         var prevHeight = _this.scrollbarHeight;
-        var prevWidth = _this.scrollbarWidth;
 
         _this.setMeasurements();
 
-        if (prevHeight !== _this.scrollbarHeight || prevWidth !== _this.scrollbarWidth) {
-          onChange({
-            scrollbarHeight: _this.scrollbarHeight,
-            scrollbarWidth: _this.scrollbarWidth
-          });
+        if (prevHeight !== _this.scrollbarHeight) {
+          _this.props.onChange(_this.scrollbarHeight);
         }
       }, 166); // Corresponds to 10 frames at 60 Hz.
     }
@@ -69,10 +68,7 @@ function (_React$Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.setMeasurements();
-      this.props.onLoad({
-        scrollbarHeight: this.scrollbarHeight,
-        scrollbarWidth: this.scrollbarWidth
-      });
+      this.props.onChange(this.scrollbarHeight);
     }
   }, {
     key: "componentWillUnmount",
@@ -82,17 +78,12 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
-      var onChange = this.props.onChange;
-      return React.createElement("div", null, onChange ? React.createElement(EventListener, {
+      return React.createElement(React.Fragment, null, React.createElement(EventListener, {
         target: "window",
         onResize: this.handleResize
-      }) : null, React.createElement("div", {
+      }), React.createElement("div", {
         style: styles,
-        ref: function ref(_ref) {
-          _this2.nodeRef = _ref;
-        }
+        ref: this.handleRef
       }));
     }
   }]);
@@ -101,7 +92,6 @@ function (_React$Component) {
 }(React.Component);
 
 ScrollbarSize.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  onLoad: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired
 };
 export default ScrollbarSize;

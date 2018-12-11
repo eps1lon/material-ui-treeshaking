@@ -31,11 +31,13 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Transition = _interopRequireDefault(require("react-transition-group/Transition"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _transitions = require("../styles/transitions");
 
-var _utils = require("../transitions/utils");
+var _utils2 = require("../transitions/utils");
 
 // @inheritedComponent Transition
 var styles = function styles(theme) {
@@ -106,7 +108,7 @@ function (_React$Component) {
           theme = _this$props.theme;
       var wrapperHeight = _this.wrapperRef ? _this.wrapperRef.clientHeight : 0;
 
-      var _getTransitionProps = (0, _utils.getTransitionProps)(_this.props, {
+      var _getTransitionProps = (0, _utils2.getTransitionProps)(_this.props, {
         mode: 'enter'
       }),
           transitionDuration = _getTransitionProps.duration;
@@ -149,7 +151,7 @@ function (_React$Component) {
           theme = _this$props2.theme;
       var wrapperHeight = _this.wrapperRef ? _this.wrapperRef.clientHeight : 0;
 
-      var _getTransitionProps2 = (0, _utils.getTransitionProps)(_this.props, {
+      var _getTransitionProps2 = (0, _utils2.getTransitionProps)(_this.props, {
         mode: 'exit'
       }),
           transitionDuration = _getTransitionProps2.duration;
@@ -257,7 +259,7 @@ Collapse.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * If `true`, the component will transition in.

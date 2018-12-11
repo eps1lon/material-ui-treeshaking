@@ -20,6 +20,7 @@ import { createChainedFunction } from '../utils/helpers';
 import withStyles from '../styles/withStyles';
 import ModalManager from './ModalManager';
 import Backdrop from '../Backdrop';
+import { ariaHidden } from './manageAriaHidden';
 
 function getContainer(container, defaultContainer) {
   container = typeof container === 'function' ? container() : container;
@@ -93,17 +94,14 @@ function (_React$Component) {
       if (_this.props.open) {
         _this.handleOpened();
       } else {
-        var doc = ownerDocument(_this.mountNode);
-        var container = getContainer(_this.props.container, doc.body);
-
-        _this.props.manager.add(_assertThisInitialized(_assertThisInitialized(_this)), container);
-
-        _this.props.manager.remove(_assertThisInitialized(_assertThisInitialized(_this)));
+        ariaHidden(_this.modalRef, true);
       }
     };
 
     _this.handleOpened = function () {
-      _this.autoFocus(); // Fix a bug on Chrome where the scroll isn't initially 0.
+      _this.autoFocus();
+
+      _this.props.manager.mount(_assertThisInitialized(_assertThisInitialized(_this))); // Fix a bug on Chrome where the scroll isn't initially 0.
 
 
       _this.modalRef.scrollTop = 0;
@@ -175,6 +173,10 @@ function (_React$Component) {
       _this.modalRef = ref;
     };
 
+    _this.onRootRef = function (ref) {
+      _this.dialogRef = ref;
+    };
+
     _this.state = {
       exited: !props.open
     };
@@ -196,7 +198,6 @@ function (_React$Component) {
       if (prevProps.open && !this.props.open) {
         this.handleClose();
       } else if (!prevProps.open && this.props.open) {
-        // check for focus
         this.lastFocus = ownerDocument(this.mountNode).activeElement;
         this.handleOpen();
       }
@@ -254,8 +255,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       var _this$props = this.props,
           BackdropComponent = _this$props.BackdropComponent,
           BackdropProps = _this$props.BackdropProps,
@@ -308,14 +307,12 @@ function (_React$Component) {
       }, React.createElement("div", _extends({
         "data-mui-test": "Modal",
         ref: this.handleModalRef,
-        className: classNames(classes.root, className, _defineProperty({}, classes.hidden, exited))
+        className: classNames('mui-fixed', classes.root, className, _defineProperty({}, classes.hidden, exited))
       }, other), hideBackdrop ? null : React.createElement(BackdropComponent, _extends({
         open: open,
         onClick: this.handleBackdropClick
       }, BackdropProps)), React.createElement(RootRef, {
-        rootRef: function rootRef(ref) {
-          _this2.dialogRef = ref;
-        }
+        rootRef: this.onRootRef
       }, React.cloneElement(children, childProps))));
     }
   }], [{

@@ -164,7 +164,7 @@ class MenuList extends React.Component {
 
 }
 
-MenuList.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? MenuList.propTypes = {
   /**
    * MenuList contents, normally `MenuItem`s.
    */
@@ -184,5 +184,5 @@ MenuList.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   onKeyDown: PropTypes.func
-} : {};
+} : void 0;
 export default MenuList;

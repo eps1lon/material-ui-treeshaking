@@ -5,14 +5,12 @@ import _createClass from "@babel/runtime/helpers/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/inherits";
-
-/* eslint-disable react/no-did-mount-set-state */
 import React from 'react';
 import PropTypes from 'prop-types';
 import EventListener from 'react-event-listener';
 import debounce from 'debounce'; // < 1kb payload overhead when lodash/debounce is > 3kb.
 
-import wrapDisplayName from 'recompose/wrapDisplayName';
+import { getDisplayName } from '@material-ui/utils';
 import hoistNonReactStatics from 'hoist-non-react-statics';
 import withTheme from '../styles/withTheme';
 import { keys as breakpointKeys } from '../styles/createBreakpoints';
@@ -190,7 +188,7 @@ var withWidth = function withWidth() {
     };
 
     if (process.env.NODE_ENV !== 'production') {
-      WithWidth.displayName = wrapDisplayName(Component, 'WithWidth');
+      WithWidth.displayName = "WithWidth(".concat(getDisplayName(Component), ")");
     }
 
     hoistNonReactStatics(WithWidth, Component);

@@ -38,22 +38,22 @@ function getPaddingRight(node) {
   return parseInt((0, _style.default)(node, 'paddingRight') || 0, 10);
 }
 
-function setContainerStyle(data, container) {
+function setContainerStyle(data) {
   var style = {
     overflow: 'hidden'
   }; // We are only interested in the actual `style` here because we will override it.
 
   data.style = {
-    overflow: container.style.overflow,
-    paddingRight: container.style.paddingRight
+    overflow: data.container.style.overflow,
+    paddingRight: data.container.style.paddingRight
   };
 
   if (data.overflowing) {
     var scrollbarSize = (0, _scrollbarSize.default)(); // Use computed style, here to get the real padding to add our scrollbar width.
 
-    style.paddingRight = "".concat(getPaddingRight(container) + scrollbarSize, "px"); // .mui-fixed is a global helper.
+    style.paddingRight = "".concat(getPaddingRight(data.container) + scrollbarSize, "px"); // .mui-fixed is a global helper.
 
-    var fixedNodes = (0, _ownerDocument.default)(container).querySelectorAll('.mui-fixed');
+    var fixedNodes = (0, _ownerDocument.default)(data.container).querySelectorAll('.mui-fixed');
 
     for (var i = 0; i < fixedNodes.length; i += 1) {
       var paddingRight = getPaddingRight(fixedNodes[i]);
@@ -63,14 +63,18 @@ function setContainerStyle(data, container) {
   }
 
   Object.keys(style).forEach(function (key) {
-    container.style[key] = style[key];
+    data.container.style[key] = style[key];
   });
 }
 
 function removeContainerStyle(data) {
-  Object.keys(data.style).forEach(function (key) {
-    data.container.style[key] = data.style[key];
-  });
+  // The modal might be closed before it had the chance to be mounted in the DOM.
+  if (data.style) {
+    Object.keys(data.style).forEach(function (key) {
+      data.container.style[key] = data.style[key];
+    });
+  }
+
   var fixedNodes = (0, _ownerDocument.default)(data.container).querySelectorAll('.mui-fixed');
 
   for (var i = 0; i < fixedNodes.length; i += 1) {
@@ -144,13 +148,20 @@ function () {
         overflowing: (0, _isOverflowing.default)(container),
         prevPaddings: []
       };
-
-      if (this.handleContainerOverflow) {
-        setContainerStyle(data, container);
-      }
-
       this.data.push(data);
       return modalIdx;
+    }
+  }, {
+    key: "mount",
+    value: function mount(modal) {
+      var containerIdx = findIndexOf(this.data, function (item) {
+        return item.modals.indexOf(modal) !== -1;
+      });
+      var data = this.data[containerIdx];
+
+      if (!data.style && this.handleContainerOverflow) {
+        setContainerStyle(data);
+      }
     }
   }, {
     key: "remove",
@@ -185,7 +196,13 @@ function () {
         this.data.splice(containerIdx, 1);
       } else if (this.hideSiblingNodes) {
         // Otherwise make sure the next top modal is visible to a screan reader.
-        (0, _manageAriaHidden.ariaHidden)(data.modals[data.modals.length - 1].modalRef, false);
+        var nextTop = data.modals[data.modals.length - 1]; // as soon as a modal is adding its modalRef is undefined. it can't set
+        // aria-hidden because the dom element doesn't exist either
+        // when modal was unmounted before modalRef gets null
+
+        if (nextTop.modalRef) {
+          (0, _manageAriaHidden.ariaHidden)(nextTop.modalRef, false);
+        }
       }
 
       return modalIdx;

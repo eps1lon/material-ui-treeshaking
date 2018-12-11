@@ -154,7 +154,7 @@ class ExpansionPanel extends React.Component {
 
 }
 
-ExpansionPanel.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ExpansionPanel.propTypes = {
   /**
    * The content of the expansion panel.
    */
@@ -199,7 +199,7 @@ ExpansionPanel.propTypes = process.env.NODE_ENV !== "production" ? {
    * @param {boolean} expanded The `expanded` state of the panel
    */
   onChange: PropTypes.func
-} : {};
+} : void 0;
 ExpansionPanel.defaultProps = {
   defaultExpanded: false,
   disabled: false

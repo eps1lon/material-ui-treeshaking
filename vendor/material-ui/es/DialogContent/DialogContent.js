@@ -31,7 +31,7 @@ function DialogContent(props) {
   }, other), children);
 }
 
-DialogContent.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? DialogContent.propTypes = {
   /**
    * The content of the component.
    */
@@ -47,7 +47,7 @@ DialogContent.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   className: PropTypes.string
-} : {};
+} : void 0;
 export default withStyles(styles, {
   name: 'MuiDialogContent'
 })(DialogContent);

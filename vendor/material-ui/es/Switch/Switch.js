@@ -136,7 +136,7 @@ function Switch(props) {
   }));
 }
 
-Switch.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Switch.propTypes = {
   /**
    * If `true`, the component is checked.
    */
@@ -216,7 +216,7 @@ Switch.propTypes = process.env.NODE_ENV !== "production" ? {
    * The value of the component.
    */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
-} : {};
+} : void 0;
 Switch.defaultProps = {
   color: 'secondary'
 };

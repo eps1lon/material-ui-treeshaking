@@ -4,6 +4,7 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { capitalize } from '../utils/helpers';
 var RADIUS = 11;
@@ -36,8 +37,13 @@ export var styles = function styles(theme) {
       borderRadius: '50%',
       backgroundColor: theme.palette.color,
       color: theme.palette.textColor,
-      zIndex: 1 // Render the badge on top of potential ripples.
-
+      zIndex: 1,
+      // Render the badge on top of potential ripples.
+      transition: theme.transitions.create('transform', {
+        easing: theme.transitions.easing.easeInOut,
+        duration: theme.transitions.duration.enteringScreen
+      }),
+      transform: 'scale(1)'
     },
 
     /* Styles applied to the root element if `color="primary"`. */
@@ -56,22 +62,34 @@ export var styles = function styles(theme) {
     colorError: {
       backgroundColor: theme.palette.error.main,
       color: theme.palette.error.contrastText
+    },
+
+    /* Styles applied to the badge `span` element if `invisible={true}`. */
+    invisible: {
+      transition: theme.transitions.create('transform', {
+        easing: theme.transitions.easing.easeInOut,
+        duration: theme.transitions.duration.leavingScreen
+      }),
+      transform: 'scale(0)'
     }
   };
 };
 
 function Badge(props) {
+  var _classNames;
+
   var badgeContent = props.badgeContent,
       children = props.children,
       classes = props.classes,
-      classNameProp = props.className,
+      className = props.className,
       color = props.color,
       ComponentProp = props.component,
-      other = _objectWithoutProperties(props, ["badgeContent", "children", "classes", "className", "color", "component"]);
+      invisible = props.invisible,
+      other = _objectWithoutProperties(props, ["badgeContent", "children", "classes", "className", "color", "component", "invisible"]);
 
-  var badgeClassName = classNames(classes.badge, _defineProperty({}, classes["color".concat(capitalize(color))], color !== 'default'));
+  var badgeClassName = classNames(classes.badge, (_classNames = {}, _defineProperty(_classNames, classes["color".concat(capitalize(color))], color !== 'default'), _defineProperty(_classNames, classes.invisible, invisible), _classNames));
   return React.createElement(ComponentProp, _extends({
-    className: classNames(classes.root, classNameProp)
+    className: classNames(classes.root, className)
   }, other), children, React.createElement("span", {
     className: badgeClassName
   }, badgeContent));
@@ -108,11 +126,17 @@ Badge.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object])
+  component: componentPropType,
+
+  /**
+   * If `true`, the badge will be invisible.
+   */
+  invisible: PropTypes.bool
 };
 Badge.defaultProps = {
   color: 'default',
-  component: 'span'
+  component: 'span',
+  invisible: false
 };
 export default withStyles(styles, {
   name: 'MuiBadge'

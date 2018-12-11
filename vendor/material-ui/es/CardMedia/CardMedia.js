@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 export const styles = {
   /* Styles applied to the root element. */
@@ -46,7 +47,7 @@ function CardMedia(props) {
   }, other));
 }
 
-CardMedia.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? CardMedia.propTypes = {
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css-api) below for more details.
@@ -62,7 +63,7 @@ CardMedia.propTypes = process.env.NODE_ENV !== "production" ? {
    * Component for rendering image.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Image to be displayed as a background image.
@@ -82,7 +83,7 @@ CardMedia.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   style: PropTypes.object
-} : {};
+} : void 0;
 CardMedia.defaultProps = {
   component: 'div'
 };

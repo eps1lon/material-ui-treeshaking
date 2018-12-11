@@ -286,7 +286,7 @@ Textarea.defaultProps = {
 };
 
 var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiTextarea'
+  name: 'MuiPrivateTextarea'
 })(Textarea);
 
 exports.default = _default;

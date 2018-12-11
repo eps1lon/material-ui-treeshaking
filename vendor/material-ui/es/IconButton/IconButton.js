@@ -105,7 +105,7 @@ function IconButton(props) {
   }, children));
 }
 
-IconButton.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? IconButton.propTypes = {
   /**
    * The icon element.
    */
@@ -136,7 +136,7 @@ IconButton.propTypes = process.env.NODE_ENV !== "production" ? {
    * If `true`, the ripple will be disabled.
    */
   disableRipple: PropTypes.bool
-} : {};
+} : void 0;
 IconButton.defaultProps = {
   color: 'default',
   disabled: false

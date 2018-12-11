@@ -9,7 +9,6 @@ exports.default = createGenerateClassName;
 
 var _warning = _interopRequireDefault(require("warning"));
 
-/* eslint-disable no-underscore-dangle */
 var escapeRegex = /([[\].#*$><+~=|^:(),"'`\s])/g;
 
 function safePrefix(classNamePrefix) {
@@ -39,16 +38,16 @@ function createGenerateClassName() {
     (0, _warning.default)(ruleCounter < 1e10, ['Material-UI: you might have a memory leak.', 'The ruleCounter is not supposed to grow that much.'].join(''));
 
     if (dangerouslyUseGlobalCSS && styleSheet && styleSheet.options.name) {
-      return "".concat(styleSheet.options.name, "-").concat(rule.key);
+      return "".concat(safePrefix(styleSheet.options.name), "-").concat(rule.key);
     }
 
     if (process.env.NODE_ENV === 'production') {
       return "".concat(productionPrefix).concat(seed).concat(ruleCounter);
-    }
+    } // Help with debuggability.
+
 
     if (styleSheet && styleSheet.options.classNamePrefix) {
-      var prefix = safePrefix(styleSheet.options.classNamePrefix);
-      return "".concat(prefix, "-").concat(rule.key, "-").concat(seed).concat(ruleCounter);
+      return "".concat(safePrefix(styleSheet.options.classNamePrefix), "-").concat(rule.key, "-").concat(seed).concat(ruleCounter);
     }
 
     return "".concat(rule.key, "-").concat(seed).concat(ruleCounter);

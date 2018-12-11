@@ -187,7 +187,7 @@ class Textarea extends React.Component {
 
 }
 
-Textarea.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Textarea.propTypes = {
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css-api) below for more details.
@@ -233,10 +233,10 @@ Textarea.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-} : {};
+} : void 0;
 Textarea.defaultProps = {
   rows: 1
 };
 export default withStyles(styles, {
-  name: 'MuiTextarea'
+  name: 'MuiPrivateTextarea'
 })(Textarea);

@@ -34,6 +34,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(ClickAwayListener)).call.apply(_getPrototypeOf2, [this].concat(args)));
     _this.mounted = false;
+    _this.moved = false;
 
     _this.handleClickAway = function (event) {
       // Ignore events that have been `event.preventDefault()` marked.
@@ -43,6 +44,12 @@ function (_React$Component) {
 
 
       if (!_this.mounted) {
+        return;
+      } // Do not act if user performed touchmove
+
+
+      if (_this.moved) {
+        _this.moved = false;
         return;
       } // The child might render null.
 
@@ -56,6 +63,10 @@ function (_React$Component) {
       if (doc.documentElement && doc.documentElement.contains(event.target) && !_this.node.contains(event.target)) {
         _this.props.onClickAway(event);
       }
+    };
+
+    _this.handleTouchMove = function () {
+      _this.moved = true;
     };
 
     return _this;
@@ -92,6 +103,7 @@ function (_React$Component) {
 
       if (touchEvent !== false) {
         listenerProps[touchEvent] = this.handleClickAway;
+        listenerProps.onTouchMove = this.handleTouchMove;
       }
 
       return React.createElement(React.Fragment, null, children, React.createElement(EventListener, _extends({

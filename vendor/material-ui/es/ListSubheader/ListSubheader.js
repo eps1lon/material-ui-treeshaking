@@ -3,6 +3,7 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutP
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { capitalize } from '../utils/helpers';
 export const styles = theme => ({
@@ -28,7 +29,10 @@ export const styles = theme => ({
   },
 
   /* Styles applied to the inner `component` element if `disableGutters={false}`. */
-  gutters: theme.mixins.gutters(),
+  gutters: {
+    paddingLeft: 16,
+    paddingRight: 16
+  },
 
   /* Styles applied to the root element if `inset={true}`. */
   inset: {
@@ -66,7 +70,7 @@ function ListSubheader(props) {
   }, other));
 }
 
-ListSubheader.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ListSubheader.propTypes = {
   /**
    * The content of the component.
    */
@@ -92,7 +96,7 @@ ListSubheader.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the List Subheader will not have gutters.
@@ -108,7 +112,7 @@ ListSubheader.propTypes = process.env.NODE_ENV !== "production" ? {
    * If `true`, the List Subheader will be indented.
    */
   inset: PropTypes.bool
-} : {};
+} : void 0;
 ListSubheader.defaultProps = {
   color: 'default',
   component: 'li',

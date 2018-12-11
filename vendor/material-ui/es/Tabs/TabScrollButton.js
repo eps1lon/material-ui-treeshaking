@@ -47,7 +47,7 @@ function TabScrollButton(props) {
   }, other), direction === 'left' ? _ref : _ref2);
 }
 
-TabScrollButton.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? TabScrollButton.propTypes = {
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css-api) below for more details.
@@ -73,10 +73,10 @@ TabScrollButton.propTypes = process.env.NODE_ENV !== "production" ? {
    * Should the button be present or just consume space.
    */
   visible: PropTypes.bool
-} : {};
+} : void 0;
 TabScrollButton.defaultProps = {
   visible: true
 };
 export default withStyles(styles, {
-  name: 'MuiTabScrollButton'
+  name: 'MuiPrivateTabScrollButton'
 })(TabScrollButton);

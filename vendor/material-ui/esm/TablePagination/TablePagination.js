@@ -8,6 +8,7 @@ import _inherits from "@babel/runtime/helpers/inherits";
 // @inheritedComponent TableCell
 import React from 'react';
 import PropTypes from 'prop-types';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import InputBase from '../InputBase';
 import MenuItem from '../MenuItem';
@@ -15,7 +16,7 @@ import Select from '../Select';
 import TableCell from '../TableCell';
 import Toolbar from '../Toolbar';
 import Typography from '../Typography';
-import TablePaginationActions from '../TablePaginationActions';
+import TablePaginationActions from './TablePaginationActions';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -48,8 +49,7 @@ export var styles = function styles(theme) {
     /* Styles applied to the Select component `root` class. */
     selectRoot: {
       marginRight: 32,
-      marginLeft: 8,
-      color: theme.palette.text.secondary
+      marginLeft: 8
     },
 
     /* Styles applied to the Select component `select` class. */
@@ -65,6 +65,7 @@ export var styles = function styles(theme) {
 
     /* Styles applied to the `InputBase` component. */
     input: {
+      color: 'inherit',
       fontSize: 'inherit',
       flexShrink: 0
     },
@@ -75,7 +76,6 @@ export var styles = function styles(theme) {
     /* Styles applied to the internal `TablePaginationActions` component. */
     actions: {
       flexShrink: 0,
-      color: theme.palette.text.secondary,
       marginLeft: 20
     }
   };
@@ -129,7 +129,8 @@ function (_React$Component) {
           page = _this$props2.page,
           rowsPerPage = _this$props2.rowsPerPage,
           rowsPerPageOptions = _this$props2.rowsPerPageOptions,
-          SelectProps = _this$props2.SelectProps,
+          _this$props2$SelectPr = _this$props2.SelectProps,
+          SelectProps = _this$props2$SelectPr === void 0 ? {} : _this$props2$SelectPr,
           other = _objectWithoutProperties(_this$props2, ["ActionsComponent", "backIconButtonProps", "classes", "colSpan", "component", "count", "labelDisplayedRows", "labelRowsPerPage", "nextIconButtonProps", "onChangePage", "onChangeRowsPerPage", "page", "rowsPerPage", "rowsPerPageOptions", "SelectProps"]);
 
       var colSpan;
@@ -138,6 +139,7 @@ function (_React$Component) {
         colSpan = colSpanProp || 1000; // col-span over everything
       }
 
+      var MenuItemComponent = SelectProps.native ? 'option' : MenuItem;
       return React.createElement(Component, _extends({
         className: classes.root,
         colSpan: colSpan
@@ -161,7 +163,7 @@ function (_React$Component) {
         value: rowsPerPage,
         onChange: onChangeRowsPerPage
       }, SelectProps), rowsPerPageOptions.map(function (rowsPerPageOption) {
-        return React.createElement(MenuItem, {
+        return React.createElement(MenuItemComponent, {
           className: classes.menuItem,
           key: rowsPerPageOption,
           value: rowsPerPageOption
@@ -217,7 +219,7 @@ TablePagination.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * The total number of rows.
@@ -286,7 +288,7 @@ TablePagination.defaultProps = {
     return "".concat(from, "-").concat(to, " of ").concat(count);
   },
   labelRowsPerPage: 'Rows per page:',
-  rowsPerPageOptions: [5, 10, 25]
+  rowsPerPageOptions: [10, 25, 50, 100]
 };
 export default withStyles(styles, {
   name: 'MuiTablePagination'

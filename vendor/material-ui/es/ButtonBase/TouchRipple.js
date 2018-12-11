@@ -273,7 +273,7 @@ class TouchRipple extends React.PureComponent {
 
 }
 
-TouchRipple.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? TouchRipple.propTypes = {
   /**
    * If `true`, the ripple starts at the center of the component
    * rather than at the point of interaction.
@@ -290,7 +290,7 @@ TouchRipple.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   className: PropTypes.string
-} : {};
+} : void 0;
 TouchRipple.defaultProps = {
   center: false
 };

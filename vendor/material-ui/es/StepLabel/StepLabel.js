@@ -59,6 +59,8 @@ export const styles = theme => ({
 
   /* Styles applied to the `icon` container element. */
   iconContainer: {
+    flexShrink: 0,
+    // Fix IE 11 issue
     display: 'flex',
     paddingRight: 8,
     '&$alternativeLabel': {
@@ -127,7 +129,7 @@ function StepLabel(props) {
   }, children), optional));
 }
 
-StepLabel.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? StepLabel.propTypes = {
   /**
    * @ignore
    * Sets the step as active. Is passed to child components.
@@ -202,7 +204,7 @@ StepLabel.propTypes = process.env.NODE_ENV !== "production" ? {
    * Properties applied to the [`StepIcon`](/api/step-icon/) element.
    */
   StepIconProps: PropTypes.object
-} : {};
+} : void 0;
 StepLabel.defaultProps = {
   active: false,
   alternativeLabel: false,

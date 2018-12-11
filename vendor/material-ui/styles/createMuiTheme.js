@@ -45,15 +45,18 @@ function createMuiTheme() {
       _options$palette = options.palette,
       paletteInput = _options$palette === void 0 ? {} : _options$palette,
       shadowsInput = options.shadows,
+      _options$spacing = options.spacing,
+      spacingInput = _options$spacing === void 0 ? {} : _options$spacing,
       _options$typography = options.typography,
       typographyInput = _options$typography === void 0 ? {} : _options$typography,
-      other = (0, _objectWithoutProperties2.default)(options, ["breakpoints", "mixins", "palette", "shadows", "typography"]);
+      other = (0, _objectWithoutProperties2.default)(options, ["breakpoints", "mixins", "palette", "shadows", "spacing", "typography"]);
   var palette = (0, _createPalette.default)(paletteInput);
   var breakpoints = (0, _createBreakpoints.default)(breakpointsInput);
+  var spacing = (0, _extends2.default)({}, _spacing.default, spacingInput);
   var muiTheme = (0, _extends2.default)({
     breakpoints: breakpoints,
     direction: 'ltr',
-    mixins: (0, _createMixins.default)(breakpoints, _spacing.default, mixinsInput),
+    mixins: (0, _createMixins.default)(breakpoints, spacing, mixinsInput),
     overrides: {},
     // Inject custom styles
     palette: palette,
@@ -63,7 +66,7 @@ function createMuiTheme() {
     typography: (0, _createTypography.default)(palette, typographyInput)
   }, (0, _deepmerge.default)({
     shape: _shape.default,
-    spacing: _spacing.default,
+    spacing: spacing,
     transitions: _transitions.default,
     zIndex: _zIndex.default
   }, other, {

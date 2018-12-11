@@ -92,7 +92,7 @@ TabScrollButton.defaultProps = {
 };
 
 var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiTabScrollButton'
+  name: 'MuiPrivateTabScrollButton'
 })(TabScrollButton);
 
 exports.default = _default;

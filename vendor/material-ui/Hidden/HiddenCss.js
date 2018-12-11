@@ -168,7 +168,7 @@ HiddenCss.propTypes = {
 };
 
 var _default = (0, _withStyles.default)(styles, {
-  name: 'MuiHiddenCss'
+  name: 'MuiPrivateHiddenCss'
 })(HiddenCss);
 
 exports.default = _default;

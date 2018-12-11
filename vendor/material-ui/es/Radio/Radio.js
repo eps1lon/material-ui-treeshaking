@@ -64,7 +64,7 @@ function Radio(props) {
   }, other));
 }
 
-Radio.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Radio.propTypes = {
   /**
    * If `true`, the component is checked.
    */
@@ -134,7 +134,7 @@ Radio.propTypes = process.env.NODE_ENV !== "production" ? {
    * The value of the component.
    */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
-} : {};
+} : void 0;
 Radio.defaultProps = {
   color: 'secondary'
 };

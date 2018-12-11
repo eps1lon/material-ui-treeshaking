@@ -40,19 +40,20 @@ function SwipeArea(props) {
   const {
     anchor,
     classes,
+    className,
     width
   } = props,
-        other = _objectWithoutPropertiesLoose(props, ["anchor", "classes", "width"]);
+        other = _objectWithoutPropertiesLoose(props, ["anchor", "classes", "className", "width"]);
 
   return React.createElement("div", _extends({
-    className: classNames(classes.root, classes[`anchor${capitalize(anchor)}`]),
+    className: classNames(classes.root, classes[`anchor${capitalize(anchor)}`], className),
     style: {
       [isHorizontal(props) ? 'width' : 'height']: width
     }
   }, other));
 }
 
-SwipeArea.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? SwipeArea.propTypes = {
   /**
    * Side on which to attach the discovery area.
    */
@@ -64,9 +65,16 @@ SwipeArea.propTypes = process.env.NODE_ENV !== "production" ? {
   classes: PropTypes.object.isRequired,
 
   /**
+   * @ignore
+   */
+  className: PropTypes.string,
+
+  /**
    * The width of the left most (or right most) area in pixels where the
    * drawer can be swiped open from.
    */
   width: PropTypes.number.isRequired
-} : {};
-export default withStyles(styles)(SwipeArea);
+} : void 0;
+export default withStyles(styles, {
+  name: 'MuiPrivateSwipeArea'
+})(SwipeArea);

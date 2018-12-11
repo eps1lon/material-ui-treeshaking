@@ -72,7 +72,7 @@ function SnackbarContent(props) {
   }, action) : null);
 }
 
-SnackbarContent.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? SnackbarContent.propTypes = {
   /**
    * The action to display.
    */
@@ -93,7 +93,7 @@ SnackbarContent.propTypes = process.env.NODE_ENV !== "production" ? {
    * The message to display.
    */
   message: PropTypes.node
-} : {};
+} : void 0;
 export default withStyles(styles, {
   name: 'MuiSnackbarContent'
 })(SnackbarContent);

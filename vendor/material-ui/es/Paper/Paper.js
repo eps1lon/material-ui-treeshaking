@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 export const styles = theme => {
   const elevations = {};
@@ -44,7 +45,7 @@ function Paper(props) {
   }, other));
 }
 
-Paper.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Paper.propTypes = {
   /**
    * The content of the component.
    */
@@ -65,7 +66,7 @@ Paper.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Shadow depth, corresponds to `dp` in the spec.
@@ -77,7 +78,7 @@ Paper.propTypes = process.env.NODE_ENV !== "production" ? {
    * If `true`, rounded corners are disabled.
    */
   square: PropTypes.bool
-} : {};
+} : void 0;
 Paper.defaultProps = {
   component: 'div',
   elevation: 2,

@@ -73,7 +73,7 @@ class RadioGroup extends React.Component {
 
 }
 
-RadioGroup.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? RadioGroup.propTypes = {
   /**
    * The content of the component.
    */
@@ -107,5 +107,5 @@ RadioGroup.propTypes = process.env.NODE_ENV !== "production" ? {
    * Value of the selected radio button.
    */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
-} : {};
+} : void 0;
 export default RadioGroup;

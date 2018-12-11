@@ -39,7 +39,7 @@ function FormGroup(props) {
   }, other), children);
 }
 
-FormGroup.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? FormGroup.propTypes = {
   /**
    * The content of the component.
    */
@@ -60,7 +60,7 @@ FormGroup.propTypes = process.env.NODE_ENV !== "production" ? {
    * Display group of elements in a compact row.
    */
   row: PropTypes.bool
-} : {};
+} : void 0;
 FormGroup.defaultProps = {
   row: false
 };

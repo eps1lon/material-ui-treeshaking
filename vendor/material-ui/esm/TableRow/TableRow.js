@@ -4,7 +4,9 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
+import Tablelvl2Context from '../Table/Tablelvl2Context';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -47,9 +49,7 @@ export var styles = function styles(theme) {
  * based on the material table element parent (head, body, etc).
  */
 
-function TableRow(props, context) {
-  var _classNames;
-
+function TableRow(props) {
   var classes = props.classes,
       classNameProp = props.className,
       Component = props.component,
@@ -57,11 +57,14 @@ function TableRow(props, context) {
       selected = props.selected,
       other = _objectWithoutProperties(props, ["classes", "className", "component", "hover", "selected"]);
 
-  var tablelvl2 = context.tablelvl2;
-  var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.head, tablelvl2 && tablelvl2.variant === 'head'), _defineProperty(_classNames, classes.footer, tablelvl2 && tablelvl2.variant === 'footer'), _defineProperty(_classNames, classes.hover, hover), _defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
-  return React.createElement(Component, _extends({
-    className: className
-  }, other));
+  return React.createElement(Tablelvl2Context.Consumer, null, function (tablelvl2) {
+    var _classNames;
+
+    var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.head, tablelvl2 && tablelvl2.variant === 'head'), _defineProperty(_classNames, classes.footer, tablelvl2 && tablelvl2.variant === 'footer'), _defineProperty(_classNames, classes.hover, hover), _defineProperty(_classNames, classes.selected, selected), _classNames), classNameProp);
+    return React.createElement(Component, _extends({
+      className: className
+    }, other));
+  });
 }
 
 TableRow.propTypes = {
@@ -85,7 +88,7 @@ TableRow.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the table row will shade on hover.
@@ -101,9 +104,6 @@ TableRow.defaultProps = {
   component: 'tr',
   hover: false,
   selected: false
-};
-TableRow.contextTypes = {
-  tablelvl2: PropTypes.object
 };
 export default withStyles(styles, {
   name: 'MuiTableRow'

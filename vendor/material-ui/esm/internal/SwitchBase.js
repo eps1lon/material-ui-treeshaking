@@ -10,6 +10,7 @@ import _inherits from "@babel/runtime/helpers/inherits";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import withStyles from '../styles/withStyles';
 import IconButton from '../IconButton';
 export var styles = {
@@ -57,7 +58,7 @@ function (_React$Component) {
         _this.props.onFocus(event);
       }
 
-      var muiFormControl = _this.context.muiFormControl;
+      var muiFormControl = _this.props.muiFormControl;
 
       if (muiFormControl && muiFormControl.onFocus) {
         muiFormControl.onFocus(event);
@@ -69,7 +70,7 @@ function (_React$Component) {
         _this.props.onBlur(event);
       }
 
-      var muiFormControl = _this.context.muiFormControl;
+      var muiFormControl = _this.props.muiFormControl;
 
       if (muiFormControl && muiFormControl.onBlur) {
         muiFormControl.onBlur(event);
@@ -112,11 +113,13 @@ function (_React$Component) {
           checkedIcon = _this$props.checkedIcon,
           classes = _this$props.classes,
           classNameProp = _this$props.className,
+          defaultChecked = _this$props.defaultChecked,
           disabledProp = _this$props.disabled,
           icon = _this$props.icon,
           id = _this$props.id,
           inputProps = _this$props.inputProps,
           inputRef = _this$props.inputRef,
+          muiFormControl = _this$props.muiFormControl,
           name = _this$props.name,
           onBlur = _this$props.onBlur,
           onChange = _this$props.onChange,
@@ -126,9 +129,8 @@ function (_React$Component) {
           tabIndex = _this$props.tabIndex,
           type = _this$props.type,
           value = _this$props.value,
-          other = _objectWithoutProperties(_this$props, ["autoFocus", "checked", "checkedIcon", "classes", "className", "disabled", "icon", "id", "inputProps", "inputRef", "name", "onBlur", "onChange", "onFocus", "readOnly", "required", "tabIndex", "type", "value"]);
+          other = _objectWithoutProperties(_this$props, ["autoFocus", "checked", "checkedIcon", "classes", "className", "defaultChecked", "disabled", "icon", "id", "inputProps", "inputRef", "muiFormControl", "name", "onBlur", "onChange", "onFocus", "readOnly", "required", "tabIndex", "type", "value"]);
 
-      var muiFormControl = this.context.muiFormControl;
       var disabled = disabledProp;
 
       if (muiFormControl) {
@@ -149,7 +151,8 @@ function (_React$Component) {
         onBlur: this.handleBlur
       }, other), checked ? checkedIcon : icon, React.createElement("input", _extends({
         autoFocus: autoFocus,
-        checked: checked,
+        checked: checkedProp,
+        defaultChecked: defaultChecked,
         className: classes.input,
         disabled: disabled,
         id: hasLabelFor && id,
@@ -232,6 +235,11 @@ SwitchBase.propTypes = {
    */
   inputRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 
+  /**
+   * @ignore
+   */
+  muiFormControl: PropTypes.object,
+
   /*
    * @ignore
    */
@@ -282,9 +290,6 @@ SwitchBase.propTypes = {
    */
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool])
 };
-SwitchBase.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 export default withStyles(styles, {
-  name: 'MuiSwitchBase'
-})(SwitchBase);
+  name: 'MuiPrivateSwitchBase'
+})(withFormControlContext(SwitchBase));

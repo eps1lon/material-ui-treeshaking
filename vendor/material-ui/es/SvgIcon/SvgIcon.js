@@ -3,6 +3,7 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutP
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { capitalize } from '../utils/helpers';
 export const styles = theme => ({
@@ -57,7 +58,7 @@ export const styles = theme => ({
 
   /* Styles applied to the root element if `fontSize="large"`. */
   fontSizeLarge: {
-    fontSize: 36
+    fontSize: 35
   }
 });
 
@@ -88,7 +89,7 @@ function SvgIcon(props) {
   }, other), children, titleAccess ? React.createElement("title", null, titleAccess) : null);
 }
 
-SvgIcon.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? SvgIcon.propTypes = {
   /**
    * Node passed into the SVG element.
    */
@@ -115,7 +116,7 @@ SvgIcon.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
@@ -126,6 +127,13 @@ SvgIcon.propTypes = process.env.NODE_ENV !== "production" ? {
    * Applies a color attribute to the SVG element.
    */
   nativeColor: PropTypes.string,
+
+  /**
+   * The shape-rendering attribute. The behavior of the different options is described
+   * [here](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/shape-rendering).
+   * If you are having issues with blurry icons you should investigate this property.
+   */
+  shapeRendering: PropTypes.string,
 
   /**
    * Provides a human-readable title for the element that contains it.
@@ -141,7 +149,7 @@ SvgIcon.propTypes = process.env.NODE_ENV !== "production" ? {
    * to bottom right (50,20) and each unit will be worth 10px.
    */
   viewBox: PropTypes.string
-} : {};
+} : void 0;
 SvgIcon.defaultProps = {
   color: 'inherit',
   component: 'svg',

@@ -16,6 +16,7 @@ import EventListener from 'react-event-listener';
 import debounce from 'debounce'; // < 1kb payload overhead when lodash/debounce is > 3kb.
 
 import { getNormalizedScrollLeft, detectScrollType } from 'normalize-scroll-left';
+import { componentPropType } from '@material-ui/utils';
 import animate from '../internal/animate';
 import ScrollbarSize from './ScrollbarSize';
 import withStyles from '../styles/withStyles';
@@ -103,7 +104,6 @@ function (_React$Component) {
           theme = _this$props.theme;
       var conditionalElements = {};
       conditionalElements.scrollbarSizeListener = scrollable ? React.createElement(ScrollbarSize, {
-        onLoad: _this.handleScrollbarSizeChange,
         onChange: _this.handleScrollbarSizeChange
       }) : null;
       var showScrollButtons = scrollable && (scrollButtons === 'auto' || scrollButtons === 'on');
@@ -147,7 +147,7 @@ function (_React$Component) {
         if (children.length > 0) {
           var tab = children[_this.valueToIndex.get(value)];
 
-          warning(tab, "Material-UI: the value provided `".concat(value, "` is invalid"));
+          warning(tab, ["Material-UI: the value provided `".concat(value, "` to the Tabs component is invalid."), 'Non of the Tabs children have this value.', _this.valueToIndex.keys ? "You can provide one of the following values: ".concat(Array.from(_this.valueToIndex.keys()).join(', '), ".") : null].join('\n'));
           tabMeta = tab ? tab.getBoundingClientRect() : null;
         }
       }
@@ -166,9 +166,7 @@ function (_React$Component) {
       _this.moveTabsScroll(_this.tabsRef.clientWidth);
     };
 
-    _this.handleScrollbarSizeChange = function (_ref) {
-      var scrollbarHeight = _ref.scrollbarHeight;
-
+    _this.handleScrollbarSizeChange = function (scrollbarHeight) {
       _this.setState({
         scrollerStyle: {
           marginBottom: -scrollbarHeight
@@ -257,7 +255,6 @@ function (_React$Component) {
   _createClass(Tabs, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      // eslint-disable-next-line react/no-did-mount-set-state
       this.setState({
         mounted: true
       });
@@ -387,8 +384,8 @@ function (_React$Component) {
       }, conditionalElements.scrollButtonLeft, React.createElement("div", {
         className: scrollerClassName,
         style: this.state.scrollerStyle,
-        ref: function ref(_ref2) {
-          _this2.tabsRef = _ref2;
+        ref: function ref(_ref) {
+          _this2.tabsRef = _ref;
         },
         role: "tablist",
         onScroll: this.handleTabsScroll
@@ -438,7 +435,7 @@ Tabs.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the tabs will grow to use all the available space.

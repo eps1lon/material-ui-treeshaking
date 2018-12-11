@@ -19,6 +19,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _classnames = _interopRequireDefault(require("classnames"));
 
+var _utils = require("@material-ui/utils");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _helpers = require("../utils/helpers");
@@ -47,7 +49,10 @@ var styles = function styles(theme) {
     },
 
     /* Styles applied to the inner `component` element if `disableGutters={false}`. */
-    gutters: theme.mixins.gutters(),
+    gutters: {
+      paddingLeft: 16,
+      paddingRight: 16
+    },
 
     /* Styles applied to the root element if `inset={true}`. */
     inset: {
@@ -108,7 +113,7 @@ ListSubheader.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * If `true`, the List Subheader will not have gutters.

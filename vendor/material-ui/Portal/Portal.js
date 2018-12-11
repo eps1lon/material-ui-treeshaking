@@ -25,7 +25,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _ownerDocument = _interopRequireDefault(require("../utils/ownerDocument"));
 
-var _exactProp = _interopRequireDefault(require("../utils/exactProp"));
+var _utils = require("@material-ui/utils");
 
 function getContainer(container, defaultContainer) {
   container = typeof container === 'function' ? container() : container;
@@ -150,6 +150,10 @@ Portal.propTypes = {
 Portal.defaultProps = {
   disablePortal: false
 };
-Portal.propTypes = (0, _exactProp.default)(Portal.propTypes);
+
+if (process.env.NODE_ENV !== 'production') {
+  Portal.propTypes = (0, _utils.exactProp)(Portal.propTypes);
+}
+
 var _default = Portal;
 exports.default = _default;

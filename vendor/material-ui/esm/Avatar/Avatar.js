@@ -1,9 +1,10 @@
-import _extends from "@babel/runtime/helpers/extends";
 import _defineProperty from "@babel/runtime/helpers/defineProperty";
+import _extends from "@babel/runtime/helpers/extends";
 import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 export var styles = function styles(theme) {
   return {
@@ -24,8 +25,6 @@ export var styles = function styles(theme) {
     },
 
     /* Styles applied to the root element if there are children and not `src` or `srcSet` */
-
-    /* Styles applied to the root element if `color="default"`. */
     colorDefault: {
       color: theme.palette.background.default,
       backgroundColor: theme.palette.type === 'light' ? theme.palette.grey[400] : theme.palette.grey[600]
@@ -55,10 +54,10 @@ function Avatar(props) {
       srcSet = props.srcSet,
       other = _objectWithoutProperties(props, ["alt", "children", "childrenClassName", "classes", "className", "component", "imgProps", "sizes", "src", "srcSet"]);
 
-  var className = classNames(classes.root, _defineProperty({}, classes.colorDefault, childrenProp && !src && !srcSet), classNameProp);
   var children = null;
+  var img = src || srcSet;
 
-  if (src || srcSet) {
+  if (img) {
     children = React.createElement("img", _extends({
       alt: alt,
       src: src,
@@ -67,16 +66,15 @@ function Avatar(props) {
       className: classes.img
     }, imgProps));
   } else if (childrenClassNameProp && React.isValidElement(childrenProp)) {
-    var childrenClassName = classNames(childrenClassNameProp, childrenProp.props.className);
     children = React.cloneElement(childrenProp, {
-      className: childrenClassName
+      className: classNames(childrenClassNameProp, childrenProp.props.className)
     });
   } else {
     children = childrenProp;
   }
 
   return React.createElement(Component, _extends({
-    className: className
+    className: classNames(classes.root, _defineProperty({}, classes.colorDefault, !img), classNameProp)
   }, other), children);
 }
 
@@ -118,7 +116,7 @@ Avatar.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Attributes applied to the `img` element if the component

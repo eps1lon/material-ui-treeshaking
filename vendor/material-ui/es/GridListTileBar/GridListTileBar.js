@@ -116,7 +116,7 @@ function GridListTileBar(props) {
   }, actionIcon) : null);
 }
 
-GridListTileBar.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? GridListTileBar.propTypes = {
   /**
    * An IconButton element to be used as secondary action target
    * (primary action target is the tile itself).
@@ -153,7 +153,7 @@ GridListTileBar.propTypes = process.env.NODE_ENV !== "production" ? {
    * Position of the title bar.
    */
   titlePosition: PropTypes.oneOf(['top', 'bottom'])
-} : {};
+} : void 0;
 GridListTileBar.defaultProps = {
   actionPosition: 'right',
   titlePosition: 'bottom'

@@ -23,7 +23,7 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _styles = require("../styles");
 
-var _exactProp = _interopRequireDefault(require("../utils/exactProp"));
+var _utils = require("@material-ui/utils");
 
 /* eslint-disable react/no-unused-prop-types */
 var styles = function styles(theme) {
@@ -88,7 +88,11 @@ CssBaseline.propTypes = {
    */
   classes: _propTypes.default.object.isRequired
 };
-CssBaseline.propTypes = (0, _exactProp.default)(CssBaseline.propTypes);
+
+if (process.env.NODE_ENV !== 'production') {
+  CssBaseline.propTypes = (0, _utils.exactProp)(CssBaseline.propTypes);
+}
+
 CssBaseline.defaultProps = {
   children: null
 };

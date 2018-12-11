@@ -20,10 +20,7 @@ export var styles = function styles(theme) {
       transition: theme.transitions.create(['color', 'padding-top'], {
         duration: theme.transitions.duration.short
       }),
-      paddingTop: 8,
-      paddingBottom: 10,
-      paddingLeft: 12,
-      paddingRight: 12,
+      padding: '6px 12px 8px',
       minWidth: 80,
       maxWidth: 168,
       color: theme.palette.text.secondary,

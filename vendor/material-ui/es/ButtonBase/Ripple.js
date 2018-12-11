@@ -72,7 +72,7 @@ class Ripple extends React.Component {
 
 }
 
-Ripple.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Ripple.propTypes = {
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css-api) below for more details.
@@ -103,7 +103,7 @@ Ripple.propTypes = process.env.NODE_ENV !== "production" ? {
    * Vertical position of the ripple center.
    */
   rippleY: PropTypes.number
-} : {};
+} : void 0;
 Ripple.defaultProps = {
   pulsate: false
 };

@@ -51,6 +51,8 @@ var _ModalManager = _interopRequireDefault(require("./ModalManager"));
 
 var _Backdrop = _interopRequireDefault(require("../Backdrop"));
 
+var _manageAriaHidden = require("./manageAriaHidden");
+
 function getContainer(container, defaultContainer) {
   container = typeof container === 'function' ? container() : container;
   return _reactDom.default.findDOMNode(container) || defaultContainer;
@@ -125,17 +127,14 @@ function (_React$Component) {
       if (_this.props.open) {
         _this.handleOpened();
       } else {
-        var doc = (0, _ownerDocument.default)(_this.mountNode);
-        var container = getContainer(_this.props.container, doc.body);
-
-        _this.props.manager.add((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)), container);
-
-        _this.props.manager.remove((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this)));
+        (0, _manageAriaHidden.ariaHidden)(_this.modalRef, true);
       }
     };
 
     _this.handleOpened = function () {
-      _this.autoFocus(); // Fix a bug on Chrome where the scroll isn't initially 0.
+      _this.autoFocus();
+
+      _this.props.manager.mount((0, _assertThisInitialized2.default)((0, _assertThisInitialized2.default)(_this))); // Fix a bug on Chrome where the scroll isn't initially 0.
 
 
       _this.modalRef.scrollTop = 0;
@@ -207,6 +206,10 @@ function (_React$Component) {
       _this.modalRef = ref;
     };
 
+    _this.onRootRef = function (ref) {
+      _this.dialogRef = ref;
+    };
+
     _this.state = {
       exited: !props.open
     };
@@ -228,7 +231,6 @@ function (_React$Component) {
       if (prevProps.open && !this.props.open) {
         this.handleClose();
       } else if (!prevProps.open && this.props.open) {
-        // check for focus
         this.lastFocus = (0, _ownerDocument.default)(this.mountNode).activeElement;
         this.handleOpen();
       }
@@ -286,8 +288,6 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this2 = this;
-
       var _this$props = this.props,
           BackdropComponent = _this$props.BackdropComponent,
           BackdropProps = _this$props.BackdropProps,
@@ -339,14 +339,12 @@ function (_React$Component) {
       }, _react.default.createElement("div", (0, _extends2.default)({
         "data-mui-test": "Modal",
         ref: this.handleModalRef,
-        className: (0, _classnames.default)(classes.root, className, (0, _defineProperty2.default)({}, classes.hidden, exited))
+        className: (0, _classnames.default)('mui-fixed', classes.root, className, (0, _defineProperty2.default)({}, classes.hidden, exited))
       }, other), hideBackdrop ? null : _react.default.createElement(BackdropComponent, (0, _extends2.default)({
         open: open,
         onClick: this.handleBackdropClick
       }, BackdropProps)), _react.default.createElement(_RootRef.default, {
-        rootRef: function rootRef(ref) {
-          _this2.dialogRef = ref;
-        }
+        rootRef: this.onRootRef
       }, _react.default.cloneElement(children, childProps))));
     }
   }], [{

@@ -43,7 +43,7 @@ function TabIndicator(props) {
   }, other));
 }
 
-TabIndicator.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? TabIndicator.propTypes = {
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css-api) below for more details.
@@ -60,7 +60,7 @@ TabIndicator.propTypes = process.env.NODE_ENV !== "production" ? {
    * The color of the tab indicator.
    */
   color: PropTypes.oneOf(['primary', 'secondary'])
-} : {};
+} : void 0;
 export default withStyles(styles, {
-  name: 'MuiTabIndicator'
+  name: 'MuiPrivateTabIndicator'
 })(TabIndicator);

@@ -5,7 +5,7 @@ import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/inherits";
 import React from 'react';
 import PropTypes from 'prop-types';
-import exactProp from '../utils/exactProp';
+import { exactProp } from '@material-ui/utils';
 /**
  * NoSsr purposely removes components from the subject of Server Side Rendering (SSR).
  *
@@ -64,7 +64,7 @@ function (_React$Component) {
       } else {
         this.setState({
           mounted: true
-        }); // eslint-disable-line react/no-did-mount-set-state
+        });
       }
     }
   }, {
@@ -99,7 +99,11 @@ NoSsr.propTypes = {
    */
   fallback: PropTypes.node
 };
-NoSsr.propTypes = exactProp(NoSsr.propTypes);
+
+if (process.env.NODE_ENV !== 'production') {
+  NoSsr.propTypes = exactProp(NoSsr.propTypes);
+}
+
 NoSsr.defaultProps = {
   defer: false,
   fallback: null

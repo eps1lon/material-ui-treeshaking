@@ -19,14 +19,25 @@ var internal = {
   keyUpEventTimeout: -1
 };
 
+function findActiveElement(doc) {
+  var activeElement = doc.activeElement;
+
+  while (activeElement && activeElement.shadowRoot && activeElement.shadowRoot.activeElement) {
+    activeElement = activeElement.shadowRoot.activeElement;
+  }
+
+  return activeElement;
+}
+
 function detectFocusVisible(instance, element, callback) {
   var attempt = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   (0, _warning.default)(instance.focusVisibleCheckTime, 'Material-UI: missing instance.focusVisibleCheckTime.');
   (0, _warning.default)(instance.focusVisibleMaxCheckTimes, 'Material-UI: missing instance.focusVisibleMaxCheckTimes.');
   instance.focusVisibleTimeout = setTimeout(function () {
     var doc = (0, _ownerDocument.default)(element);
+    var activeElement = findActiveElement(doc);
 
-    if (internal.focusKeyPressed && (doc.activeElement === element || element.contains(doc.activeElement))) {
+    if (internal.focusKeyPressed && (activeElement === element || element.contains(activeElement))) {
       callback();
     } else if (attempt < instance.focusVisibleMaxCheckTimes) {
       detectFocusVisible(instance, element, callback, attempt + 1);

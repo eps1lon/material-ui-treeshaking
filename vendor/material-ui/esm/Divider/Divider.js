@@ -4,8 +4,10 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { fade } from '../styles/colorManipulator';
+import chainPropTypes from '../utils/chainPropTypes';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -26,7 +28,7 @@ export var styles = function styles(theme) {
       width: '100%'
     },
 
-    /* Styles applied to the root element if `inset={true}`. */
+    /* Styles applied to the root element if `variant="inset"`. */
     inset: {
       marginLeft: 72
     },
@@ -34,6 +36,12 @@ export var styles = function styles(theme) {
     /* Styles applied to the root element if `light={true}`. */
     light: {
       backgroundColor: fade(theme.palette.divider, 0.08)
+    },
+
+    /* Styles applied to the root element if `variant="middle"`. */
+    middle: {
+      marginLeft: theme.spacing.unit * 2,
+      marginRight: theme.spacing.unit * 2
     }
   };
 };
@@ -43,19 +51,22 @@ function Divider(props) {
 
   var absolute = props.absolute,
       classes = props.classes,
-      classNameProp = props.className,
+      className = props.className,
       Component = props.component,
       inset = props.inset,
       light = props.light,
-      other = _objectWithoutProperties(props, ["absolute", "classes", "className", "component", "inset", "light"]);
+      variant = props.variant,
+      other = _objectWithoutProperties(props, ["absolute", "classes", "className", "component", "inset", "light", "variant"]);
 
-  var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.absolute, absolute), _defineProperty(_classNames, classes.inset, inset), _defineProperty(_classNames, classes.light, light), _classNames), classNameProp);
   return React.createElement(Component, _extends({
-    className: className
+    className: classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.inset, inset || variant === 'inset'), _defineProperty(_classNames, classes.middle, variant === 'middle'), _defineProperty(_classNames, classes.absolute, absolute), _defineProperty(_classNames, classes.light, light), _classNames), className)
   }, other));
 }
 
 Divider.propTypes = {
+  /**
+   * Absolutely position the element.
+   */
   absolute: PropTypes.bool,
 
   /**
@@ -73,23 +84,37 @@ Divider.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the divider will be indented.
+   * __WARNING__: `inset` is deprecated.
+   * Instead use `variant="inset"`.
    */
-  inset: PropTypes.bool,
+  inset: chainPropTypes(PropTypes.bool, function (props) {
+    /* istanbul ignore if */
+    if (props.inset) {
+      return new Error('Material-UI: you are using the deprecated `inset` property ' + 'that will be removed in the next major release. The property `variant="inset"` ' + 'is equivalent and should be used instead.');
+    }
+
+    return null;
+  }),
 
   /**
    * If `true`, the divider will have a lighter color.
    */
-  light: PropTypes.bool
+  light: PropTypes.bool,
+
+  /**
+   *  The variant to use.
+   */
+  variant: PropTypes.oneOf(['fullWidth', 'inset', 'middle'])
 };
 Divider.defaultProps = {
   absolute: false,
   component: 'hr',
-  inset: false,
-  light: false
+  light: false,
+  variant: 'fullWidth'
 };
 export default withStyles(styles, {
   name: 'MuiDivider'

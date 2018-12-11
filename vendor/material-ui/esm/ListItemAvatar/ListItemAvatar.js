@@ -4,8 +4,8 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import warning from 'warning';
 import withStyles from '../styles/withStyles';
+import ListContext from '../List/ListContext';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -14,6 +14,11 @@ export var styles = function styles(theme) {
       height: 36,
       fontSize: theme.typography.pxToRem(18),
       marginRight: 4
+    },
+
+    /* Styles applied to the root element when. */
+    alignItemsFlexStart: {
+      marginTop: 4
     },
 
     /* Styles applied to the children – typically the `Avatar` component. */
@@ -25,24 +30,24 @@ export var styles = function styles(theme) {
   };
 };
 /**
- * This is a simple wrapper to apply the `dense` mode styles to `Avatar`.
+ * This is a simple wrapper to apply the `dense`
+ * and `align-items="flex-start"` mode styles to `Avatar`.
  */
 
-function ListItemAvatar(props, context) {
+function ListItemAvatar(props) {
   var children = props.children,
       classes = props.classes,
-      classNameProp = props.className,
+      className = props.className,
       other = _objectWithoutProperties(props, ["children", "classes", "className"]);
 
-  if (context.dense === undefined) {
-    warning(false, "Material-UI: <ListItemAvatar> is a simple wrapper to apply the dense styles\n      to <Avatar>. You do not need it unless you are controlling the <List> dense property.");
-    return props.children;
-  }
+  return React.createElement(ListContext.Consumer, null, function (context) {
+    var _classNames;
 
-  return React.cloneElement(children, _extends({
-    className: classNames(_defineProperty({}, classes.root, context.dense), classNameProp, children.props.className),
-    childrenClassName: classNames(_defineProperty({}, classes.icon, context.dense), children.props.childrenClassName)
-  }, other));
+    return React.cloneElement(children, _extends({
+      className: classNames((_classNames = {}, _defineProperty(_classNames, classes.root, context.dense), _defineProperty(_classNames, classes.alignItemsFlexStart, context.alignItems === 'flex-start'), _classNames), className, children.props.className),
+      childrenClassName: classNames(_defineProperty({}, classes.icon, context.dense), children.props.childrenClassName)
+    }, other));
+  });
 }
 
 ListItemAvatar.propTypes = {
@@ -61,9 +66,6 @@ ListItemAvatar.propTypes = {
    * @ignore
    */
   className: PropTypes.string
-};
-ListItemAvatar.contextTypes = {
-  dense: PropTypes.bool
 };
 ListItemAvatar.muiName = 'ListItemAvatar';
 export default withStyles(styles, {

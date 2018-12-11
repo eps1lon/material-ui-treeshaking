@@ -84,7 +84,7 @@ function Stepper(props) {
   }, other), steps);
 }
 
-Stepper.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Stepper.propTypes = {
   /**
    * Set the active step (zero based index).
    */
@@ -126,7 +126,7 @@ Stepper.propTypes = process.env.NODE_ENV !== "production" ? {
    * The stepper orientation (layout flow direction).
    */
   orientation: PropTypes.oneOf(['horizontal', 'vertical'])
-} : {};
+} : void 0;
 Stepper.defaultProps = {
   activeStep: 0,
   alternativeLabel: false,

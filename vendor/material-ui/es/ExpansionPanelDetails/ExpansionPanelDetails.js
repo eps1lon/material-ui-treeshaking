@@ -25,7 +25,7 @@ function ExpansionPanelDetails(props) {
   }, other), children);
 }
 
-ExpansionPanelDetails.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ExpansionPanelDetails.propTypes = {
   /**
    * The content of the expansion panel details.
    */
@@ -41,7 +41,7 @@ ExpansionPanelDetails.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   className: PropTypes.string
-} : {};
+} : void 0;
 export default withStyles(styles, {
   name: 'MuiExpansionPanelDetails'
 })(ExpansionPanelDetails);

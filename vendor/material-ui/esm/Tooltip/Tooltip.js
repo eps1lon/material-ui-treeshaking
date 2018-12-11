@@ -253,7 +253,7 @@ function (_React$Component) {
   _createClass(Tooltip, [{
     key: "componentDidMount",
     value: function componentDidMount() {
-      warning(!this.childrenRef.disabled || !this.childrenRef.tagName.toLowerCase() === 'button', ['Material-UI: you are providing a disabled `button` child to the Tooltip component.', 'A disabled element does not fire events.', "Tooltip needs to listen to the child element's events to display the title.", '', 'Place a `div` container on top of the element.'].join('\n')); // Fallback to this default id when possible.
+      warning(!this.childrenRef.disabled || this.childrenRef.disabled && this.props.title === '' || this.childrenRef.tagName.toLowerCase() !== 'button', ['Material-UI: you are providing a disabled `button` child to the Tooltip component.', 'A disabled element does not fire events.', "Tooltip needs to listen to the child element's events to display the title.", '', 'Place a `div` container on top of the element.'].join('\n')); // Fallback to this default id when possible.
       // Use the random value for client side rendering only.
       // We can't use it server side.
 
@@ -286,6 +286,7 @@ function (_React$Component) {
           enterDelay = _this$props5.enterDelay,
           enterTouchDelay = _this$props5.enterTouchDelay,
           id = _this$props5.id,
+          interactive = _this$props5.interactive,
           leaveDelay = _this$props5.leaveDelay,
           leaveTouchDelay = _this$props5.leaveTouchDelay,
           onClose = _this$props5.onClose,
@@ -297,18 +298,27 @@ function (_React$Component) {
           title = _this$props5.title,
           TransitionComponent = _this$props5.TransitionComponent,
           TransitionProps = _this$props5.TransitionProps,
-          other = _objectWithoutProperties(_this$props5, ["children", "classes", "disableFocusListener", "disableHoverListener", "disableTouchListener", "enterDelay", "enterTouchDelay", "id", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperProps", "theme", "title", "TransitionComponent", "TransitionProps"]);
+          other = _objectWithoutProperties(_this$props5, ["children", "classes", "disableFocusListener", "disableHoverListener", "disableTouchListener", "enterDelay", "enterTouchDelay", "id", "interactive", "leaveDelay", "leaveTouchDelay", "onClose", "onOpen", "open", "placement", "PopperProps", "theme", "title", "TransitionComponent", "TransitionProps"]);
 
-      var open = this.isControlled ? openProp : this.state.open; // There is no point at displaying an empty tooltip.
+      var open = this.isControlled ? openProp : this.state.open; // There is no point in displaying an empty tooltip.
 
       if (title === '') {
         open = false;
-      }
+      } // For accessibility and SEO concerns, we render the title to the DOM node when
+      // the tooltip is hidden. However, we have made a tradeoff when
+      // `disableHoverListener` is set. This title logic is disabled.
+      // It's allowing us to keep the implementation size minimal.
+      // We are open to change the tradeoff.
+
+
+      var shouldShowNativeTitle = !open && !disableHoverListener;
 
       var childrenProps = _extends({
         'aria-describedby': open ? id || this.defaultId : null,
-        title: !open && typeof title === 'string' ? title : null
-      }, other);
+        title: shouldShowNativeTitle && typeof title === 'string' ? title : null
+      }, other, children.props, {
+        className: classNames(other.className, children.props.className)
+      });
 
       if (!disableTouchListener) {
         childrenProps.onTouchStart = this.handleTouchStart;
@@ -325,6 +335,12 @@ function (_React$Component) {
         childrenProps.onBlur = this.handleLeave;
       }
 
+      var interactiveWrapperListeners = interactive ? {
+        onMouseOver: childrenProps.onMouseOver,
+        onMouseLeave: childrenProps.onMouseLeave,
+        onFocus: childrenProps.onFocus,
+        onBlur: childrenProps.onBlur
+      } : {};
       warning(!children.props.title, ['Material-UI: you have provided a `title` property to the child of <Tooltip />.', "Remove this title property `".concat(children.props.title, "` or the Tooltip component.")].join('\n'));
       return React.createElement(React.Fragment, null, React.createElement(RootRef, {
         rootRef: this.onRootRef
@@ -335,7 +351,7 @@ function (_React$Component) {
         open: open,
         id: childrenProps['aria-describedby'],
         transition: true
-      }, PopperProps), function (_ref) {
+      }, interactiveWrapperListeners, PopperProps), function (_ref) {
         var placementInner = _ref.placement,
             TransitionPropsInner = _ref.TransitionProps;
         return React.createElement(TransitionComponent, _extends({
@@ -391,9 +407,15 @@ Tooltip.propTypes = {
   /**
    * The relationship between the tooltip and the wrapper component is not clear from the DOM.
    * This property is used with aria-describedby to solve the accessibility issue.
-   * If you don't provide this property. It fallback to a random generated id.
+   * If you don't provide this property. It falls back to a randomly generated id.
    */
   id: PropTypes.string,
+
+  /**
+   * Makes a tooltip interactive, i.e. will not close when the user
+   * hovers over the tooltip before the `leaveDelay` is expired.
+   */
+  interactive: PropTypes.bool,
 
   /**
    * The number of milliseconds to wait before hiding the tooltip.
@@ -461,6 +483,7 @@ Tooltip.defaultProps = {
   disableTouchListener: false,
   enterDelay: 0,
   enterTouchDelay: 1000,
+  interactive: false,
   leaveDelay: 0,
   leaveTouchDelay: 1500,
   placement: 'bottom',

@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import keycode from 'keycode';
 import warning from 'warning';
+import { componentPropType } from '@material-ui/utils';
 import CancelIcon from '../internal/svg-icons/Cancel';
 import withStyles from '../styles/withStyles';
 import { emphasize, fade } from '../styles/colorManipulator';
@@ -39,7 +40,8 @@ export const styles = theme => {
       // Remove `button` border
       padding: 0,
       // Remove `button` padding
-      verticalAlign: 'middle'
+      verticalAlign: 'middle',
+      boxSizing: 'border-box'
     },
 
     /* Styles applied to the root element if `color="primary"`. */
@@ -121,6 +123,9 @@ export const styles = theme => {
       border: `1px solid ${theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'}`,
       '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
         backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity)
+      },
+      '& $avatar': {
+        marginLeft: -1
       }
     },
 
@@ -403,7 +408,7 @@ class Chip extends React.Component {
 
 }
 
-Chip.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Chip.propTypes = {
   /**
    * Avatar element.
    */
@@ -444,7 +449,7 @@ Chip.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Override the default delete icon element. Shown only if `onDelete` is set.
@@ -491,7 +496,7 @@ Chip.propTypes = process.env.NODE_ENV !== "production" ? {
    * The variant to use.
    */
   variant: PropTypes.oneOf(['default', 'outlined'])
-} : {};
+} : void 0;
 Chip.defaultProps = {
   component: 'div',
   color: 'default',

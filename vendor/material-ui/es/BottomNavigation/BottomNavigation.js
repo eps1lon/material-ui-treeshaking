@@ -46,7 +46,7 @@ function BottomNavigation(props) {
   }, other), children);
 }
 
-BottomNavigation.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? BottomNavigation.propTypes = {
   /**
    * The content of the component.
    */
@@ -81,7 +81,7 @@ BottomNavigation.propTypes = process.env.NODE_ENV !== "production" ? {
    * The value of the currently selected `BottomNavigationAction`.
    */
   value: PropTypes.any
-} : {};
+} : void 0;
 BottomNavigation.defaultProps = {
   showLabels: false
 };

@@ -25,12 +25,30 @@ var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 // @inheritedComponent InputBase
 var styles = function styles(theme) {
+  var borderColor = theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)';
   return {
     /* Styles applied to the root element. */
     root: {
       position: 'relative',
+      '& $notchedOutline': {
+        borderColor: borderColor
+      },
       '&:hover:not($disabled):not($focused):not($error) $notchedOutline': {
-        borderColor: theme.palette.text.primary
+        borderColor: theme.palette.text.primary,
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          borderColor: borderColor
+        }
+      },
+      '&$focused $notchedOutline': {
+        borderColor: theme.palette.primary.main,
+        borderWidth: 2
+      },
+      '&$error $notchedOutline': {
+        borderColor: theme.palette.error.main
+      },
+      '&$disabled $notchedOutline': {
+        borderColor: theme.palette.action.disabled
       }
     },
 
@@ -102,15 +120,12 @@ function OutlinedInput(props) {
     renderPrefix: function renderPrefix(state) {
       return _react.default.createElement(_NotchedOutline.default, {
         className: classes.notchedOutline,
-        disabled: state.disabled,
-        error: state.error,
-        focused: state.focused,
         labelWidth: labelWidth,
         notched: typeof notched !== 'undefined' ? notched : Boolean(state.startAdornment || state.filled || state.focused)
       });
     },
     classes: (0, _extends2.default)({}, classes, {
-      root: (0, _classnames.default)(classes.root, classes.underline, {}),
+      root: (0, _classnames.default)(classes.root, classes.underline),
       notchedOutline: null
     })
   }, other));
@@ -144,7 +159,7 @@ OutlinedInput.propTypes = {
   /**
    * The default input value, useful when not controlling the component.
    */
-  defaultValue: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number]),
+  defaultValue: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.object, _propTypes.default.arrayOf(_propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.object]))]),
 
   /**
    * If `true`, the input will be disabled.
@@ -261,7 +276,7 @@ OutlinedInput.propTypes = {
   /**
    * The input value, required for a controlled component.
    */
-  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.arrayOf(_propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool]))])
+  value: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.object, _propTypes.default.arrayOf(_propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.number, _propTypes.default.bool, _propTypes.default.object]))])
 };
 _InputBase.default.defaultProps = {
   fullWidth: false,

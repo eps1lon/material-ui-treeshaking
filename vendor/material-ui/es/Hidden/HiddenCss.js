@@ -70,7 +70,7 @@ function HiddenCss(props) {
   }, children);
 }
 
-HiddenCss.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? HiddenCss.propTypes = {
   /**
    * The content of the component.
    */
@@ -147,7 +147,7 @@ HiddenCss.propTypes = process.env.NODE_ENV !== "production" ? {
    * If true, screens this size and up will be hidden.
    */
   xsUp: PropTypes.bool
-} : {};
+} : void 0;
 export default withStyles(styles, {
-  name: 'MuiHiddenCss'
+  name: 'MuiPrivateHiddenCss'
 })(HiddenCss);

@@ -27,6 +27,12 @@ export const styles = theme => ({
     backgroundColor: lighten(theme.palette.secondary.light, 0.4)
   },
 
+  /* Styles applied to the root element if `variant="determinate"`. */
+  determinate: {},
+
+  /* Styles applied to the root element if `variant="indeterminate"`. */
+  indeterminate: {},
+
   /* Styles applied to the root element if `variant="buffer"`. */
   buffer: {
     backgroundColor: 'transparent'
@@ -108,9 +114,6 @@ export const styles = theme => ({
     animationDelay: '1.15s'
   },
 
-  /* Styles applied to the bar2 element if `variant="determinate"`. */
-  bar2Determinate: {},
-
   /* Styles applied to the bar2 element if `variant="buffer"`. */
   bar2Buffer: {
     transition: `transform .${TRANSITION_DURATION}s linear`
@@ -188,6 +191,8 @@ function LinearProgress(props) {
   const className = classNames(classes.root, {
     [classes.colorPrimary]: color === 'primary',
     [classes.colorSecondary]: color === 'secondary',
+    [classes.determinate]: variant === 'determinate',
+    [classes.indeterminate]: variant === 'indeterminate',
     [classes.buffer]: variant === 'buffer',
     [classes.query]: variant === 'query'
   }, classNameProp);
@@ -208,7 +213,6 @@ function LinearProgress(props) {
     [classes.barColorSecondary]: color === 'secondary' && variant !== 'buffer',
     [classes.colorSecondary]: color === 'secondary' && variant === 'buffer',
     [classes.bar2Indeterminate]: variant === 'indeterminate' || variant === 'query',
-    [classes.bar2Determinate]: variant === 'determinate',
     [classes.bar2Buffer]: variant === 'buffer'
   });
   const rootProps = {};
@@ -248,7 +252,7 @@ function LinearProgress(props) {
   }));
 }
 
-LinearProgress.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? LinearProgress.propTypes = {
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css-api) below for more details.
@@ -282,7 +286,7 @@ LinearProgress.propTypes = process.env.NODE_ENV !== "production" ? {
    * Use indeterminate or query when there is no progress value.
    */
   variant: PropTypes.oneOf(['determinate', 'indeterminate', 'buffer', 'query'])
-} : {};
+} : void 0;
 LinearProgress.defaultProps = {
   color: 'primary',
   variant: 'indeterminate'

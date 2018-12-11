@@ -72,5 +72,5 @@ TabScrollButton.defaultProps = {
   visible: true
 };
 export default withStyles(styles, {
-  name: 'MuiTabScrollButton'
+  name: 'MuiPrivateTabScrollButton'
 })(TabScrollButton);

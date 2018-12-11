@@ -40,7 +40,7 @@ function NativeSelectInput(props) {
   }));
 }
 
-NativeSelectInput.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? NativeSelectInput.propTypes = {
   /**
    * The option elements to populate the select with.
    * Can be some `<option>` elements.
@@ -89,11 +89,11 @@ NativeSelectInput.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The input value.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))]),
 
   /**
    * The variant to use.
    */
   variant: PropTypes.oneOf(['standard', 'outlined', 'filled'])
-} : {};
+} : void 0;
 export default NativeSelectInput;

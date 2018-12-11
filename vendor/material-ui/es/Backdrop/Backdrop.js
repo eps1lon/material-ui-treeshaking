@@ -48,7 +48,7 @@ function Backdrop(props) {
   }));
 }
 
-Backdrop.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Backdrop.propTypes = {
   /**
    * Override or extend the styles applied to the component.
    * See [CSS API](#css-api) below for more details.
@@ -79,7 +79,7 @@ Backdrop.propTypes = process.env.NODE_ENV !== "production" ? {
     enter: PropTypes.number,
     exit: PropTypes.number
   })])
-} : {};
+} : void 0;
 Backdrop.defaultProps = {
   invisible: false
 };

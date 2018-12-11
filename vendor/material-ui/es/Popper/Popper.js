@@ -4,11 +4,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import PopperJS from 'popper.js';
-import withTheme from '../styles/withTheme';
 import Portal from '../Portal';
 
-function flipPlacement(theme, placement) {
-  if (theme.direction !== 'rtl') {
+function flipPlacement(placement) {
+  const direction = typeof window !== 'undefined' && document.body.getAttribute('dir') || 'ltr';
+
+  if (direction !== 'rtl') {
     return placement;
   }
 
@@ -49,7 +50,6 @@ class Popper extends React.Component {
         open,
         placement,
         popperOptions = {},
-        theme,
         disablePortal
       } = this.props;
       const popperNode = ReactDOM.findDOMNode(this);
@@ -64,7 +64,7 @@ class Popper extends React.Component {
       }
 
       this.popper = new PopperJS(getAnchorEl(anchorEl), popperNode, _extends({
-        placement: flipPlacement(theme, placement)
+        placement: flipPlacement(placement)
       }, popperOptions, {
         modifiers: _extends({}, disablePortal ? {} : {
           // It's using scrollParent by default, we can use the viewport when using a portal.
@@ -150,7 +150,6 @@ class Popper extends React.Component {
       keepMounted,
       open,
       placement: placementProps,
-      theme,
       transition
     } = _this$props,
           other = _objectWithoutPropertiesLoose(_this$props, ["anchorEl", "children", "container", "disablePortal", "keepMounted", "modifiers", "open", "placement", "popperOptions", "theme", "transition"]);
@@ -165,7 +164,7 @@ class Popper extends React.Component {
     }
 
     const childProps = {
-      placement: placement || flipPlacement(theme, placementProps)
+      placement: placement || flipPlacement(placementProps)
     };
 
     if (transition) {
@@ -190,7 +189,7 @@ class Popper extends React.Component {
 
 }
 
-Popper.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Popper.propTypes = {
   /**
    * This is the DOM element, or a function that returns the DOM element,
    * that may be used to set the position of the popover.
@@ -252,18 +251,13 @@ Popper.propTypes = process.env.NODE_ENV !== "production" ? {
   popperOptions: PropTypes.object,
 
   /**
-   * @ignore
-   */
-  theme: PropTypes.object.isRequired,
-
-  /**
    * Help supporting a react-transition-group/Transition component.
    */
   transition: PropTypes.bool
-} : {};
+} : void 0;
 Popper.defaultProps = {
   disablePortal: false,
   placement: 'bottom',
   transition: false
 };
-export default withTheme()(Popper);
+export default Popper;

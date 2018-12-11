@@ -3,9 +3,11 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutP
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import ButtonBase from '../ButtonBase';
 import { isMuiElement } from '../utils/reactHelpers';
+import MergeListContext from './MergeListContext';
 export const styles = theme => ({
   /* Styles applied to the (normally root) `component` element. May be wrapped by a `container`. */
   root: {
@@ -46,6 +48,11 @@ export const styles = theme => ({
     paddingBottom: 8
   },
 
+  /* Styles applied to the `component` element if `alignItems="flex-start"`. */
+  alignItemsFlexStart: {
+    alignItems: 'flex-start'
+  },
+
   /* Styles applied to the inner `component` element if `disabled={true}`. */
   disabled: {
     opacity: 0.5
@@ -58,7 +65,10 @@ export const styles = theme => ({
   },
 
   /* Styles applied to the inner `component` element if `disableGutters={false}`. */
-  gutters: theme.mixins.gutters(),
+  gutters: {
+    paddingLeft: 16,
+    paddingRight: 16
+  },
 
   /* Styles applied to the inner `component` element if `button={true}`. */
   button: {
@@ -86,45 +96,44 @@ export const styles = theme => ({
   selected: {}
 });
 
-class ListItem extends React.Component {
-  getChildContext() {
-    return {
-      dense: this.props.dense || this.context.dense || false
-    };
-  }
+function ListItem(props) {
+  const {
+    alignItems,
+    button,
+    children: childrenProp,
+    classes,
+    className: classNameProp,
+    component: componentProp,
+    ContainerComponent,
+    ContainerProps: {
+      className: ContainerClassName
+    } = {},
+    dense: denseProp,
+    disabled,
+    disableGutters,
+    divider,
+    focusVisibleClassName,
+    selected
+  } = props,
+        ContainerProps = _objectWithoutPropertiesLoose(props.ContainerProps, ["className"]),
+        other = _objectWithoutPropertiesLoose(props, ["alignItems", "button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
 
-  render() {
-    const _this$props = this.props,
-          {
-      button,
-      children: childrenProp,
-      classes,
-      className: classNameProp,
-      component: componentProp,
-      ContainerComponent,
-      ContainerProps: {
-        className: ContainerClassName
-      } = {},
-      dense,
-      disabled,
-      disableGutters,
-      divider,
-      focusVisibleClassName,
-      selected
-    } = _this$props,
-          ContainerProps = _objectWithoutPropertiesLoose(_this$props.ContainerProps, ["className"]),
-          other = _objectWithoutPropertiesLoose(_this$props, ["button", "children", "classes", "className", "component", "ContainerComponent", "ContainerProps", "dense", "disabled", "disableGutters", "divider", "focusVisibleClassName", "selected"]);
-
-    const isDense = dense || this.context.dense || false;
+  return React.createElement(MergeListContext, {
+    dense: denseProp,
+    alignItems: alignItems
+  }, ({
+    dense
+  }) => {
     const children = React.Children.toArray(childrenProp);
     const hasAvatar = children.some(value => isMuiElement(value, ['ListItemAvatar']));
     const hasSecondaryAction = children.length && isMuiElement(children[children.length - 1], ['ListItemSecondaryAction']);
     const className = classNames(classes.root, classes.default, {
-      [classes.dense]: isDense || hasAvatar,
+      [classes.dense]: dense || hasAvatar,
       [classes.gutters]: !disableGutters,
       [classes.divider]: divider,
       [classes.disabled]: disabled,
       [classes.button]: button,
+      [classes.alignItemsFlexStart]: alignItems === 'flex-start',
       [classes.secondaryAction]: hasSecondaryAction,
       [classes.selected]: selected
     }, classNameProp);
@@ -160,11 +169,15 @@ class ListItem extends React.Component {
     }
 
     return React.createElement(Component, componentProps, children);
-  }
-
+  });
 }
 
-ListItem.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ListItem.propTypes = {
+  /**
+   * Defines the `align-items` style property.
+   */
+  alignItems: PropTypes.oneOf(['flex-start', 'center']),
+
   /**
    * If `true`, the list item will be a button (using `ButtonBase`).
    */
@@ -191,7 +204,7 @@ ListItem.propTypes = process.env.NODE_ENV !== "production" ? {
    * Either a string to use a DOM element or a component.
    * By default, it's a `li` when `button` is `false` and a `div` when `button` is `true`.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * The container component used when a `ListItemSecondaryAction` is rendered.
@@ -233,8 +246,9 @@ ListItem.propTypes = process.env.NODE_ENV !== "production" ? {
    * Use to apply selected styling.
    */
   selected: PropTypes.bool
-} : {};
+} : void 0;
 ListItem.defaultProps = {
+  alignItems: 'center',
   button: false,
   ContainerComponent: 'li',
   dense: false,
@@ -242,12 +256,6 @@ ListItem.defaultProps = {
   disableGutters: false,
   divider: false,
   selected: false
-};
-ListItem.contextTypes = {
-  dense: PropTypes.bool
-};
-ListItem.childContextTypes = {
-  dense: PropTypes.bool
 };
 export default withStyles(styles, {
   name: 'MuiListItem'

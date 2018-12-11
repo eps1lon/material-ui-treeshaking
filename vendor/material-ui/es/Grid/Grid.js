@@ -13,6 +13,7 @@ import _extends from "@babel/runtime/helpers/extends";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { keys as breakpointKeys } from '../styles/createBreakpoints';
 import requirePropFactory from '../utils/requirePropFactory';
@@ -250,7 +251,7 @@ function Grid(props) {
   }, other));
 }
 
-Grid.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Grid.propTypes = {
   /**
    * Defines the `align-content` style property.
    * It's applied for all screen sizes.
@@ -283,7 +284,7 @@ Grid.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the component will have the flex *container* behavior.
@@ -356,7 +357,7 @@ Grid.propTypes = process.env.NODE_ENV !== "production" ? {
    * Refer to the limitations section of the documentation to better understand the use case.
    */
   zeroMinWidth: PropTypes.bool
-} : {};
+} : void 0;
 Grid.defaultProps = {
   alignContent: 'stretch',
   alignItems: 'stretch',

@@ -29,6 +29,12 @@ export var styles = function styles(theme) {
       backgroundColor: lighten(theme.palette.secondary.light, 0.4)
     },
 
+    /* Styles applied to the root element if `variant="determinate"`. */
+    determinate: {},
+
+    /* Styles applied to the root element if `variant="indeterminate"`. */
+    indeterminate: {},
+
     /* Styles applied to the root element if `variant="buffer"`. */
     buffer: {
       backgroundColor: 'transparent'
@@ -110,9 +116,6 @@ export var styles = function styles(theme) {
       animationDelay: '1.15s'
     },
 
-    /* Styles applied to the bar2 element if `variant="determinate"`. */
-    bar2Determinate: {},
-
     /* Styles applied to the bar2 element if `variant="buffer"`. */
     bar2Buffer: {
       transition: "transform .".concat(TRANSITION_DURATION, "s linear")
@@ -188,10 +191,10 @@ function LinearProgress(props) {
       variant = props.variant,
       other = _objectWithoutProperties(props, ["classes", "className", "color", "value", "valueBuffer", "variant"]);
 
-  var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.colorPrimary, color === 'primary'), _defineProperty(_classNames, classes.colorSecondary, color === 'secondary'), _defineProperty(_classNames, classes.buffer, variant === 'buffer'), _defineProperty(_classNames, classes.query, variant === 'query'), _classNames), classNameProp);
+  var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.colorPrimary, color === 'primary'), _defineProperty(_classNames, classes.colorSecondary, color === 'secondary'), _defineProperty(_classNames, classes.determinate, variant === 'determinate'), _defineProperty(_classNames, classes.indeterminate, variant === 'indeterminate'), _defineProperty(_classNames, classes.buffer, variant === 'buffer'), _defineProperty(_classNames, classes.query, variant === 'query'), _classNames), classNameProp);
   var dashedClass = classNames(classes.dashed, (_classNames2 = {}, _defineProperty(_classNames2, classes.dashedColorPrimary, color === 'primary'), _defineProperty(_classNames2, classes.dashedColorSecondary, color === 'secondary'), _classNames2));
   var bar1ClassName = classNames(classes.bar, (_classNames3 = {}, _defineProperty(_classNames3, classes.barColorPrimary, color === 'primary'), _defineProperty(_classNames3, classes.barColorSecondary, color === 'secondary'), _defineProperty(_classNames3, classes.bar1Indeterminate, variant === 'indeterminate' || variant === 'query'), _defineProperty(_classNames3, classes.bar1Determinate, variant === 'determinate'), _defineProperty(_classNames3, classes.bar1Buffer, variant === 'buffer'), _classNames3));
-  var bar2ClassName = classNames(classes.bar, (_classNames4 = {}, _defineProperty(_classNames4, classes.barColorPrimary, color === 'primary' && variant !== 'buffer'), _defineProperty(_classNames4, classes.colorPrimary, color === 'primary' && variant === 'buffer'), _defineProperty(_classNames4, classes.barColorSecondary, color === 'secondary' && variant !== 'buffer'), _defineProperty(_classNames4, classes.colorSecondary, color === 'secondary' && variant === 'buffer'), _defineProperty(_classNames4, classes.bar2Indeterminate, variant === 'indeterminate' || variant === 'query'), _defineProperty(_classNames4, classes.bar2Determinate, variant === 'determinate'), _defineProperty(_classNames4, classes.bar2Buffer, variant === 'buffer'), _classNames4));
+  var bar2ClassName = classNames(classes.bar, (_classNames4 = {}, _defineProperty(_classNames4, classes.barColorPrimary, color === 'primary' && variant !== 'buffer'), _defineProperty(_classNames4, classes.colorPrimary, color === 'primary' && variant === 'buffer'), _defineProperty(_classNames4, classes.barColorSecondary, color === 'secondary' && variant !== 'buffer'), _defineProperty(_classNames4, classes.colorSecondary, color === 'secondary' && variant === 'buffer'), _defineProperty(_classNames4, classes.bar2Indeterminate, variant === 'indeterminate' || variant === 'query'), _defineProperty(_classNames4, classes.bar2Buffer, variant === 'buffer'), _classNames4));
   var rootProps = {};
   var inlineStyles = {
     bar1: {},

@@ -39,7 +39,7 @@ function CardActions(props) {
   }, other), disableActionSpacing ? children : cloneChildrenWithClassName(children, classes.action));
 }
 
-CardActions.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? CardActions.propTypes = {
   /**
    * The content of the component.
    */
@@ -60,7 +60,7 @@ CardActions.propTypes = process.env.NODE_ENV !== "production" ? {
    * If `true`, the card actions do not have additional margin.
    */
   disableActionSpacing: PropTypes.bool
-} : {};
+} : void 0;
 CardActions.defaultProps = {
   disableActionSpacing: false
 };

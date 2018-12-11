@@ -5,15 +5,28 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import formControlState from '../FormControl/formControlState';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import withStyles from '../styles/withStyles';
 import FormLabel from '../FormLabel';
-import { formControlState } from '../InputBase/InputBase';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
     root: {
       transformOrigin: 'top left'
     },
+
+    /* Styles applied to the root element if `focused={true}`. */
+    focused: {},
+
+    /* Styles applied to the root element if `disabled={true}`. */
+    disabled: {},
+
+    /* Styles applied to the root element if `error={true}`. */
+    error: {},
+
+    /* Styles applied to the root element if `required={true}`. */
+    required: {},
 
     /* Styles applied to the root element if the component is a descendant of `FormControl`. */
     formControl: {
@@ -52,9 +65,9 @@ export var styles = function styles(theme) {
       // zIndex: 1 will raise the label above opaque background-colors of input.
       zIndex: 1,
       pointerEvents: 'none',
-      transform: 'translate(12px, 22px) scale(1)',
+      transform: 'translate(12px, 20px) scale(1)',
       '&$marginDense': {
-        transform: 'translate(12px, 19px) scale(1)'
+        transform: 'translate(12px, 17px) scale(1)'
       },
       '&$shrink': {
         transform: 'translate(12px, 10px) scale(0.75)',
@@ -69,9 +82,9 @@ export var styles = function styles(theme) {
       // see comment above on filled.zIndex
       zIndex: 1,
       pointerEvents: 'none',
-      transform: 'translate(14px, 22px) scale(1)',
+      transform: 'translate(14px, 20px) scale(1)',
       '&$marginDense': {
-        transform: 'translate(14px, 17.5px) scale(1)'
+        transform: 'translate(14px, 17px) scale(1)'
       },
       '&$shrink': {
         transform: 'translate(14px, -6px) scale(0.75)'
@@ -80,7 +93,7 @@ export var styles = function styles(theme) {
   };
 };
 
-function InputLabel(props, context) {
+function InputLabel(props) {
   var _classNames;
 
   var children = props.children,
@@ -89,11 +102,11 @@ function InputLabel(props, context) {
       disableAnimation = props.disableAnimation,
       FormLabelClasses = props.FormLabelClasses,
       margin = props.margin,
+      muiFormControl = props.muiFormControl,
       shrinkProp = props.shrink,
       variant = props.variant,
-      other = _objectWithoutProperties(props, ["children", "classes", "className", "disableAnimation", "FormLabelClasses", "margin", "shrink", "variant"]);
+      other = _objectWithoutProperties(props, ["children", "classes", "className", "disableAnimation", "FormLabelClasses", "margin", "muiFormControl", "shrink", "variant"]);
 
-  var muiFormControl = context.muiFormControl;
   var shrink = shrinkProp;
 
   if (typeof shrink === 'undefined' && muiFormControl) {
@@ -102,14 +115,19 @@ function InputLabel(props, context) {
 
   var fcs = formControlState({
     props: props,
-    context: context,
+    muiFormControl: muiFormControl,
     states: ['margin', 'variant']
   });
   var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.formControl, muiFormControl), _defineProperty(_classNames, classes.animated, !disableAnimation), _defineProperty(_classNames, classes.shrink, shrink), _defineProperty(_classNames, classes.marginDense, fcs.margin === 'dense'), _defineProperty(_classNames, classes.filled, fcs.variant === 'filled'), _defineProperty(_classNames, classes.outlined, fcs.variant === 'outlined'), _classNames), classNameProp);
   return React.createElement(FormLabel, _extends({
     "data-shrink": shrink,
     className: className,
-    classes: FormLabelClasses
+    classes: _extends({
+      focused: classes.focused,
+      disabled: classes.disabled,
+      error: classes.error,
+      required: classes.required
+    }, FormLabelClasses)
   }, other), children);
 }
 
@@ -162,6 +180,11 @@ InputLabel.propTypes = {
   margin: PropTypes.oneOf(['dense']),
 
   /**
+   * @ignore
+   */
+  muiFormControl: PropTypes.object,
+
+  /**
    * if `true`, the label will indicate that the input is required.
    */
   required: PropTypes.bool,
@@ -179,9 +202,6 @@ InputLabel.propTypes = {
 InputLabel.defaultProps = {
   disableAnimation: false
 };
-InputLabel.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 export default withStyles(styles, {
   name: 'MuiInputLabel'
-})(InputLabel);
+})(withFormControlContext(InputLabel));

@@ -29,6 +29,9 @@ export function getAnchor(props) {
 }
 export var styles = function styles(theme) {
   return {
+    /* Styles applied to the root element. */
+    root: {},
+
     /* Styles applied to the root element if `variant="permanent or persistent"`. */
     docked: {
       flex: '0 0 auto'
@@ -173,7 +176,7 @@ function (_React$Component) {
 
       if (variant === 'permanent') {
         return React.createElement("div", _extends({
-          className: classNames(classes.docked, className)
+          className: classNames(classes.root, classes.docked, className)
         }, other), drawer);
       }
 
@@ -186,7 +189,7 @@ function (_React$Component) {
 
       if (variant === 'persistent') {
         return React.createElement("div", _extends({
-          className: classNames(classes.docked, className)
+          className: classNames(classes.root, classes.docked, className)
         }, other), slidingDrawer);
       } // variant === temporary
 
@@ -195,7 +198,7 @@ function (_React$Component) {
         BackdropProps: _extends({}, BackdropProps, BackdropPropsProp, {
           transitionDuration: transitionDuration
         }),
-        className: classNames(classes.modal, className),
+        className: classNames(classes.root, classes.modal, className),
         open: open,
         onClose: onClose
       }, other, ModalProps), slidingDrawer);

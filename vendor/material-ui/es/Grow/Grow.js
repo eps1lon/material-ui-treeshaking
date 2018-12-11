@@ -142,7 +142,7 @@ class Grow extends React.Component {
 
 }
 
-Grow.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Grow.propTypes = {
   /**
    * A single child content element.
    */
@@ -183,7 +183,7 @@ Grow.propTypes = process.env.NODE_ENV !== "production" ? {
     enter: PropTypes.number,
     exit: PropTypes.number
   }), PropTypes.oneOf(['auto'])])
-} : {};
+} : void 0;
 Grow.defaultProps = {
   timeout: 'auto'
 };

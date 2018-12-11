@@ -10,6 +10,7 @@ import debounce from 'debounce'; // < 1kb payload overhead when lodash/debounce 
 import EventListener from 'react-event-listener';
 import ownerDocument from '../utils/ownerDocument';
 import ownerWindow from '../utils/ownerWindow';
+import { createChainedFunction } from '../utils/helpers';
 import withStyles from '../styles/withStyles';
 import Modal from '../Modal';
 import Grow from '../Grow';
@@ -94,19 +95,17 @@ class Popover extends React.Component {
     };
 
     this.setPositioningStyles = element => {
-      if (element && element.style) {
-        const positioning = this.getPositioningStyle(element);
+      const positioning = this.getPositioningStyle(element);
 
-        if (positioning.top !== null) {
-          element.style.top = positioning.top;
-        }
-
-        if (positioning.left !== null) {
-          element.style.left = positioning.left;
-        }
-
-        element.style.transformOrigin = positioning.transformOrigin;
+      if (positioning.top !== null) {
+        element.style.top = positioning.top;
       }
+
+      if (positioning.left !== null) {
+        element.style.left = positioning.left;
+      }
+
+      element.style.transformOrigin = positioning.transformOrigin;
     };
 
     this.getPositioningStyle = element => {
@@ -174,9 +173,9 @@ class Popover extends React.Component {
       };
     };
 
-    this.handleEnter = element => {
-      if (this.props.onEnter) {
-        this.props.onEnter(element);
+    this.handleEntering = element => {
+      if (this.props.onEntering) {
+        this.props.onEntering(element);
       }
 
       this.setPositioningStyles(element);
@@ -184,6 +183,12 @@ class Popover extends React.Component {
 
     if (typeof window !== 'undefined') {
       this.handleResize = debounce(() => {
+        // Because we debounce the event, the open property might no longer be true
+        // when the callback resolves.
+        if (!this.props.open) {
+          return;
+        }
+
         this.setPositioningStyles(this.paperRef);
       }, 166); // Corresponds to 10 frames at 60 Hz.
     }
@@ -266,8 +271,8 @@ class Popover extends React.Component {
       container: containerProp,
       elevation,
       ModalClasses,
+      onEnter,
       onEntered,
-      onEntering,
       onExit,
       onExited,
       onExiting,
@@ -276,7 +281,7 @@ class Popover extends React.Component {
       role,
       TransitionComponent,
       transitionDuration: transitionDurationProp,
-      TransitionProps
+      TransitionProps = {}
     } = _this$props,
           other = _objectWithoutPropertiesLoose(_this$props, ["action", "anchorEl", "anchorOrigin", "anchorPosition", "anchorReference", "children", "classes", "container", "elevation", "getContentAnchorEl", "marginThreshold", "ModalClasses", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "open", "PaperProps", "role", "transformOrigin", "TransitionComponent", "transitionDuration", "TransitionProps"]);
 
@@ -300,15 +305,16 @@ class Popover extends React.Component {
     }, other), React.createElement(TransitionComponent, _extends({
       appear: true,
       in: open,
-      onEnter: this.handleEnter,
+      onEnter: onEnter,
       onEntered: onEntered,
-      onEntering: onEntering,
       onExit: onExit,
       onExited: onExited,
       onExiting: onExiting,
       role: role,
       timeout: transitionDuration
-    }, TransitionProps), React.createElement(Paper, _extends({
+    }, TransitionProps, {
+      onEntering: createChainedFunction(this.handleEntering, TransitionProps.onEntering)
+    }), React.createElement(Paper, _extends({
       className: classes.paper,
       elevation: elevation,
       ref: ref => {
@@ -322,7 +328,7 @@ class Popover extends React.Component {
 
 }
 
-Popover.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Popover.propTypes = {
   /**
    * This is callback property. It's called by the component on mount.
    * This is useful when you want to trigger an action programmatically.
@@ -496,7 +502,7 @@ Popover.propTypes = process.env.NODE_ENV !== "production" ? {
    * Properties applied to the `Transition` element.
    */
   TransitionProps: PropTypes.object
-} : {};
+} : void 0;
 Popover.defaultProps = {
   anchorReference: 'anchorEl',
   anchorOrigin: {

@@ -4,6 +4,7 @@ import _extends from "@babel/runtime/helpers/extends";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { fade } from '../styles/colorManipulator';
 import ButtonBase from '../ButtonBase';
@@ -47,7 +48,9 @@ export const styles = theme => ({
   },
 
   /* Styles applied to the root element if `variant="text"`. */
-  text: {},
+  text: {
+    padding: theme.spacing.unit
+  },
 
   /* Styles applied to the root element if `variant="text"` and `color="primary"`. */
   textPrimary: {
@@ -220,7 +223,7 @@ export const styles = theme => ({
     color: 'inherit'
   },
 
-  /* Styles applied to the root element if `size="mini"` & `variant="[fab | extendedFab]"`. */
+  /* Styles applied to the root element if `mini={true}` & `variant="[fab | extendedFab]"`. */
   mini: {
     width: 40,
     height: 40
@@ -274,9 +277,9 @@ function Button(props) {
     [classes.text]: text,
     [classes.textPrimary]: text && color === 'primary',
     [classes.textSecondary]: text && color === 'secondary',
-    [classes.flat]: variant === 'text' || variant === 'flat',
-    [classes.flatPrimary]: (variant === 'text' || variant === 'flat') && color === 'primary',
-    [classes.flatSecondary]: (variant === 'text' || variant === 'flat') && color === 'secondary',
+    [classes.flat]: text,
+    [classes.flatPrimary]: text && color === 'primary',
+    [classes.flatSecondary]: text && color === 'secondary',
     [classes.contained]: contained || fab,
     [classes.containedPrimary]: (contained || fab) && color === 'primary',
     [classes.containedSecondary]: (contained || fab) && color === 'secondary',
@@ -301,7 +304,7 @@ function Button(props) {
   }, children));
 }
 
-Button.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Button.propTypes = {
   /**
    * The content of the button.
    */
@@ -327,7 +330,7 @@ Button.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the button will be disabled.
@@ -381,8 +384,10 @@ Button.propTypes = process.env.NODE_ENV !== "production" ? {
    * The variant to use.
    * __WARNING__: `flat` and `raised` are deprecated.
    * Instead use `text` and `contained` respectively.
+   * `fab` and `extendedFab` are deprecated.
+   * Instead use `<Fab>` and `<Fab variant="extended">`
    */
-  variant: chainPropTypes(PropTypes.oneOf(['text', 'flat', 'outlined', 'contained', 'raised', 'fab', 'extendedFab']), props => {
+  variant: chainPropTypes(PropTypes.oneOf(['text', 'outlined', 'contained', 'fab', 'extendedFab', 'flat', 'raised']), props => {
     if (props.variant === 'flat') {
       return new Error('The `flat` variant will be removed in the next major release. ' + '`text` is equivalent and should be used instead.');
     }
@@ -391,9 +396,17 @@ Button.propTypes = process.env.NODE_ENV !== "production" ? {
       return new Error('The `raised` variant will be removed in the next major release. ' + '`contained` is equivalent and should be used instead.');
     }
 
+    if (props.variant === 'fab') {
+      return new Error('The `fab` variant will be removed in the next major release. ' + 'The `<Fab>` component is equivalent and should be used instead.');
+    }
+
+    if (props.variant === 'extendedFab') {
+      return new Error('The `fab` variant will be removed in the next major release. ' + 'The `<Fab>` component with `variant="extended"` is equivalent ' + 'and should be used instead.');
+    }
+
     return null;
   })
-} : {};
+} : void 0;
 Button.defaultProps = {
   color: 'default',
   component: 'button',

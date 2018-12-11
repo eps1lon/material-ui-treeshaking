@@ -37,6 +37,8 @@ var _ownerDocument = _interopRequireDefault(require("../utils/ownerDocument"));
 
 var _ownerWindow = _interopRequireDefault(require("../utils/ownerWindow"));
 
+var _helpers = require("../utils/helpers");
+
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
 
 var _Modal = _interopRequireDefault(require("../Modal"));
@@ -134,19 +136,17 @@ function (_React$Component) {
     };
 
     _this.setPositioningStyles = function (element) {
-      if (element && element.style) {
-        var positioning = _this.getPositioningStyle(element);
+      var positioning = _this.getPositioningStyle(element);
 
-        if (positioning.top !== null) {
-          element.style.top = positioning.top;
-        }
-
-        if (positioning.left !== null) {
-          element.style.left = positioning.left;
-        }
-
-        element.style.transformOrigin = positioning.transformOrigin;
+      if (positioning.top !== null) {
+        element.style.top = positioning.top;
       }
+
+      if (positioning.left !== null) {
+        element.style.left = positioning.left;
+      }
+
+      element.style.transformOrigin = positioning.transformOrigin;
     };
 
     _this.getPositioningStyle = function (element) {
@@ -218,9 +218,9 @@ function (_React$Component) {
       };
     };
 
-    _this.handleEnter = function (element) {
-      if (_this.props.onEnter) {
-        _this.props.onEnter(element);
+    _this.handleEntering = function (element) {
+      if (_this.props.onEntering) {
+        _this.props.onEntering(element);
       }
 
       _this.setPositioningStyles(element);
@@ -228,6 +228,12 @@ function (_React$Component) {
 
     if (typeof window !== 'undefined') {
       _this.handleResize = (0, _debounce.default)(function () {
+        // Because we debounce the event, the open property might no longer be true
+        // when the callback resolves.
+        if (!_this.props.open) {
+          return;
+        }
+
         _this.setPositioningStyles(_this.paperRef);
       }, 166); // Corresponds to 10 frames at 60 Hz.
     }
@@ -334,7 +340,8 @@ function (_React$Component) {
           transformOrigin = _this$props4.transformOrigin,
           TransitionComponent = _this$props4.TransitionComponent,
           transitionDurationProp = _this$props4.transitionDuration,
-          TransitionProps = _this$props4.TransitionProps,
+          _this$props4$Transiti = _this$props4.TransitionProps,
+          TransitionProps = _this$props4$Transiti === void 0 ? {} : _this$props4$Transiti,
           other = (0, _objectWithoutProperties2.default)(_this$props4, ["action", "anchorEl", "anchorOrigin", "anchorPosition", "anchorReference", "children", "classes", "container", "elevation", "getContentAnchorEl", "marginThreshold", "ModalClasses", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "open", "PaperProps", "role", "transformOrigin", "TransitionComponent", "transitionDuration", "TransitionProps"]);
       var transitionDuration = transitionDurationProp;
 
@@ -356,15 +363,16 @@ function (_React$Component) {
       }, other), _react.default.createElement(TransitionComponent, (0, _extends2.default)({
         appear: true,
         in: open,
-        onEnter: this.handleEnter,
+        onEnter: onEnter,
         onEntered: onEntered,
-        onEntering: onEntering,
         onExit: onExit,
         onExited: onExited,
         onExiting: onExiting,
         role: role,
         timeout: transitionDuration
-      }, TransitionProps), _react.default.createElement(_Paper.default, (0, _extends2.default)({
+      }, TransitionProps, {
+        onEntering: (0, _helpers.createChainedFunction)(this.handleEntering, TransitionProps.onEntering)
+      }), _react.default.createElement(_Paper.default, (0, _extends2.default)({
         className: classes.paper,
         "data-mui-test": "Popover",
         elevation: elevation,

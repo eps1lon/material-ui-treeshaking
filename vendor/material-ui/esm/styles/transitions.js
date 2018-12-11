@@ -1,7 +1,5 @@
 import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
 
-/* eslint-disable no-param-reassign */
-
 /* eslint-disable no-restricted-globals */
 import warning from 'warning'; // Follow https://material.google.com/motion/duration-easing.html#duration-easing-natural-easing-curves
 // to learn the context in which each easing should be used.

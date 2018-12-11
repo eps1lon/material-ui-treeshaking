@@ -6,11 +6,13 @@ import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstruct
 import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/inherits";
 import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
+
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import warning from 'warning';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import wrapDisplayName from 'recompose/wrapDisplayName';
+import { getDisplayName, ponyfillGlobal } from '@material-ui/utils';
 import { create } from 'jss';
 import ns from './reactJssContext';
 import jssPreset from './jssPreset';
@@ -20,7 +22,6 @@ import createMuiTheme from './createMuiTheme';
 import themeListener from './themeListener';
 import createGenerateClassName from './createGenerateClassName';
 import getStylesCreator from './getStylesCreator';
-import getDisplayName from '../utils/getDisplayName';
 import getThemeProps from './getThemeProps'; // Default JSS instance.
 
 var jss = create(jssPreset()); // Use a singleton or the provided one by the context.
@@ -43,25 +44,15 @@ export var sheetsManager = new Map(); // We use the same empty object to ref cou
 
 var noopTheme = {}; // In order to have self-supporting components, we rely on default theme when not provided.
 
-var defaultTheme;
-
-function getDefaultTheme() {
-  if (defaultTheme) {
-    return defaultTheme;
+var defaultTheme = createMuiTheme({
+  typography: {
+    suppressWarning: true
   }
-
-  defaultTheme = createMuiTheme({
-    typography: {
-      suppressWarning: true
-    }
-  });
-  return defaultTheme;
-} // Link a style sheet with a component.
+}); // Link a style sheet with a component.
 // It does not modify the component passed to it;
 // instead, it returns a new component, with a `classes` property.
 
-
-var withStyles = function withStyles(stylesOrCreator) {
+var withStylesOld = function withStylesOld(stylesOrCreator) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return function (Component) {
     var _extends2;
@@ -112,7 +103,7 @@ var withStyles = function withStyles(stylesOrCreator) {
           generateClassName: generateClassName
         }, context[ns.sheetOptions]); // We use || as the function call is lazy evaluated.
 
-        _this.theme = listenToTheme ? themeListener.initial(context) || getDefaultTheme() : noopTheme;
+        _this.theme = listenToTheme ? themeListener.initial(context) || defaultTheme : noopTheme;
 
         _this.attach(_this.theme);
 
@@ -334,7 +325,7 @@ var withStyles = function withStyles(stylesOrCreator) {
     }, _defineProperty(_extends2, ns.jss, PropTypes.object), _defineProperty(_extends2, ns.sheetOptions, PropTypes.object), _defineProperty(_extends2, ns.sheetsRegistry, PropTypes.object), _extends2), listenToTheme ? themeListener.contextTypes : {});
 
     if (process.env.NODE_ENV !== 'production') {
-      WithStyles.displayName = wrapDisplayName(Component, 'WithStyles');
+      WithStyles.displayName = "WithStyles(".concat(getDisplayName(Component), ")");
     }
 
     hoistNonReactStatics(WithStyles, Component);
@@ -348,5 +339,19 @@ var withStyles = function withStyles(stylesOrCreator) {
     return WithStyles;
   };
 };
+/* istanbul ignore if */
 
-export default withStyles;
+
+if (!ponyfillGlobal.__MUI_STYLES__) {
+  ponyfillGlobal.__MUI_STYLES__ = {};
+}
+
+if (!ponyfillGlobal.__MUI_STYLES__.withStyles) {
+  ponyfillGlobal.__MUI_STYLES__.withStyles = withStylesOld;
+}
+
+export default (function (styles, options) {
+  return ponyfillGlobal.__MUI_STYLES__.withStyles(styles, _extends({
+    defaultTheme: defaultTheme
+  }, options));
+});

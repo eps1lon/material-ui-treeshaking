@@ -3,6 +3,7 @@ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/objectWithoutP
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { capitalize } from '../utils/helpers';
 export const styles = theme => ({
@@ -77,7 +78,7 @@ function Icon(props) {
   }, other), children);
 }
 
-Icon.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Icon.propTypes = {
   /**
    * The name of the icon font ligature.
    */
@@ -103,13 +104,13 @@ Icon.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * The fontSize applied to the icon. Defaults to 24px, but can be configure to inherit font size.
    */
   fontSize: PropTypes.oneOf(['inherit', 'default', 'small', 'large'])
-} : {};
+} : void 0;
 Icon.defaultProps = {
   color: 'inherit',
   component: 'span',

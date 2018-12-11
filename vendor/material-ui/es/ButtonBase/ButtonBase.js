@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import classNames from 'classnames';
 import keycode from 'keycode';
+import { componentPropType } from '@material-ui/utils';
 import ownerWindow from '../utils/ownerWindow';
 import withStyles from '../styles/withStyles';
 import NoSsr from '../NoSsr';
@@ -293,7 +294,7 @@ class ButtonBase extends React.Component {
 
 }
 
-ButtonBase.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ButtonBase.propTypes = {
   /**
    * Callback fired when the component mounts.
    * This is useful when you want to trigger an action programmatically.
@@ -335,7 +336,7 @@ ButtonBase.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the base button will be disabled.
@@ -448,7 +449,7 @@ ButtonBase.propTypes = process.env.NODE_ENV !== "production" ? {
    * Valid property values include `button`, `submit`, and `reset`.
    */
   type: PropTypes.string
-} : {};
+} : void 0;
 ButtonBase.defaultProps = {
   centerRipple: false,
   component: 'button',

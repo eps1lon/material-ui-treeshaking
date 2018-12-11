@@ -42,7 +42,7 @@ function Toolbar(props) {
   }, other), children);
 }
 
-Toolbar.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Toolbar.propTypes = {
   /**
    * Toolbar children, usually a mixture of `IconButton`, `Button` and `Typography`.
    */
@@ -68,7 +68,7 @@ Toolbar.propTypes = process.env.NODE_ENV !== "production" ? {
    * The variant to use.
    */
   variant: PropTypes.oneOf(['regular', 'dense'])
-} : {};
+} : void 0;
 Toolbar.defaultProps = {
   disableGutters: false,
   variant: 'regular'

@@ -9,11 +9,12 @@ import withStyles from '../styles/withStyles';
 export const styles = theme => {
   const light = theme.palette.type === 'light';
   const bottomLineColor = light ? 'rgba(0, 0, 0, 0.42)' : 'rgba(255, 255, 255, 0.7)';
+  const backgroundColor = light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)';
   return {
     /* Styles applied to the root element. */
     root: {
       position: 'relative',
-      backgroundColor: light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)',
+      backgroundColor,
       borderTopLeftRadius: theme.shape.borderRadius,
       borderTopRightRadius: theme.shape.borderRadius,
       transition: theme.transitions.create('background-color', {
@@ -21,7 +22,11 @@ export const styles = theme => {
         easing: theme.transitions.easing.easeOut
       }),
       '&:hover': {
-        backgroundColor: light ? 'rgba(0, 0, 0, 0.13)' : 'rgba(255, 255, 255, 0.13)'
+        backgroundColor: light ? 'rgba(0, 0, 0, 0.13)' : 'rgba(255, 255, 255, 0.13)',
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          backgroundColor
+        }
       },
       '&$focused': {
         backgroundColor: light ? 'rgba(0, 0, 0, 0.09)' : 'rgba(255, 255, 255, 0.09)'
@@ -135,19 +140,22 @@ export const styles = theme => {
 
 function FilledInput(props) {
   const {
+    disableUnderline,
     classes
   } = props,
-        other = _objectWithoutPropertiesLoose(props, ["classes"]);
+        other = _objectWithoutPropertiesLoose(props, ["disableUnderline", "classes"]);
 
   return React.createElement(InputBase, _extends({
     classes: _extends({}, classes, {
-      root: classNames(classes.root, classes.underline, {}),
+      root: classNames(classes.root, {
+        [classes.underline]: !disableUnderline
+      }),
       underline: null
     })
   }, other));
 }
 
-FilledInput.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? FilledInput.propTypes = {
   /**
    * This property helps users to fill forms faster, especially on mobile devices.
    * The name can be confusing, as it's more like an autofill.
@@ -175,12 +183,17 @@ FilledInput.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The default input value, useful when not controlling the component.
    */
-  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]),
 
   /**
    * If `true`, the input will be disabled.
    */
   disabled: PropTypes.bool,
+
+  /**
+   * If `true`, the input will not have an underline.
+   */
+  disableUnderline: PropTypes.bool,
 
   /**
    * End `InputAdornment` for this component.
@@ -282,8 +295,8 @@ FilledInput.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The input value, required for a controlled component.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))])
-} : {};
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))])
+} : void 0;
 InputBase.defaultProps = {
   fullWidth: false,
   inputComponent: 'input',

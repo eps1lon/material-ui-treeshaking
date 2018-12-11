@@ -37,7 +37,7 @@ function DialogActions(props) {
   }, other), disableActionSpacing ? children : cloneChildrenWithClassName(children, classes.action));
 }
 
-DialogActions.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? DialogActions.propTypes = {
   /**
    * The content of the component.
    */
@@ -58,7 +58,7 @@ DialogActions.propTypes = process.env.NODE_ENV !== "production" ? {
    * If `true`, the dialog actions do not have additional margin.
    */
   disableActionSpacing: PropTypes.bool
-} : {};
+} : void 0;
 DialogActions.defaultProps = {
   disableActionSpacing: false
 };

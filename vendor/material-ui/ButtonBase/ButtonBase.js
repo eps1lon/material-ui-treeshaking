@@ -35,6 +35,8 @@ var _classnames = _interopRequireDefault(require("classnames"));
 
 var _keycode = _interopRequireDefault(require("keycode"));
 
+var _utils = require("@material-ui/utils");
+
 var _ownerWindow = _interopRequireDefault(require("../utils/ownerWindow"));
 
 var _withStyles = _interopRequireDefault(require("../styles/withStyles"));
@@ -410,7 +412,7 @@ ButtonBase.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
+  component: _utils.componentPropType,
 
   /**
    * If `true`, the base button will be disabled.

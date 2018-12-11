@@ -5,10 +5,12 @@ import _createClass from "@babel/runtime/helpers/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/inherits";
+
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import wrapDisplayName from 'recompose/wrapDisplayName';
+import { getDisplayName, ponyfillGlobal } from '@material-ui/utils';
 import createMuiTheme from './createMuiTheme';
 import themeListener from './themeListener';
 var defaultTheme;
@@ -18,12 +20,16 @@ function getDefaultTheme() {
     return defaultTheme;
   }
 
-  defaultTheme = createMuiTheme();
+  defaultTheme = createMuiTheme({
+    typography: {
+      suppressWarning: true
+    }
+  });
   return defaultTheme;
 } // Provide the theme object as a property to the input component.
 
 
-var withTheme = function withTheme() {
+var withThemeOld = function withThemeOld() {
   return function (Component) {
     var WithTheme =
     /*#__PURE__*/
@@ -87,7 +93,7 @@ var withTheme = function withTheme() {
     WithTheme.contextTypes = themeListener.contextTypes;
 
     if (process.env.NODE_ENV !== 'production') {
-      WithTheme.displayName = wrapDisplayName(Component, 'WithTheme');
+      WithTheme.displayName = "WithTheme(".concat(getDisplayName(Component), ")");
     }
 
     hoistNonReactStatics(WithTheme, Component);
@@ -100,5 +106,15 @@ var withTheme = function withTheme() {
     return WithTheme;
   };
 };
+/* istanbul ignore if */
 
-export default withTheme;
+
+if (!ponyfillGlobal.__MUI_STYLES__) {
+  ponyfillGlobal.__MUI_STYLES__ = {};
+}
+
+if (!ponyfillGlobal.__MUI_STYLES__.withTheme) {
+  ponyfillGlobal.__MUI_STYLES__.withTheme = withThemeOld;
+}
+
+export default ponyfillGlobal.__MUI_STYLES__.withTheme;

@@ -5,6 +5,7 @@ import _extends from "@babel/runtime/helpers/extends";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { fade } from '../styles/colorManipulator';
 import ButtonBase from '../ButtonBase';
@@ -49,7 +50,9 @@ export var styles = function styles(theme) {
     },
 
     /* Styles applied to the root element if `variant="text"`. */
-    text: {},
+    text: {
+      padding: theme.spacing.unit
+    },
 
     /* Styles applied to the root element if `variant="text"` and `color="primary"`. */
     textPrimary: {
@@ -222,7 +225,7 @@ export var styles = function styles(theme) {
       color: 'inherit'
     },
 
-    /* Styles applied to the root element if `size="mini"` & `variant="[fab | extendedFab]"`. */
+    /* Styles applied to the root element if `mini={true}` & `variant="[fab | extendedFab]"`. */
     mini: {
       width: 40,
       height: 40
@@ -270,7 +273,7 @@ function Button(props) {
   var fab = variant === 'fab' || variant === 'extendedFab';
   var contained = variant === 'contained' || variant === 'raised';
   var text = variant === 'text' || variant === 'flat';
-  var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.fab, fab), _defineProperty(_classNames, classes.mini, fab && mini), _defineProperty(_classNames, classes.extendedFab, variant === 'extendedFab'), _defineProperty(_classNames, classes.text, text), _defineProperty(_classNames, classes.textPrimary, text && color === 'primary'), _defineProperty(_classNames, classes.textSecondary, text && color === 'secondary'), _defineProperty(_classNames, classes.flat, variant === 'text' || variant === 'flat'), _defineProperty(_classNames, classes.flatPrimary, (variant === 'text' || variant === 'flat') && color === 'primary'), _defineProperty(_classNames, classes.flatSecondary, (variant === 'text' || variant === 'flat') && color === 'secondary'), _defineProperty(_classNames, classes.contained, contained || fab), _defineProperty(_classNames, classes.containedPrimary, (contained || fab) && color === 'primary'), _defineProperty(_classNames, classes.containedSecondary, (contained || fab) && color === 'secondary'), _defineProperty(_classNames, classes.raised, contained || fab), _defineProperty(_classNames, classes.raisedPrimary, (contained || fab) && color === 'primary'), _defineProperty(_classNames, classes.raisedSecondary, (contained || fab) && color === 'secondary'), _defineProperty(_classNames, classes.outlined, variant === 'outlined'), _defineProperty(_classNames, classes.outlinedPrimary, variant === 'outlined' && color === 'primary'), _defineProperty(_classNames, classes.outlinedSecondary, variant === 'outlined' && color === 'secondary'), _defineProperty(_classNames, classes["size".concat(capitalize(size))], size !== 'medium'), _defineProperty(_classNames, classes.disabled, disabled), _defineProperty(_classNames, classes.fullWidth, fullWidth), _defineProperty(_classNames, classes.colorInherit, color === 'inherit'), _classNames), classNameProp);
+  var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.fab, fab), _defineProperty(_classNames, classes.mini, fab && mini), _defineProperty(_classNames, classes.extendedFab, variant === 'extendedFab'), _defineProperty(_classNames, classes.text, text), _defineProperty(_classNames, classes.textPrimary, text && color === 'primary'), _defineProperty(_classNames, classes.textSecondary, text && color === 'secondary'), _defineProperty(_classNames, classes.flat, text), _defineProperty(_classNames, classes.flatPrimary, text && color === 'primary'), _defineProperty(_classNames, classes.flatSecondary, text && color === 'secondary'), _defineProperty(_classNames, classes.contained, contained || fab), _defineProperty(_classNames, classes.containedPrimary, (contained || fab) && color === 'primary'), _defineProperty(_classNames, classes.containedSecondary, (contained || fab) && color === 'secondary'), _defineProperty(_classNames, classes.raised, contained || fab), _defineProperty(_classNames, classes.raisedPrimary, (contained || fab) && color === 'primary'), _defineProperty(_classNames, classes.raisedSecondary, (contained || fab) && color === 'secondary'), _defineProperty(_classNames, classes.outlined, variant === 'outlined'), _defineProperty(_classNames, classes.outlinedPrimary, variant === 'outlined' && color === 'primary'), _defineProperty(_classNames, classes.outlinedSecondary, variant === 'outlined' && color === 'secondary'), _defineProperty(_classNames, classes["size".concat(capitalize(size))], size !== 'medium'), _defineProperty(_classNames, classes.disabled, disabled), _defineProperty(_classNames, classes.fullWidth, fullWidth), _defineProperty(_classNames, classes.colorInherit, color === 'inherit'), _classNames), classNameProp);
   return React.createElement(ButtonBase, _extends({
     className: className,
     disabled: disabled,
@@ -307,7 +310,7 @@ Button.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the button will be disabled.
@@ -361,14 +364,24 @@ Button.propTypes = {
    * The variant to use.
    * __WARNING__: `flat` and `raised` are deprecated.
    * Instead use `text` and `contained` respectively.
+   * `fab` and `extendedFab` are deprecated.
+   * Instead use `<Fab>` and `<Fab variant="extended">`
    */
-  variant: chainPropTypes(PropTypes.oneOf(['text', 'flat', 'outlined', 'contained', 'raised', 'fab', 'extendedFab']), function (props) {
+  variant: chainPropTypes(PropTypes.oneOf(['text', 'outlined', 'contained', 'fab', 'extendedFab', 'flat', 'raised']), function (props) {
     if (props.variant === 'flat') {
       return new Error('The `flat` variant will be removed in the next major release. ' + '`text` is equivalent and should be used instead.');
     }
 
     if (props.variant === 'raised') {
       return new Error('The `raised` variant will be removed in the next major release. ' + '`contained` is equivalent and should be used instead.');
+    }
+
+    if (props.variant === 'fab') {
+      return new Error('The `fab` variant will be removed in the next major release. ' + 'The `<Fab>` component is equivalent and should be used instead.');
+    }
+
+    if (props.variant === 'extendedFab') {
+      return new Error('The `fab` variant will be removed in the next major release. ' + 'The `<Fab>` component with `variant="extended"` is equivalent ' + 'and should be used instead.');
     }
 
     return null;

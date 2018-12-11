@@ -7,6 +7,7 @@ import _createClass from "@babel/runtime/helpers/createClass";
 import _possibleConstructorReturn from "@babel/runtime/helpers/possibleConstructorReturn";
 import _getPrototypeOf from "@babel/runtime/helpers/getPrototypeOf";
 import _inherits from "@babel/runtime/helpers/inherits";
+import _typeof from "@babel/runtime/helpers/typeof";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -15,9 +16,18 @@ import warning from 'warning';
 import Menu from '../Menu/Menu';
 import { isFilled } from '../InputBase/utils';
 import { setRef } from '../utils/reactHelpers';
+
+function areEqualValues(a, b) {
+  if (_typeof(b) === 'object' && b !== null) {
+    return a === b;
+  }
+
+  return String(a) === String(b);
+}
 /**
  * @ignore - internal component.
  */
+
 
 var SelectInput =
 /*#__PURE__*/
@@ -257,13 +267,15 @@ function (_React$Component) {
             throw new Error('Material-UI: the `value` property must be an array ' + 'when using the `Select` component with `multiple`.');
           }
 
-          selected = value.indexOf(child.props.value) !== -1;
+          selected = value.some(function (v) {
+            return areEqualValues(v, child.props.value);
+          });
 
           if (selected && computeDisplay) {
             displayMultiple.push(child.props.children);
           }
         } else {
-          selected = value === child.props.value;
+          selected = areEqualValues(value, child.props.value);
 
           if (selected && computeDisplay) {
             displaySingle = child.props.children;
@@ -309,7 +321,7 @@ function (_React$Component) {
         "aria-pressed": open ? 'true' : 'false',
         tabIndex: tabIndex,
         role: "button",
-        "aria-owns": open ? "menu-".concat(name || '') : null,
+        "aria-owns": open ? "menu-".concat(name || '') : undefined,
         "aria-haspopup": "true",
         onKeyDown: this.handleKeyDown,
         onBlur: this.handleBlur,
@@ -487,7 +499,7 @@ SelectInput.propTypes = {
   /**
    * The input value.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]).isRequired,
 
   /**
    * The variant to use.

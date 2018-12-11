@@ -20,7 +20,7 @@ function Hidden(props) {
   return React.createElement(HiddenCss, other);
 }
 
-Hidden.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Hidden.propTypes = {
   /**
    * The content of the component.
    */
@@ -104,7 +104,7 @@ Hidden.propTypes = process.env.NODE_ENV !== "production" ? {
    * If true, screens this size and up will be hidden.
    */
   xsUp: PropTypes.bool
-} : {};
+} : void 0;
 Hidden.defaultProps = {
   implementation: 'js',
   lgDown: false,

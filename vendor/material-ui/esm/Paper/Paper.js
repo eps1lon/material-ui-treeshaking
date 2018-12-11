@@ -5,6 +5,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import warning from 'warning';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 export var styles = function styles(theme) {
   var elevations = {};
@@ -62,7 +63,7 @@ Paper.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Shadow depth, corresponds to `dp` in the spec.

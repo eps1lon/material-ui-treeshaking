@@ -81,7 +81,7 @@ function Step(props) {
   }));
 }
 
-Step.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Step.propTypes = {
   /**
    * Sets the step as active. Is passed to child components.
    */
@@ -141,7 +141,7 @@ Step.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   orientation: PropTypes.oneOf(['horizontal', 'vertical'])
-} : {};
+} : void 0;
 Step.defaultProps = {
   active: false,
   completed: false,

@@ -82,7 +82,7 @@ function TableSortLabel(props) {
   }));
 }
 
-TableSortLabel.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? TableSortLabel.propTypes = {
   /**
    * If `true`, the label will have the active styling (should be true for the sorted column).
    */
@@ -118,7 +118,7 @@ TableSortLabel.propTypes = process.env.NODE_ENV !== "production" ? {
    * Sort icon to use.
    */
   IconComponent: PropTypes.func
-} : {};
+} : void 0;
 TableSortLabel.defaultProps = {
   active: false,
   direction: 'desc',

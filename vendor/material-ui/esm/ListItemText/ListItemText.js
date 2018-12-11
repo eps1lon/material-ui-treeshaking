@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import withStyles from '../styles/withStyles';
 import Typography from '../Typography';
+import ListContext from '../List/ListContext';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -49,9 +50,7 @@ export var styles = function styles(theme) {
   };
 };
 
-function ListItemText(props, context) {
-  var _classNames3;
-
+function ListItemText(props) {
   var children = props.children,
       classes = props.classes,
       classNameProp = props.className,
@@ -63,30 +62,34 @@ function ListItemText(props, context) {
       secondaryTypographyProps = props.secondaryTypographyProps,
       other = _objectWithoutProperties(props, ["children", "classes", "className", "disableTypography", "inset", "primary", "primaryTypographyProps", "secondary", "secondaryTypographyProps"]);
 
-  var dense = context.dense;
-  var primary = primaryProp != null ? primaryProp : children;
+  return React.createElement(ListContext.Consumer, null, function (_ref) {
+    var _classNames3;
 
-  if (primary != null && primary.type !== Typography && !disableTypography) {
-    primary = React.createElement(Typography, _extends({
-      variant: "subheading",
-      internalDeprecatedVariant: true,
-      className: classNames(classes.primary, _defineProperty({}, classes.textDense, dense)),
-      component: "span"
-    }, primaryTypographyProps), primary);
-  }
+    var dense = _ref.dense;
+    var primary = primaryProp != null ? primaryProp : children;
 
-  var secondary = secondaryProp;
+    if (primary != null && primary.type !== Typography && !disableTypography) {
+      primary = React.createElement(Typography, _extends({
+        variant: "subheading",
+        internalDeprecatedVariant: true,
+        className: classNames(classes.primary, _defineProperty({}, classes.textDense, dense)),
+        component: "span"
+      }, primaryTypographyProps), primary);
+    }
 
-  if (secondary != null && secondary.type !== Typography && !disableTypography) {
-    secondary = React.createElement(Typography, _extends({
-      className: classNames(classes.secondary, _defineProperty({}, classes.textDense, dense)),
-      color: "textSecondary"
-    }, secondaryTypographyProps), secondary);
-  }
+    var secondary = secondaryProp;
 
-  return React.createElement("div", _extends({
-    className: classNames(classes.root, (_classNames3 = {}, _defineProperty(_classNames3, classes.dense, dense), _defineProperty(_classNames3, classes.inset, inset), _classNames3), classNameProp)
-  }, other), primary, secondary);
+    if (secondary != null && secondary.type !== Typography && !disableTypography) {
+      secondary = React.createElement(Typography, _extends({
+        className: classNames(classes.secondary, _defineProperty({}, classes.textDense, dense)),
+        color: "textSecondary"
+      }, secondaryTypographyProps), secondary);
+    }
+
+    return React.createElement("div", _extends({
+      className: classNames(classes.root, (_classNames3 = {}, _defineProperty(_classNames3, classes.dense, dense), _defineProperty(_classNames3, classes.inset, inset), _classNames3), classNameProp)
+    }, other), primary, secondary);
+  });
 }
 
 ListItemText.propTypes = {
@@ -145,9 +148,6 @@ ListItemText.propTypes = {
 ListItemText.defaultProps = {
   disableTypography: false,
   inset: false
-};
-ListItemText.contextTypes = {
-  dense: PropTypes.bool
 };
 export default withStyles(styles, {
   name: 'MuiListItemText'

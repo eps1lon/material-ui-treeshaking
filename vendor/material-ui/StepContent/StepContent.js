@@ -134,7 +134,7 @@ StepContent.propTypes = {
   /**
    * Collapse component.
    */
-  TransitionComponent: _propTypes.default.func,
+  TransitionComponent: _propTypes.default.oneOfType([_propTypes.default.string, _propTypes.default.func, _propTypes.default.object]),
 
   /**
    * Adjust the duration of the content expand transition.

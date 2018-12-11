@@ -8,9 +8,18 @@ import warning from 'warning';
 import Menu from '../Menu/Menu';
 import { isFilled } from '../InputBase/utils';
 import { setRef } from '../utils/reactHelpers';
+
+function areEqualValues(a, b) {
+  if (typeof b === 'object' && b !== null) {
+    return a === b;
+  }
+
+  return String(a) === String(b);
+}
 /**
  * @ignore - internal component.
  */
+
 
 class SelectInput extends React.Component {
   constructor(props) {
@@ -228,13 +237,13 @@ class SelectInput extends React.Component {
           throw new Error('Material-UI: the `value` property must be an array ' + 'when using the `Select` component with `multiple`.');
         }
 
-        selected = value.indexOf(child.props.value) !== -1;
+        selected = value.some(v => areEqualValues(v, child.props.value));
 
         if (selected && computeDisplay) {
           displayMultiple.push(child.props.children);
         }
       } else {
-        selected = value === child.props.value;
+        selected = areEqualValues(value, child.props.value);
 
         if (selected && computeDisplay) {
           displaySingle = child.props.children;
@@ -283,7 +292,7 @@ class SelectInput extends React.Component {
       "aria-pressed": open ? 'true' : 'false',
       tabIndex: tabIndex,
       role: "button",
-      "aria-owns": open ? `menu-${name || ''}` : null,
+      "aria-owns": open ? `menu-${name || ''}` : undefined,
       "aria-haspopup": "true",
       onKeyDown: this.handleKeyDown,
       onBlur: this.handleBlur,
@@ -319,7 +328,7 @@ class SelectInput extends React.Component {
 
 }
 
-SelectInput.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? SelectInput.propTypes = {
   /**
    * @ignore
    */
@@ -459,11 +468,11 @@ SelectInput.propTypes = process.env.NODE_ENV !== "production" ? {
   /**
    * The input value.
    */
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]))]).isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object, PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool, PropTypes.object]))]).isRequired,
 
   /**
    * The variant to use.
    */
   variant: PropTypes.oneOf(['standard', 'outlined', 'filled'])
-} : {};
+} : void 0;
 export default SelectInput;

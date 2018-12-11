@@ -21,7 +21,7 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _exactProp = _interopRequireDefault(require("../utils/exactProp"));
+var _utils = require("@material-ui/utils");
 
 /**
  * NoSsr purposely removes components from the subject of Server Side Rendering (SSR).
@@ -80,7 +80,7 @@ function (_React$Component) {
       } else {
         this.setState({
           mounted: true
-        }); // eslint-disable-line react/no-did-mount-set-state
+        });
       }
     }
   }, {
@@ -114,7 +114,11 @@ NoSsr.propTypes = {
    */
   fallback: _propTypes.default.node
 };
-NoSsr.propTypes = (0, _exactProp.default)(NoSsr.propTypes);
+
+if (process.env.NODE_ENV !== 'production') {
+  NoSsr.propTypes = (0, _utils.exactProp)(NoSsr.propTypes);
+}
+
 NoSsr.defaultProps = {
   defer: false,
   fallback: null

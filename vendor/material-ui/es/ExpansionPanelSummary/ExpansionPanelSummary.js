@@ -82,16 +82,24 @@ class ExpansionPanelSummary extends React.Component {
       focused: false
     };
 
-    this.handleFocus = () => {
+    this.handleFocusVisible = event => {
       this.setState({
         focused: true
       });
+
+      if (this.props.onFocusVisible) {
+        this.props.onFocusVisible(event);
+      }
     };
 
-    this.handleBlur = () => {
+    this.handleBlur = event => {
       this.setState({
         focused: false
       });
+
+      if (this.props.onBlur) {
+        this.props.onBlur(event);
+      }
     };
 
     this.handleChange = event => {
@@ -121,7 +129,7 @@ class ExpansionPanelSummary extends React.Component {
       expandIcon,
       IconButtonProps
     } = _this$props,
-          other = _objectWithoutPropertiesLoose(_this$props, ["children", "classes", "className", "disabled", "expanded", "expandIcon", "IconButtonProps", "onChange"]);
+          other = _objectWithoutPropertiesLoose(_this$props, ["children", "classes", "className", "disabled", "expanded", "expandIcon", "IconButtonProps", "onBlur", "onChange", "onClick", "onFocusVisible"]);
 
     const {
       focused
@@ -136,12 +144,11 @@ class ExpansionPanelSummary extends React.Component {
         [classes.disabled]: disabled,
         [classes.expanded]: expanded,
         [classes.focused]: focused
-      }, className)
-    }, other, {
-      onFocusVisible: this.handleFocus,
+      }, className),
+      onFocusVisible: this.handleFocusVisible,
       onBlur: this.handleBlur,
       onClick: this.handleChange
-    }), React.createElement("div", {
+    }, other), React.createElement("div", {
       className: classNames(classes.content, {
         [classes.expanded]: expanded
       })
@@ -158,7 +165,7 @@ class ExpansionPanelSummary extends React.Component {
 
 }
 
-ExpansionPanelSummary.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ExpansionPanelSummary.propTypes = {
   /**
    * The content of the expansion panel summary.
    */
@@ -206,7 +213,7 @@ ExpansionPanelSummary.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   onClick: PropTypes.func
-} : {};
+} : void 0;
 ExpansionPanelSummary.defaultProps = {
   disabled: false
 };

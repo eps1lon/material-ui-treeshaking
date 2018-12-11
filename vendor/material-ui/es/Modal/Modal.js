@@ -13,6 +13,7 @@ import { createChainedFunction } from '../utils/helpers';
 import withStyles from '../styles/withStyles';
 import ModalManager from './ModalManager';
 import Backdrop from '../Backdrop';
+import { ariaHidden } from './manageAriaHidden';
 
 function getContainer(container, defaultContainer) {
   container = typeof container === 'function' ? container() : container;
@@ -74,15 +75,13 @@ class Modal extends React.Component {
       if (this.props.open) {
         this.handleOpened();
       } else {
-        const doc = ownerDocument(this.mountNode);
-        const container = getContainer(this.props.container, doc.body);
-        this.props.manager.add(this, container);
-        this.props.manager.remove(this);
+        ariaHidden(this.modalRef, true);
       }
     };
 
     this.handleOpened = () => {
-      this.autoFocus(); // Fix a bug on Chrome where the scroll isn't initially 0.
+      this.autoFocus();
+      this.props.manager.mount(this); // Fix a bug on Chrome where the scroll isn't initially 0.
 
       this.modalRef.scrollTop = 0;
     };
@@ -151,6 +150,10 @@ class Modal extends React.Component {
       this.modalRef = ref;
     };
 
+    this.onRootRef = ref => {
+      this.dialogRef = ref;
+    };
+
     this.state = {
       exited: !props.open
     };
@@ -168,7 +171,6 @@ class Modal extends React.Component {
     if (prevProps.open && !this.props.open) {
       this.handleClose();
     } else if (!prevProps.open && this.props.open) {
-      // check for focus
       this.lastFocus = ownerDocument(this.mountNode).activeElement;
       this.handleOpen();
     }
@@ -283,22 +285,20 @@ class Modal extends React.Component {
       onRendered: this.handleRendered
     }, React.createElement("div", _extends({
       ref: this.handleModalRef,
-      className: classNames(classes.root, className, {
+      className: classNames('mui-fixed', classes.root, className, {
         [classes.hidden]: exited
       })
     }, other), hideBackdrop ? null : React.createElement(BackdropComponent, _extends({
       open: open,
       onClick: this.handleBackdropClick
     }, BackdropProps)), React.createElement(RootRef, {
-      rootRef: ref => {
-        this.dialogRef = ref;
-      }
+      rootRef: this.onRootRef
     }, React.cloneElement(children, childProps))));
   }
 
 }
 
-Modal.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Modal.propTypes = {
   /**
    * A backdrop component. This property enables custom backdrop rendering.
    */
@@ -419,7 +419,7 @@ Modal.propTypes = process.env.NODE_ENV !== "production" ? {
    * If `true`, the modal is open.
    */
   open: PropTypes.bool.isRequired
-} : {};
+} : void 0;
 Modal.defaultProps = {
   BackdropComponent: Backdrop,
   disableAutoFocus: false,

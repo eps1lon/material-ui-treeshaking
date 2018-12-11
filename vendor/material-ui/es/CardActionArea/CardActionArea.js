@@ -56,7 +56,7 @@ function CardActionArea(props) {
   }));
 }
 
-CardActionArea.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? CardActionArea.propTypes = {
   /**
    * The content of the component.
    */
@@ -77,7 +77,7 @@ CardActionArea.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   focusVisibleClassName: PropTypes.string
-} : {};
+} : void 0;
 export default withStyles(styles, {
   name: 'MuiCardActionArea'
 })(CardActionArea);

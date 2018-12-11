@@ -4,9 +4,13 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { capitalize } from '../utils/helpers';
+import deprecatedPropType from '../utils/deprecatedPropType';
 import { darken, fade, lighten } from '../styles/colorManipulator';
+import TableContext from '../Table/TableContext';
+import Tablelvl2Context from '../Table/Tablelvl2Context';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -15,7 +19,7 @@ export var styles = function styles(theme) {
       verticalAlign: 'inherit',
       // Workaround for a rendering bug with spanned columns in Chrome 62.0.
       // Removes the alpha (sets it to 1), and lightens or darkens the theme color.
-      borderBottom: "1px solid\n    ".concat(theme.palette.type === 'light' ? lighten(fade(theme.palette.divider, 1), 0.88) : darken(fade(theme.palette.divider, 1), 0.8)),
+      borderBottom: "1px solid\n    ".concat(theme.palette.type === 'light' ? lighten(fade(theme.palette.divider, 1), 0.88) : darken(fade(theme.palette.divider, 1), 0.68)),
       textAlign: 'left',
       padding: '4px 56px 4px 24px',
       '&:last-child': {
@@ -70,56 +74,89 @@ export var styles = function styles(theme) {
       '&:last-child': {
         padding: 0
       }
+    },
+
+    /* Styles applied to the root element if `align="left"`. */
+    alignLeft: {
+      textAlign: 'left'
+    },
+
+    /* Styles applied to the root element if `align="center"`. */
+    alignCenter: {
+      textAlign: 'center'
+    },
+
+    /* Styles applied to the root element if `align="right"`. */
+    alignRight: {
+      textAlign: 'right',
+      flexDirection: 'row-reverse'
+    },
+
+    /* Styles applied to the root element if `align="justify"`. */
+    alignJustify: {
+      textAlign: 'justify'
     }
   };
 };
 
-function TableCell(props, context) {
-  var _classNames;
-
-  var children = props.children,
+function TableCell(props) {
+  var align = props.align,
+      children = props.children,
       classes = props.classes,
       classNameProp = props.className,
       component = props.component,
       sortDirection = props.sortDirection,
-      numeric = props.numeric,
+      _props$numeric = props.numeric,
+      numeric = _props$numeric === void 0 ? false : _props$numeric,
       paddingProp = props.padding,
       scopeProp = props.scope,
       variant = props.variant,
-      other = _objectWithoutProperties(props, ["children", "classes", "className", "component", "sortDirection", "numeric", "padding", "scope", "variant"]);
+      other = _objectWithoutProperties(props, ["align", "children", "classes", "className", "component", "sortDirection", "numeric", "padding", "scope", "variant"]);
 
-  var table = context.table,
-      tablelvl2 = context.tablelvl2;
-  var Component;
+  return React.createElement(TableContext.Consumer, null, function (table) {
+    return React.createElement(Tablelvl2Context.Consumer, null, function (tablelvl2) {
+      var _classNames;
 
-  if (component) {
-    Component = component;
-  } else {
-    Component = tablelvl2 && tablelvl2.variant === 'head' ? 'th' : 'td';
-  }
+      var Component;
 
-  var scope = scopeProp;
+      if (component) {
+        Component = component;
+      } else {
+        Component = tablelvl2 && tablelvl2.variant === 'head' ? 'th' : 'td';
+      }
 
-  if (!scope && tablelvl2 && tablelvl2.variant === 'head') {
-    scope = 'col';
-  }
+      var scope = scopeProp;
 
-  var padding = paddingProp || (table && table.padding ? table.padding : 'default');
-  var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.head, variant ? variant === 'head' : tablelvl2 && tablelvl2.variant === 'head'), _defineProperty(_classNames, classes.body, variant ? variant === 'body' : tablelvl2 && tablelvl2.variant === 'body'), _defineProperty(_classNames, classes.footer, variant ? variant === 'footer' : tablelvl2 && tablelvl2.variant === 'footer'), _defineProperty(_classNames, classes.numeric, numeric), _defineProperty(_classNames, classes["padding".concat(capitalize(padding))], padding !== 'default'), _classNames), classNameProp);
-  var ariaSort = null;
+      if (!scope && tablelvl2 && tablelvl2.variant === 'head') {
+        scope = 'col';
+      }
 
-  if (sortDirection) {
-    ariaSort = sortDirection === 'asc' ? 'ascending' : 'descending';
-  }
+      var padding = paddingProp || (table && table.padding ? table.padding : 'default');
+      var className = classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.head, variant ? variant === 'head' : tablelvl2 && tablelvl2.variant === 'head'), _defineProperty(_classNames, classes.body, variant ? variant === 'body' : tablelvl2 && tablelvl2.variant === 'body'), _defineProperty(_classNames, classes.footer, variant ? variant === 'footer' : tablelvl2 && tablelvl2.variant === 'footer'), _defineProperty(_classNames, classes["align".concat(capitalize(align))], align !== 'inherit'), _defineProperty(_classNames, classes.numeric, numeric), _defineProperty(_classNames, classes["padding".concat(capitalize(padding))], padding !== 'default'), _classNames), classNameProp);
+      var ariaSort = null;
 
-  return React.createElement(Component, _extends({
-    className: className,
-    "aria-sort": ariaSort,
-    scope: scope
-  }, other), children);
+      if (sortDirection) {
+        ariaSort = sortDirection === 'asc' ? 'ascending' : 'descending';
+      }
+
+      return React.createElement(Component, _extends({
+        className: className,
+        "aria-sort": ariaSort,
+        scope: scope
+      }, other), children);
+    });
+  });
 }
 
 TableCell.propTypes = {
+  /**
+   * Set the text-align on the table cell content.
+   *
+   * Monetary or generally number fields **should be right aligned** as that allows
+   * you to add them up quickly in your head without having to worry about decimals.
+   */
+  align: PropTypes.oneOf(['inherit', 'left', 'center', 'right', 'justify']),
+
   /**
    * The table cell contents.
    */
@@ -140,12 +177,12 @@ TableCell.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, content will align to the right.
    */
-  numeric: PropTypes.bool,
+  numeric: deprecatedPropType(PropTypes.bool, 'Instead, use the `align` property.'),
 
   /**
    * Sets the padding applied to the cell.
@@ -170,11 +207,7 @@ TableCell.propTypes = {
   variant: PropTypes.oneOf(['head', 'body', 'footer'])
 };
 TableCell.defaultProps = {
-  numeric: false
-};
-TableCell.contextTypes = {
-  table: PropTypes.object,
-  tablelvl2: PropTypes.object
+  align: 'inherit'
 };
 export default withStyles(styles, {
   name: 'MuiTableCell'

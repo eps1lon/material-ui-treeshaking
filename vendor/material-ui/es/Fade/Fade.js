@@ -83,7 +83,7 @@ class Fade extends React.Component {
 
 }
 
-Fade.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Fade.propTypes = {
   /**
    * A single child content element.
    */
@@ -122,7 +122,7 @@ Fade.propTypes = process.env.NODE_ENV !== "production" ? {
     enter: PropTypes.number,
     exit: PropTypes.number
   })])
-} : {};
+} : void 0;
 Fade.defaultProps = {
   timeout: {
     enter: duration.enteringScreen,

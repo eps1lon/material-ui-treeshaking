@@ -5,6 +5,7 @@ import React from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import { duration } from '../styles/transitions';
 import { getTransitionProps } from '../transitions/utils';
@@ -175,7 +176,7 @@ class Collapse extends React.Component {
 
 }
 
-Collapse.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Collapse.propTypes = {
   /**
    * The content node to be collapsed.
    */
@@ -201,7 +202,7 @@ Collapse.propTypes = process.env.NODE_ENV !== "production" ? {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the component will transition in.
@@ -253,7 +254,7 @@ Collapse.propTypes = process.env.NODE_ENV !== "production" ? {
     enter: PropTypes.number,
     exit: PropTypes.number
   }), PropTypes.oneOf(['auto'])])
-} : {};
+} : void 0;
 Collapse.defaultProps = {
   collapsedHeight: '0px',
   component: 'div',

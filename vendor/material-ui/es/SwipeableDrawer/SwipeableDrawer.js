@@ -329,11 +329,12 @@ class SwipeableDrawer extends React.Component {
       } = {},
       open,
       PaperProps = {},
+      SwipeAreaProps,
       swipeAreaWidth,
       variant
     } = _this$props,
           ModalPropsProp = _objectWithoutPropertiesLoose(_this$props.ModalProps, ["BackdropProps"]),
-          other = _objectWithoutPropertiesLoose(_this$props, ["anchor", "disableBackdropTransition", "disableDiscovery", "disableSwipeToOpen", "hysteresis", "minFlingVelocity", "ModalProps", "onOpen", "open", "PaperProps", "swipeAreaWidth", "variant"]);
+          other = _objectWithoutPropertiesLoose(_this$props, ["anchor", "disableBackdropTransition", "disableDiscovery", "disableSwipeToOpen", "hysteresis", "minFlingVelocity", "ModalProps", "onOpen", "open", "PaperProps", "SwipeAreaProps", "swipeAreaWidth", "variant"]);
 
     const {
       maybeSwiping
@@ -353,15 +354,15 @@ class SwipeableDrawer extends React.Component {
         ref: this.handlePaperRef
       }),
       anchor: anchor
-    }, other)), !disableDiscovery && !disableSwipeToOpen && variant === 'temporary' && React.createElement(NoSsr, null, React.createElement(SwipeArea, {
+    }, other)), !disableDiscovery && !disableSwipeToOpen && variant === 'temporary' && React.createElement(NoSsr, null, React.createElement(SwipeArea, _extends({
       anchor: anchor,
       width: swipeAreaWidth
-    })));
+    }, SwipeAreaProps))));
   }
 
 }
 
-SwipeableDrawer.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? SwipeableDrawer.propTypes = {
   /**
    * @ignore
    */
@@ -428,6 +429,11 @@ SwipeableDrawer.propTypes = process.env.NODE_ENV !== "production" ? {
   PaperProps: PropTypes.object,
 
   /**
+   * Properties applied to the swipe area element.
+   */
+  SwipeAreaProps: PropTypes.object,
+
+  /**
    * The width of the left most (or right most) area in pixels where the
    * drawer can be swiped open from.
    */
@@ -451,7 +457,7 @@ SwipeableDrawer.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   variant: PropTypes.oneOf(['permanent', 'persistent', 'temporary'])
-} : {};
+} : void 0;
 SwipeableDrawer.defaultProps = {
   anchor: 'left',
   disableBackdropTransition: false,

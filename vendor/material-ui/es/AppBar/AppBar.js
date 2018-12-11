@@ -98,7 +98,7 @@ function AppBar(props) {
   }, other), children);
 }
 
-AppBar.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? AppBar.propTypes = {
   /**
    * The content of the component.
    */
@@ -126,7 +126,7 @@ AppBar.propTypes = process.env.NODE_ENV !== "production" ? {
    * Note: `sticky` is not universally supported and will fall back to `static` when unavailable.
    */
   position: PropTypes.oneOf(['fixed', 'absolute', 'sticky', 'static', 'relative'])
-} : {};
+} : void 0;
 AppBar.defaultProps = {
   color: 'primary',
   position: 'fixed'

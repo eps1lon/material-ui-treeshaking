@@ -76,7 +76,7 @@ function Checkbox(props) {
   }, other));
 }
 
-Checkbox.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Checkbox.propTypes = {
   /**
    * If `true`, the component is checked.
    */
@@ -164,7 +164,7 @@ Checkbox.propTypes = process.env.NODE_ENV !== "production" ? {
    * The value of the component.
    */
   value: PropTypes.string
-} : {};
+} : void 0;
 Checkbox.defaultProps = {
   checkedIcon: React.createElement(CheckBoxIcon, null),
   color: 'secondary',

@@ -30,7 +30,7 @@ function ListItemIcon(props) {
   }, other), children);
 }
 
-ListItemIcon.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ListItemIcon.propTypes = {
   /**
    * The content of the component, normally `Icon`, `SvgIcon`,
    * or a `@material-ui/icons` SVG icon element.
@@ -47,7 +47,7 @@ ListItemIcon.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   className: PropTypes.string
-} : {};
+} : void 0;
 export default withStyles(styles, {
   name: 'MuiListItemIcon'
 })(ListItemIcon);

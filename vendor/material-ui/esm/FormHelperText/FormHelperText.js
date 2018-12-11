@@ -4,8 +4,10 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
+import formControlState from '../FormControl/formControlState';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import withStyles from '../styles/withStyles';
-import { formControlState } from '../InputBase/InputBase';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -53,7 +55,7 @@ export var styles = function styles(theme) {
   };
 };
 
-function FormHelperText(props, context) {
+function FormHelperText(props) {
   var _classNames;
 
   var classes = props.classes,
@@ -64,13 +66,14 @@ function FormHelperText(props, context) {
       filled = props.filled,
       focused = props.focused,
       margin = props.margin,
+      muiFormControl = props.muiFormControl,
       required = props.required,
       variant = props.variant,
-      other = _objectWithoutProperties(props, ["classes", "className", "component", "disabled", "error", "filled", "focused", "margin", "required", "variant"]);
+      other = _objectWithoutProperties(props, ["classes", "className", "component", "disabled", "error", "filled", "focused", "margin", "muiFormControl", "required", "variant"]);
 
   var fcs = formControlState({
     props: props,
-    context: context,
+    muiFormControl: muiFormControl,
     states: ['variant', 'margin', 'disabled', 'error', 'filled', 'focused', 'required']
   });
   return React.createElement(Component, _extends({
@@ -99,7 +102,7 @@ FormHelperText.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * If `true`, the helper text should be displayed in a disabled state.
@@ -128,6 +131,11 @@ FormHelperText.propTypes = {
   margin: PropTypes.oneOf(['dense']),
 
   /**
+   * @ignore
+   */
+  muiFormControl: PropTypes.object,
+
+  /**
    * If `true`, the helper text should use required classes key.
    */
   required: PropTypes.bool,
@@ -140,9 +148,6 @@ FormHelperText.propTypes = {
 FormHelperText.defaultProps = {
   component: 'p'
 };
-FormHelperText.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 export default withStyles(styles, {
   name: 'MuiFormHelperText'
-})(FormHelperText);
+})(withFormControlContext(FormHelperText));

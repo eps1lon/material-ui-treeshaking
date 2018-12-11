@@ -19,8 +19,9 @@ export var styles = function styles(theme) {
     /* Styles applied to the root element. */
     root: _extends({}, theme.typography.button, _defineProperty({
       maxWidth: 264,
-      position: 'relative',
       minWidth: 72,
+      position: 'relative',
+      boxSizing: 'border-box',
       padding: 0,
       minHeight: 48,
       flexShrink: 0,
@@ -34,7 +35,14 @@ export var styles = function styles(theme) {
 
     /* Styles applied to the root element if both `icon` and `label` are provided. */
     labelIcon: {
-      minHeight: 72
+      minHeight: 72,
+      // paddingTop supposed to be 12px
+      // - 3px from the paddingBottom
+      paddingTop: 9 // paddingBottom supposed to be 12px
+      // -3px for line-height of the label
+      // -6px for label padding
+      // = 3px
+
     },
 
     /* Styles applied to the root element if `textColor="inherit"`. */
@@ -98,13 +106,9 @@ export var styles = function styles(theme) {
       width: '100%',
       // Fix an IE 11 issue
       boxSizing: 'border-box',
-      paddingTop: 6,
-      paddingBottom: 6,
-      paddingLeft: 12,
-      paddingRight: 12
+      padding: '6px 12px'
     }, theme.breakpoints.up('md'), {
-      paddingLeft: 24,
-      paddingRight: 24
+      padding: '6px 24px'
     }),
 
     /* Styles applied to the label wrapper element if `label` is provided. */
@@ -193,7 +197,7 @@ function (_React$Component) {
 
       var _this$props2 = this.props,
           classes = _this$props2.classes,
-          classNameProp = _this$props2.className,
+          className = _this$props2.className,
           disabled = _this$props2.disabled,
           fullWidth = _this$props2.fullWidth,
           icon = _this$props2.icon,
@@ -218,10 +222,9 @@ function (_React$Component) {
         }, labelProp));
       }
 
-      var className = classNames(classes.root, classes["textColor".concat(capitalize(textColor))], (_classNames2 = {}, _defineProperty(_classNames2, classes.disabled, disabled), _defineProperty(_classNames2, classes.selected, selected), _defineProperty(_classNames2, classes.labelIcon, icon && label), _defineProperty(_classNames2, classes.fullWidth, fullWidth), _classNames2), classNameProp);
       return React.createElement(ButtonBase, _extends({
         focusRipple: true,
-        className: className,
+        className: classNames(classes.root, classes["textColor".concat(capitalize(textColor))], (_classNames2 = {}, _defineProperty(_classNames2, classes.disabled, disabled), _defineProperty(_classNames2, classes.selected, selected), _defineProperty(_classNames2, classes.labelIcon, icon && label), _defineProperty(_classNames2, classes.fullWidth, fullWidth), _classNames2), className),
         role: "tab",
         "aria-selected": selected,
         disabled: disabled

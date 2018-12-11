@@ -212,7 +212,7 @@ class Slide extends React.Component {
 
 }
 
-Slide.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Slide.propTypes = {
   /**
    * A single child content element.
    */
@@ -266,7 +266,7 @@ Slide.propTypes = process.env.NODE_ENV !== "production" ? {
     enter: PropTypes.number,
     exit: PropTypes.number
   })])
-} : {};
+} : void 0;
 Slide.defaultProps = {
   direction: 'down',
   timeout: {

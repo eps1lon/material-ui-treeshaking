@@ -3,6 +3,7 @@ import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProper
 import deepmerge from 'deepmerge'; // < 1kb payload overhead when lodash/merge is > 3kb.
 
 import warning from 'warning';
+import { ponyfillGlobal } from '@material-ui/utils';
 
 function round(value) {
   return Math.round(value * 1e5) / 1e5;
@@ -32,7 +33,7 @@ export default function createTypography(palette, typography) {
       _ref$htmlFontSize = _ref.htmlFontSize,
       htmlFontSize = _ref$htmlFontSize === void 0 ? 16 : _ref$htmlFontSize,
       _ref$useNextVariants = _ref.useNextVariants,
-      useNextVariants = _ref$useNextVariants === void 0 ? Boolean(global.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__) : _ref$useNextVariants,
+      useNextVariants = _ref$useNextVariants === void 0 ? Boolean(ponyfillGlobal.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__) : _ref$useNextVariants,
       _ref$suppressWarning = _ref.suppressWarning,
       suppressWarning = _ref$suppressWarning === void 0 ? false : _ref$suppressWarning,
       allVariants = _ref.allVariants,

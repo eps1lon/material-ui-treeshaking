@@ -1,13 +1,13 @@
 import _extends from "@babel/runtime/helpers/extends";
 import _defineProperty from "@babel/runtime/helpers/defineProperty";
 import _objectWithoutProperties from "@babel/runtime/helpers/objectWithoutProperties";
-
-/* eslint-disable jsx-a11y/label-has-for */
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import withFormControlContext from '../FormControl/withFormControlContext';
 import withStyles from '../styles/withStyles';
 import Typography from '../Typography';
+import { capitalize } from '../utils/helpers';
 export var styles = function styles(theme) {
   return {
     /* Styles applied to the root element. */
@@ -35,6 +35,18 @@ export var styles = function styles(theme) {
       marginRight: -14
     },
 
+    /* Styles applied to the root element if `labelPlacement="top"`. */
+    labelPlacementTop: {
+      flexDirection: 'column-reverse',
+      marginLeft: 16
+    },
+
+    /* Styles applied to the root element if `labelPlacement="bottom"`. */
+    labelPlacementBottom: {
+      flexDirection: 'column',
+      marginLeft: 16
+    },
+
     /* Styles applied to the root element if `disabled={true}`. */
     disabled: {},
 
@@ -51,7 +63,7 @@ export var styles = function styles(theme) {
  * Use this component if you want to display an extra label.
  */
 
-function FormControlLabel(props, context) {
+function FormControlLabel(props) {
   var _classNames;
 
   var checked = props.checked,
@@ -62,12 +74,12 @@ function FormControlLabel(props, context) {
       inputRef = props.inputRef,
       label = props.label,
       labelPlacement = props.labelPlacement,
+      muiFormControl = props.muiFormControl,
       name = props.name,
       onChange = props.onChange,
       value = props.value,
-      other = _objectWithoutProperties(props, ["checked", "classes", "className", "control", "disabled", "inputRef", "label", "labelPlacement", "name", "onChange", "value"]);
+      other = _objectWithoutProperties(props, ["checked", "classes", "className", "control", "disabled", "inputRef", "label", "labelPlacement", "muiFormControl", "name", "onChange", "value"]);
 
-  var muiFormControl = context.muiFormControl;
   var disabled = disabledProp;
 
   if (typeof disabled === 'undefined' && typeof control.props.disabled !== 'undefined') {
@@ -87,7 +99,7 @@ function FormControlLabel(props, context) {
     }
   });
   return React.createElement("label", _extends({
-    className: classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.labelPlacementStart, labelPlacement === 'start'), _defineProperty(_classNames, classes.disabled, disabled), _classNames), classNameProp)
+    className: classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes["labelPlacement".concat(capitalize(labelPlacement))], labelPlacement !== 'end'), _defineProperty(_classNames, classes.disabled, disabled), _classNames), classNameProp)
   }, other), React.cloneElement(control, controlProps), React.createElement(Typography, {
     component: "span",
     className: classNames(classes.label, _defineProperty({}, classes.disabled, disabled))
@@ -134,7 +146,12 @@ FormControlLabel.propTypes = {
   /**
    * The position of the label.
    */
-  labelPlacement: PropTypes.oneOf(['end', 'start']),
+  labelPlacement: PropTypes.oneOf(['end', 'start', 'top', 'bottom']),
+
+  /**
+   * @ignore
+   */
+  muiFormControl: PropTypes.object,
 
   /*
    * @ignore
@@ -158,9 +175,6 @@ FormControlLabel.propTypes = {
 FormControlLabel.defaultProps = {
   labelPlacement: 'end'
 };
-FormControlLabel.contextTypes = {
-  muiFormControl: PropTypes.object
-};
 export default withStyles(styles, {
   name: 'MuiFormControlLabel'
-})(FormControlLabel);
+})(withFormControlContext(FormControlLabel));

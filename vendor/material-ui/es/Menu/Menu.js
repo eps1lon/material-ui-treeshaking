@@ -33,11 +33,11 @@ class Menu extends React.Component {
     super(...args);
 
     this.getContentAnchorEl = () => {
-      if (!this.menuListRef || !this.menuListRef.selectedItemRef) {
-        return ReactDOM.findDOMNode(this.menuListRef).firstChild;
+      if (this.menuListRef.selectedItemRef) {
+        return ReactDOM.findDOMNode(this.menuListRef.selectedItemRef);
       }
 
-      return ReactDOM.findDOMNode(this.menuListRef.selectedItemRef);
+      return ReactDOM.findDOMNode(this.menuListRef).firstChild;
     };
 
     this.focus = () => {
@@ -53,7 +53,11 @@ class Menu extends React.Component {
       }
     };
 
-    this.handleEnter = element => {
+    this.handleMenuListRef = ref => {
+      this.menuListRef = ref;
+    };
+
+    this.handleEntering = element => {
       const {
         disableAutoFocusItem,
         theme
@@ -72,8 +76,8 @@ class Menu extends React.Component {
         menuList.style.width = `calc(100% + ${size})`;
       }
 
-      if (this.props.onEnter) {
-        this.props.onEnter(element);
+      if (this.props.onEntering) {
+        this.props.onEntering(element);
       }
     };
 
@@ -104,12 +108,12 @@ class Menu extends React.Component {
       PopoverClasses,
       theme
     } = _this$props,
-          other = _objectWithoutPropertiesLoose(_this$props, ["children", "classes", "disableAutoFocusItem", "MenuListProps", "onEnter", "PaperProps", "PopoverClasses", "theme"]);
+          other = _objectWithoutPropertiesLoose(_this$props, ["children", "classes", "disableAutoFocusItem", "MenuListProps", "onEntering", "PaperProps", "PopoverClasses", "theme"]);
 
     return React.createElement(Popover, _extends({
       getContentAnchorEl: this.getContentAnchorEl,
       classes: PopoverClasses,
-      onEnter: this.handleEnter,
+      onEntering: this.handleEntering,
       anchorOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
       transformOrigin: theme.direction === 'rtl' ? RTL_ORIGIN : LTR_ORIGIN,
       PaperProps: _extends({}, PaperProps, {
@@ -120,15 +124,13 @@ class Menu extends React.Component {
     }, other), React.createElement(MenuList, _extends({
       onKeyDown: this.handleListKeyDown
     }, MenuListProps, {
-      ref: ref => {
-        this.menuListRef = ref;
-      }
+      ref: this.handleMenuListRef
     }), children));
   }
 
 }
 
-Menu.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? Menu.propTypes = {
   /**
    * The DOM element used to set the position of the menu.
    */
@@ -219,7 +221,7 @@ Menu.propTypes = process.env.NODE_ENV !== "production" ? {
     enter: PropTypes.number,
     exit: PropTypes.number
   }), PropTypes.oneOf(['auto'])])
-} : {};
+} : void 0;
 Menu.defaultProps = {
   disableAutoFocusItem: false,
   transitionDuration: 'auto'

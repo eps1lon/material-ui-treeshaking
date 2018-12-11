@@ -5,6 +5,7 @@ import _extends from "@babel/runtime/helpers/extends";
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import { componentPropType } from '@material-ui/utils';
 import withStyles from '../styles/withStyles';
 import ListItem from '../ListItem';
 export var styles = function styles(theme) {
@@ -15,12 +16,15 @@ export var styles = function styles(theme) {
       boxSizing: 'content-box',
       width: 'auto',
       overflow: 'hidden',
-      textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
-      paddingLeft: 16,
-      paddingRight: 16,
       '&$selected': {}
     }),
+
+    /* Styles applied to the root element if `disableGutters={false}`. */
+    gutters: {
+      paddingLeft: 16,
+      paddingRight: 16
+    },
 
     /* Styles applied to the root element if `selected={true}`. */
     selected: {}
@@ -28,20 +32,24 @@ export var styles = function styles(theme) {
 };
 
 function MenuItem(props) {
+  var _classNames;
+
   var classes = props.classes,
       className = props.className,
       component = props.component,
-      selected = props.selected,
+      disableGutters = props.disableGutters,
       role = props.role,
-      other = _objectWithoutProperties(props, ["classes", "className", "component", "selected", "role"]);
+      selected = props.selected,
+      other = _objectWithoutProperties(props, ["classes", "className", "component", "disableGutters", "role", "selected"]);
 
   return React.createElement(ListItem, _extends({
     button: true,
     role: role,
     tabIndex: -1,
+    component: component,
     selected: selected,
-    className: classNames(classes.root, _defineProperty({}, classes.selected, selected), className),
-    component: component
+    disableGutters: disableGutters,
+    className: classNames(classes.root, (_classNames = {}, _defineProperty(_classNames, classes.selected, selected), _defineProperty(_classNames, classes.gutters, !disableGutters), _classNames), className)
   }, other));
 }
 
@@ -66,7 +74,12 @@ MenuItem.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
+
+  /**
+   * If `true`, the left and right padding is removed.
+   */
+  disableGutters: PropTypes.bool,
 
   /**
    * @ignore
@@ -80,6 +93,7 @@ MenuItem.propTypes = {
 };
 MenuItem.defaultProps = {
   component: 'li',
+  disableGutters: false,
   role: 'menuitem'
 };
 export default withStyles(styles, {

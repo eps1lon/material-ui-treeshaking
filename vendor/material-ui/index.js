@@ -1,8 +1,3 @@
-/** @license Material-UI v3.3.1
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -238,6 +233,12 @@ Object.defineProperty(exports, "ExpansionPanelSummary", {
   enumerable: true,
   get: function get() {
     return _ExpansionPanelSummary.default;
+  }
+});
+Object.defineProperty(exports, "Fab", {
+  enumerable: true,
+  get: function get() {
+    return _Fab.default;
   }
 });
 Object.defineProperty(exports, "Fade", {
@@ -753,6 +754,8 @@ var _ExpansionPanelActions = _interopRequireDefault(require("./ExpansionPanelAct
 var _ExpansionPanelDetails = _interopRequireDefault(require("./ExpansionPanelDetails"));
 
 var _ExpansionPanelSummary = _interopRequireDefault(require("./ExpansionPanelSummary"));
+
+var _Fab = _interopRequireDefault(require("./Fab"));
 
 var _Fade = _interopRequireDefault(require("./Fade"));
 

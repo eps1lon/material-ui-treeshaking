@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import keycode from 'keycode';
 import warning from 'warning';
+import { componentPropType } from '@material-ui/utils';
 import CancelIcon from '../internal/svg-icons/Cancel';
 import withStyles from '../styles/withStyles';
 import { emphasize, fade } from '../styles/colorManipulator';
@@ -45,7 +46,8 @@ export var styles = function styles(theme) {
       // Remove `button` border
       padding: 0,
       // Remove `button` padding
-      verticalAlign: 'middle'
+      verticalAlign: 'middle',
+      boxSizing: 'border-box'
     },
 
     /* Styles applied to the root element if `color="primary"`. */
@@ -127,6 +129,9 @@ export var styles = function styles(theme) {
       border: "1px solid ".concat(theme.palette.type === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'),
       '$clickable&:hover, $clickable&:focus, $deletable&:focus': {
         backgroundColor: fade(theme.palette.text.primary, theme.palette.action.hoverOpacity)
+      },
+      '& $avatar': {
+        marginLeft: -1
       }
     },
 
@@ -454,7 +459,7 @@ Chip.propTypes = {
    * The component used for the root node.
    * Either a string to use a DOM element or a component.
    */
-  component: PropTypes.oneOfType([PropTypes.string, PropTypes.func, PropTypes.object]),
+  component: componentPropType,
 
   /**
    * Override the default delete icon element. Shown only if `onDelete` is set.

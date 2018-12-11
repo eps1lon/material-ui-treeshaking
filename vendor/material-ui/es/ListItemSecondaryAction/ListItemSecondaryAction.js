@@ -27,7 +27,7 @@ function ListItemSecondaryAction(props) {
   }, other), children);
 }
 
-ListItemSecondaryAction.propTypes = process.env.NODE_ENV !== "production" ? {
+process.env.NODE_ENV !== "production" ? ListItemSecondaryAction.propTypes = {
   /**
    * The content of the component, normally an `IconButton` or selection control.
    */
@@ -43,7 +43,7 @@ ListItemSecondaryAction.propTypes = process.env.NODE_ENV !== "production" ? {
    * @ignore
    */
   className: PropTypes.string
-} : {};
+} : void 0;
 ListItemSecondaryAction.muiName = 'ListItemSecondaryAction';
 export default withStyles(styles, {
   name: 'MuiListItemSecondaryAction'
