@@ -33,9 +33,11 @@ rules: [
 ## Dev Workflow
 
 ```
-$ yarn build
-$ yarn build:profile
-$ yarn size
+git clone https://github.com/eps1lon/material-ui-treeshaking.git && cd material-ui-treeshaking
+yarn
+yarn link @material-ui/utils
+yarn test
+yarn size:why
 ```
 
 Be sure to set "Show content of concatenated modules" when looking at the bundle
