@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^3.3.1",
+    "@material-ui/core": "^3.6.2",
     "@material-ui/core-next": "file:vendor/material-ui",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
