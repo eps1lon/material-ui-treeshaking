@@ -3,10 +3,6 @@ const path = require("path");
 
 module.exports = {
   entry: `./src/current-manual-es.js`,
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM"
-  },
   mode: "production",
   module: {
     rules: [
