@@ -33,7 +33,7 @@
     "dev": "webpack --config config/webpack.config.current-manual-shakeable.js",
     "rebuild": "yarn run build:clean && yarn run build",
     "size": "size-limit",
-    "size:why": "node scripts/runSize",
+    "start": "node scripts/runSize",
     "test": "yarn rebuild && yarn size"
   }
 }

@@ -1,8 +1,28 @@
-# material-ui-shook
+i# material-ui-shook
 Tree-shaking capabilites of material-ui and how to do it.
 
 **Warning** Consider this experimental. If you don't monitor your build output or have
 a very custom babel/webpack config this might have unwanted side effects.
+
+## showcase install
+```
+git clone https://github.com/eps1lon/material-ui-treeshaking.git && cd material-ui-treeshaking
+yarn
+yarn link @material-ui/utils
+yarn build 
+yarn start
+```
+
+### What to look for:
+`@material-ui/utils` will be fully included in `current-magic` (5Kb stat). This is due to
+`@material-ui/core` components being transpiled with commondJS. Therefore even
+if every import from that package seems unused it cannot be guarenteed since `require`
+can only be analyzed at run-time.
+
+`@material-ui/utils` will only be included with an empty index in `next-magic` (500B stat)
+In `next-magic` `@material-ui/core` components are transpiled with esmodules. Therefore
+unused imports can be tree-shaken since `import` can be analyzed at compile-time.
+
 
 ## TL;DR
 
@@ -28,16 +48,6 @@ rules: [
     loader: "babel-loader"
   }
 ];
-```
-
-## Dev Workflow
-
-```
-git clone https://github.com/eps1lon/material-ui-treeshaking.git && cd material-ui-treeshaking
-yarn
-yarn link @material-ui/utils
-yarn test
-yarn size:why
 ```
 
 Be sure to set "Show content of concatenated modules" when looking at the bundle
