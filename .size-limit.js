@@ -30,5 +30,17 @@ module.exports = [
     path: "bundle/next-magic/next-magic.js",
     // gzipped tricked me :()
     limit: "54292 B"
+  },
+  {
+    name: "a module in @material-ui/core that doesn't use classnames",
+    webpack: false,
+    path: "bundle/classnames-wo/classnames-wo.js",
+    limit: "47433 B"
+  },
+  {
+    name: "a module in @material-ui/core that uses classnames",
+    webpack: false,
+    path: "bundle/classnames/classnames.js",
+    limit: "70866 B"
   }
 ];
