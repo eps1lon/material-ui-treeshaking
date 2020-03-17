@@ -1,4 +1,6 @@
-i# material-ui-shook
+**WARNING** These approaches are concerned with Material-UI V3. Starting With 4.0 you get tree-shaking out of the box. For more information see https://material-ui.com/guides/minimizing-bundle-size/#minimizing-bundle-size
+
+# material-ui-shook
 Tree-shaking capabilites of material-ui and how to do it.
 
 **Warning** Consider this experimental. If you don't monitor your build output or have
